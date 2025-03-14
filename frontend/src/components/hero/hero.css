@@ -1,0 +1,26 @@
+.hero-slider .slick-dots {
+    position: absolute;
+    bottom: 30px !important;
+}
+
+.hero-slider .slick-dots{
+    display: flex !important;
+    justify-content: center;
+    gap: 20px;
+}
+
+.hero-slider .slick-dots li button::before {
+    display: none;
+}
+
+.hero-slider .slick-dots li{
+    width: 12px;
+    height: 12px;
+    background-color: #d9d9d941;
+    border-radius: 50%;
+}
+
+.hero-slider .slick-dots li.slick-active{
+    background-color: #DB4444;
+    border: 2px solid white;
+}

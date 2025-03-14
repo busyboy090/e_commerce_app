@@ -1,1 +1,38 @@
 @import "tailwindcss";
+
+.container {
+    width: 100%;
+    max-width: 1200px; /* Adjust based on your design */
+    margin:0 auto; /* Centers the container */
+    padding: 0 15px; /* Adds some padding */
+  }
+  
+.container-fluid {
+    width: 100%;
+    padding: 0 15px;
+}
+
+/* Responsive Breakpoints */
+@media (max-width: 576px) {
+    .container {
+        max-width: 540px;
+    }
+}
+
+@media (max-width: 768px) {
+    .container {
+        max-width: 720px;
+    }
+}
+
+@media (max-width: 992px) {
+    .container {
+        max-width: 960px;
+    }
+}
+
+@media (max-width: 1200px) {
+    .container {
+        max-width: 1140px;
+    }
+}

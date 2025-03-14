@@ -1,0 +1,6 @@
+@import 'tailwindcss';
+
+.active-link {
+    text-decoration: underline !important;
+    text-underline-offset: 0.3em;
+}
