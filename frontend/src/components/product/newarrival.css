@@ -1,0 +1,47 @@
+.new-arrival-product {
+    position: relative;
+    overflow: hidden;
+}
+
+.new-arrival-product .content {
+    position: absolute;
+    margin: 32px;
+    z-index: 10;
+    bottom: 0;
+    color: #fff;
+    width: 38%;
+    transition: all 0.3s ease-in-out;
+}
+
+
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+
+}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) {
+
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+
+}
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
+    .new-arrival-product .content {
+        bottom: -100%;
+        transition: all 0.3s ease-in-out;
+    }
+    
+    .new-arrival-product:hover .content {
+        bottom: 0;
+    }
+}
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {
+
+}

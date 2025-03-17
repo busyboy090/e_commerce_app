@@ -77,29 +77,29 @@ function Hero() {
                     </button>
                 </div>
             </div>
-            <div className='max-lg:col-span-10 col-span-8 lg:ms-[35px] lg:mt-[35px]'>
+            <div className='max-lg:col-span-10 col-span-8 lg:ms-[35px] lg:mt-[35px] p-0'>
                 <Slider {...settings} className='hero-slider'>
-                    <div className='bg-[black] text-white size-100'>
+                    <div className='bg-[black] text-white w-full h-full'>
                         <div className='flex h-100 justify-center items-center'>
                                 Slide 1
                         </div>
                     </div>
-                    <div className='bg-[black] text-white size-100'>
+                    <div className='bg-[red] text-white w-full h-full'>
                         <div className='flex h-100 justify-center items-center'>
                             Slide 2
                         </div>
                     </div>
-                    <div className='bg-[black] text-white size-100'>
+                    <div className='bg-[green] text-white w-full h-full'>
                         <div className='flex items-center h-100 justify-center'>
                             Slide 3
                         </div>
                     </div>
-                    <div className='bg-[black] text-white size-100'>
+                    <div className='bg-slate-500 text-white w-full h-full'>
                         <div className='flex items-center h-100 justify-center'>
                             Slide 4
                         </div>
                     </div>
-                    <div className='bg-[black] text-white size-100'>
+                    <div className='bg-[yellow] text-white w-full h-full'>
                         <div className='flex items-center h-100 justify-center'>
                             Slide 5
                         </div>
