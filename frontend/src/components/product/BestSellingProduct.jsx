@@ -49,9 +49,9 @@ function BestSellingProduct() {
         },
       },
       {
-        breakpoint: 768, // Large phones & small tablets
+        breakpoint: 700, // Large phones & small tablets
         settings: {
-          slidesToShow: 2.5,
+          slidesToShow: 2.1,
         },
       },
       {
@@ -78,7 +78,7 @@ function BestSellingProduct() {
 
   return (
     <div className="container">
-      <div className="mt-[90px] mb-[50px] pb-[50px]">
+      <div className="mt-[90px] lg:mb-[50px] lg:pb-[50px]">
         <div className="flex gap-[10px] items-center mb-[20px]">
           <span className="w-[20px] bg-[#DB4444] rounded-sm h-[40px]"></span>
           <p className="text-[#DB4444] font-semibold">This Month</p>
@@ -101,7 +101,7 @@ function BestSellingProduct() {
 
         {/* product */}
         <div className="product-list mb-[40px] mt-[15px]">
-          <Slider {...settings} className="product-slider">
+          <Slider {...settings} className="slick-container">
             <ProductCard
               image={Gamepad}
               name="HAVIT HV-G92 Gamepad"
@@ -109,10 +109,6 @@ function BestSellingProduct() {
               {...productCardSettings}
             />
             <ProductCard image={WiredKeyboard} name="AK-900 Wired Keyboard" {...productCardSettings}/>
-            <ProductCard image={Gamepad} name="HAVIT HV-G92 Gamepad" {...productCardSettings}/>
-            <ProductCard image={WiredKeyboard} name="AK-900 Wired Keyboard" {...productCardSettings}/>
-            <ProductCard image={Gamepad} name="HAVIT HV-G92 Gamepad" {...productCardSettings}/>
-            <ProductCard image={WiredKeyboard} name="AK-900 Wired Keyboard" {...productCardSettings} />
             <ProductCard image={Gamepad} name="HAVIT HV-G92 Gamepad" {...productCardSettings}/>
             <ProductCard image={WiredKeyboard} name="AK-900 Wired Keyboard" {...productCardSettings}/>
           </Slider>

@@ -1,0 +1,51 @@
+.select-field-container {
+    background-color: #F5F5F5;
+    border: none;
+    width: 100%;
+    border-radius: 4px;
+}
+
+.select-field-container input {
+    border: none;
+    color: black;
+    height: 50px;
+    width: 100%;
+}
+
+.select-field-container input:focus {
+    outline: none;
+}
+
+.react-tel-input {
+    height: 56px;
+    background-color: #F5F5F5;
+}
+
+.react-tel-input input {
+    height: 56px !important;
+    background-color: #F5F5F5 !important;
+    border: none !important;
+    border-radius: 4px !important;
+    width: 100% !important;
+}
+
+.react-tel-input input:focus {
+    outline: none;
+}
+
+.react-tel-input .flag-dropdown {
+    border: none !important;
+}
+
+.select-field-dropdown {
+    background: white;
+    height: 200px;
+    width: 100%;
+    position: absolute;
+    top: 55px;
+    overflow-y: visible;
+    overflow-x: hidden;
+    z-index: 99;
+    flex-direction: column;
+    gap: 15px;
+}

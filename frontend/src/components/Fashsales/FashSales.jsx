@@ -43,13 +43,13 @@ function FashSales() {
       {
         breakpoint: 1280, // Medium desktops
         settings: {
-          slidesToShow: 3.5,
+          slidesToShow: 4,
         },
       },
       {
         breakpoint: 1024, // Tablets
         settings: {
-          slidesToShow: 3,
+          slidesToShow: 4,
         },
       },
       {
@@ -59,15 +59,15 @@ function FashSales() {
         },
       },
       {
-        breakpoint: 768, // Large phones & small tablets
+        breakpoint: 700, // Large phones & small tablets
         settings: {
-          slidesToShow: 2,
+          slidesToShow: 2.1,
         },
       },
       {
         breakpoint: 640, // Small phones
         settings: {
-          slidesToShow: 1,
+          slidesToShow: 2,
         },
       },
       {

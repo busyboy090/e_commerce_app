@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { BrowserRouter as Router, Route, Routes, Outlet} from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes} from 'react-router-dom';
 import Home from './components/home/Home';
 import Checkout from './components/checkout/Checkout';
 // import About from './components/about/About'
@@ -9,24 +9,15 @@ import Login from './components/login/Login'
 import Register from './components/register/Register';
 import Cart from './components/cart/Cart';
 // import Dashboard from './components/dashboard/Dashboard'
-// import Profile from './components/profile/Profile'
 // import Admin from './components/admin/Admin'
 // import User from './components/user/User';
 import Wishlist from './components/wishlist/Wishlist';
-import Navbar from './components/Navbar/Navbar';
-import Footer from './components/Footer/Footer';
-
-function Layout() {
-  return (
-    <>
-        <Navbar />
-
-        <Outlet />
-
-        <Footer />
-    </>
-  )
-}
+import Layout from './components/Layout';
+import Account from './components/account/Account';
+import Profile from './components/account/Profile';
+import Address from './components/account/address-book/Address';
+import AddNewAddress from './components/account/address-book/AddNewAddress';
+import EditAddress from './components/account/address-book/EditAddress';
 
 function App() {
 
@@ -41,6 +32,10 @@ function App() {
             <Route path='wishlist' element={<Wishlist />} />
             <Route path='cart' element={<Cart />}></Route>
             <Route path='checkout' element={<Checkout />}></Route>
+            <Route path='account/manage-account/profile' element={<Account component={<Profile />} />}></Route>
+            <Route path='account/manage-account/address-book' element={<Account component={<Address />} />}></Route>
+            <Route path='account/manage-account/address-book/add-address' element={<Account component={<Address component={<AddNewAddress/>} />} />}></Route>
+            <Route path='account/manage-account/address-book/edit-address/:id' element={<Account component={<Address component={<EditAddress/>} />} />}></Route>
             <Route path='*' element={<NotFound />} />
           </Route>
           {/* <Route path='/about' element={<About />} />

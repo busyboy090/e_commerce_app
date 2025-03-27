@@ -9,6 +9,8 @@ import OrderIcon from '../../assets/icons/icon-mallbag.svg'
 import CancellationIcon from '../../assets/icons/icon-cancel.svg';
 import ReviewIcon from '../../assets/icons/icon-reviews.svg';
 import Logout from '../../assets/icons/icon-logout.svg';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBars} from "@fortawesome/free-solid-svg-icons";
 
 function Navbar() {
     const [toggle, setToggle] = useState(false);
@@ -18,7 +20,15 @@ function Navbar() {
     <nav className='border-b-[1.5px] border-[#E5E5E5]'>
         <div className='container'>
             <div className='navbar flex-wrap my-[25px] flex justify-between items-center'>
-                <a className='font-bold text-2xl' href='/'>Exclusive</a>
+                <div className='flex gap-5 items-center'>
+                    {/* mobile nav toggle */}
+                    <button onClick={() => {
+                        setToggle(!toggle)
+                    }} className='text-[1.5rem] lg:hidden'>
+                        <FontAwesomeIcon icon={faBars} />
+                    </button>
+                    <a className='font-bold text-3xl' href='/'>Exclusive</a>
+                </div>
 
                 <div className='flex lg:hidden items-center space-x-6'>
                     {/* mobile search bar */}
@@ -26,14 +36,56 @@ function Navbar() {
                         <img src={SearchIcon} alt="search" />
                     </button>
 
-                    {/* mobile nav toggle */}
-                    <button onClick={() => {
-                        setToggle(!toggle)
-                    }}>
-                        <svg className='w-6 h-6' fill='none' stroke='currentColor' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'>
-                            <path strokeLinecap='round' strokeLinejoin='round' strokeWidth='2' d='M4 6h16M4 12h16M4 18h16'></path>
-                        </svg>
-                    </button>
+                    {
+                        login ? (
+                            <div className='relative mt-1 lg:hidden group'>
+                                <button type='button'>
+                                    <img src={User} alt="" />
+                                </button>
+                                <div className= 'hidden group-hover:block w-[265px] h-[265px] backdrop-blur-md bg-black/40 absolute top-[40px] right-[10%] z-10 rounded-[4px] p-[20px]'>
+                                    <ul className='text-white'>
+                                        {/* manage account */}
+                                        <li>
+                                            <a href="/account/manage-account/profile" className='flex items-center gap-[16px] p-[10px] text-[0.875rem]'>
+                                                <img src={Account} alt="" />
+                                                <span className='text-[0.875rem]'>Manage My Account</span>
+                                            </a>
+                                        </li>
+                                        {/* orders */}
+                                        <li>
+                                            <a href="/account/orders" className='flex items-center gap-[16px] p-[10px] text-[0.875rem]'>
+                                                <img src={OrderIcon} alt="" />
+                                                <span className='text-[0.875rem]'>My Order</span>
+                                            </a>
+                                        </li>
+                                        {/* cancellation */}
+                                        <li>
+                                            <a href="/account/cancellations" className='flex items-center gap-[16px] p-[10px] text-[0.875rem]'>
+                                                <img src={CancellationIcon} alt="" />
+                                                <span className='text-[0.875rem]'>My Cancellations</span>
+                                            </a>
+                                        </li>
+                                        {/* My Reviews */}
+                                        <li>
+                                            <a href="/account/reviews" className='flex items-center gap-[16px] p-[10px] text-[0.875rem]'>
+                                                <img src={ReviewIcon} alt="" />
+                                                <span className='text-[0.875rem]'>My Reviews</span>
+                                            </a>
+                                        </li>
+                                        {/* logout */}
+                                        <li>
+                                            <form>
+                                                <a href="" className='flex items-center gap-[16px] p-[10px] text-[0.875rem]'>
+                                                    <img src={Logout} alt="" />
+                                                    <span className='text-[0.875rem]'>Logout</span>
+                                                </a>
+                                            </form>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        ) : ""
+                    }
                 </div>
 
                 <div className={`flex-col max-lg:w-screen mt-[10px] lg:mt-[0] lg:flex lg:flex-row space-x-[148px] lg:items-center ${toggle ? 'flex' : 'hidden'} `}>
@@ -66,7 +118,7 @@ function Navbar() {
 
                         {/* wishlist */}
                         <a href="/wishlist" className={`${URL.includes('login') || URL.includes('register')  ? 'hidden' : ''} relative`}>
-                            <img src={WishlistIcon} alt="Wishlist" />
+                            <img src={WishlistIcon} alt="Wishlist" className='skeleton'/>
                             <span className='bg-[#DB4444] rounded-full w-[18px] h-[18px] text-white text-[0.75rem] absolute top-[-1px] right-[-3px] flex items-center justify-center'>
                                 9
                             </span>
@@ -82,7 +134,7 @@ function Navbar() {
 
                        {
                             login ? (
-                                <div className='group relative'>
+                                <div className='group relative hidden lg:block'>
                                     <button type='button' onClick={() => {
                                         setAccountDropdown(!accountDropdown)
                                     }
@@ -93,28 +145,28 @@ function Navbar() {
                                         <ul className='text-white'>
                                             {/* manage account */}
                                             <li>
-                                                <a href="" className='flex items-center gap-[16px] p-[10px] text-[0.875rem]'>
+                                                <a href="/account/manage-account/profile" className='flex items-center gap-[16px] p-[10px] text-[0.875rem]'>
                                                     <img src={Account} alt="" />
                                                     <span className='text-[0.875rem]'>Manage My Account</span>
                                                 </a>
                                             </li>
                                             {/* orders */}
                                             <li>
-                                                <a href="" className='flex items-center gap-[16px] p-[10px] text-[0.875rem]'>
+                                                <a href="/account/orders" className='flex items-center gap-[16px] p-[10px] text-[0.875rem]'>
                                                     <img src={OrderIcon} alt="" />
                                                     <span className='text-[0.875rem]'>My Order</span>
                                                 </a>
                                             </li>
                                             {/* cancellation */}
                                             <li>
-                                                <a href="" className='flex items-center gap-[16px] p-[10px] text-[0.875rem]'>
+                                                <a href="/account/cancellations" className='flex items-center gap-[16px] p-[10px] text-[0.875rem]'>
                                                     <img src={CancellationIcon} alt="" />
                                                     <span className='text-[0.875rem]'>My Cancellations</span>
                                                 </a>
                                             </li>
                                             {/* My Reviews */}
                                             <li>
-                                                <a href="" className='flex items-center gap-[16px] p-[10px] text-[0.875rem]'>
+                                                <a href="/account/reviews" className='flex items-center gap-[16px] p-[10px] text-[0.875rem]'>
                                                     <img src={ReviewIcon} alt="" />
                                                     <span className='text-[0.875rem]'>My Reviews</span>
                                                 </a>
