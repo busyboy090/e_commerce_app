@@ -5,8 +5,8 @@ import Checkout from './components/checkout/Checkout';
 // import About from './components/about/About'
 // import Contact from './components/contact/Contact'
 import NotFound from './components/NotFound'
-import Login from './components/login/Login'
-import Register from './components/register/Register';
+import Login from './components/auth/Login'
+import Register from './components/auth/Register';
 import Cart from './components/cart/Cart';
 // import Dashboard from './components/dashboard/Dashboard'
 // import Admin from './components/admin/Admin'
@@ -18,6 +18,8 @@ import Profile from './components/account/Profile';
 import Address from './components/account/address-book/Address';
 import AddNewAddress from './components/account/address-book/AddNewAddress';
 import EditAddress from './components/account/address-book/EditAddress';
+import ProtectedRoute from './components/auth/ProtectedRoute';
+import ForgetPassword from './components/auth/forgot-password/ForgetPassword';
 
 function App() {
 
@@ -25,17 +27,26 @@ function App() {
     <>
       <Router>
         <Routes>
+          {/* layout for all routes */}
           <Route path='/' element={<Layout />}>
+
             <Route index element={<Home />} />
             <Route path='register' element={<Register />}></Route>
             <Route path='login' element={<Login />} />
             <Route path='wishlist' element={<Wishlist />} />
             <Route path='cart' element={<Cart />}></Route>
-            <Route path='checkout' element={<Checkout />}></Route>
-            <Route path='account/manage-account/profile' element={<Account component={<Profile />} />}></Route>
-            <Route path='account/manage-account/address-book' element={<Account component={<Address />} />}></Route>
-            <Route path='account/manage-account/address-book/add-address' element={<Account component={<Address component={<AddNewAddress/>} />} />}></Route>
-            <Route path='account/manage-account/address-book/edit-address/:id' element={<Account component={<Address component={<EditAddress/>} />} />}></Route>
+            <Route path='forgot-password' element={<ForgetPassword />}></Route>
+
+            {/* Protected routes */}
+            <Route element={<ProtectedRoute />}>
+              <Route path='checkout' element={<Checkout />}></Route>
+              <Route path='account/manage-account/profile' element={<Account component={<Profile />} />}></Route>
+              <Route path='account/manage-account/address-book' element={<Account component={<Address />} />}></Route>
+              <Route path='account/manage-account/address-book/add-address' element={<Account component={<Address component={<AddNewAddress/>} />} />}></Route>
+              <Route path='account/manage-account/address-book/edit-address/:id' element={<Account component={<Address component={<EditAddress/>} />} />}></Route>
+            </Route>
+
+            {/* Missing Routes */}
             <Route path='*' element={<NotFound />} />
           </Route>
           {/* <Route path='/about' element={<About />} />

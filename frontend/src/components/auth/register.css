@@ -1,0 +1,12 @@
+.phone .form-control {
+    background-color: transparent !important;
+    border-bottom: 1px solid rgb(128, 128, 128, 0.3) !important;
+}
+
+.phone {
+    background-color: transparent !important;
+}
+
+.phone .flag-dropdown {
+    background-color: transparent !important;
+}

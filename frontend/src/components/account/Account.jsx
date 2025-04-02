@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import useAuth from '../../hooks/useAuth';
 
 // SidebarLink Component
 function SidebarLink({ label, href, isActive }) {
@@ -35,6 +36,7 @@ function MobileNavigation() {
 // Main Account Component
 function Account({ component }) {
   const URL = window.location.href;
+  const { auth } = useAuth();
 
   // Sidebar configuration
   const sidebarSections = [
@@ -65,7 +67,7 @@ function Account({ component }) {
       <div className="flex justify-between mt-[15px] mb-[30px] md:my-[30px] lg:my-[80px]">
         <p>Home / My Account</p>
         <p>
-          Welcome! <span className="text-[#DB4444]">Busayo</span>
+          Welcome! <span className="text-[#DB4444]">{auth?.user?.first_name}</span>
         </p>
       </div>
 

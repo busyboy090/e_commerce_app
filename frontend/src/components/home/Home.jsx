@@ -1,4 +1,4 @@
-import React from "react";
+import {React} from "react";
 import Hero from "../Hero/Hero";
 import FashSales from "../Fashsales/FashSales";
 import Categories from "./Categories";

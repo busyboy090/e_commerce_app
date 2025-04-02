@@ -91,7 +91,7 @@ function PhoneInputField({ label, id, country, value, onChange }) {
 }
 
 // Reusable CheckboxField Component
-function CheckboxField({ label, checked, onChange }) {
+export function CheckboxField({ label, checked, onChange }) {
   return (
     <div className="flex gap-[16px] items-center mt-[16px]">
       <div className="relative mt-[6px]">
@@ -99,7 +99,9 @@ function CheckboxField({ label, checked, onChange }) {
           type="checkbox"
           className="bg-[#DB4444] appearance-none h-[24px] w-[24px] rounded-[4px]"
           checked={checked}
-          onChange={onChange}
+          onChange={() => {
+            onChange(prev => !prev)
+          }}
         />
         <img
           src={WhiteTick}
@@ -107,7 +109,9 @@ function CheckboxField({ label, checked, onChange }) {
           className={`${
             checked ? "block" : "hidden"
           } absolute top-[40%] left-[50%] translate-[-50%]`}
-          onClick={onChange}
+          onClick={() => {
+            onChange(prev => !prev)
+          }}
         />
       </div>
       <label>{label}</label>

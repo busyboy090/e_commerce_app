@@ -10,12 +10,38 @@ import CancellationIcon from '../../assets/icons/icon-cancel.svg';
 import ReviewIcon from '../../assets/icons/icon-reviews.svg';
 import Logout from '../../assets/icons/icon-logout.svg';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBars} from "@fortawesome/free-solid-svg-icons";
+import { faBars, faUser, faBagShopping, faXmark, faRightFromBracket} from "@fortawesome/free-solid-svg-icons";
+import { faStar } from "@fortawesome/free-regular-svg-icons";
+import { privateApi } from '../../api/axios';
+import { useNavigate } from 'react-router-dom';
+import useAuth from '../../hooks/useAuth';
+import { toast } from 'react-toastify';
 
 function Navbar() {
     const [toggle, setToggle] = useState(false);
+    const [accountDropdown, setAccountDropdown] = useState(false)
     const URL = window.location.href;
-    const login = true;
+
+    const userIcon = URL.includes('/login') || URL.includes('/register');
+    
+    const { auth } = useAuth();
+
+    const navigate = useNavigate()
+
+    const logout = async () => {
+        
+        try {
+            const response = await privateApi.post('/auth/logout');
+            
+            toast.success(response?.data?.message);
+            localStorage.removeItem('authenticated')
+
+            navigate('/login', { replace: true});
+        } catch(err) {
+            console.log(err)
+        } 
+    }
+
   return (
     <nav className='border-b-[1.5px] border-[#E5E5E5]'>
         <div className='container'>
@@ -37,12 +63,12 @@ function Navbar() {
                     </button>
 
                     {
-                        login ? (
+                        auth?.user && !userIcon ? (
                             <div className='relative mt-1 lg:hidden group'>
                                 <button type='button'>
                                     <img src={User} alt="" />
                                 </button>
-                                <div className= 'hidden group-hover:block w-[265px] h-[265px] backdrop-blur-md bg-black/40 absolute top-[40px] right-[10%] z-10 rounded-[4px] p-[20px]'>
+                                <div className='hidden group-hover:block w-[265px] h-[265px] backdrop-blur-md bg-black/40 absolute top-[40px] right-[10%] z-10 rounded-[4px] p-[20px]'>
                                     <ul className='text-white'>
                                         {/* manage account */}
                                         <li>
@@ -74,12 +100,10 @@ function Navbar() {
                                         </li>
                                         {/* logout */}
                                         <li>
-                                            <form>
-                                                <a href="" className='flex items-center gap-[16px] p-[10px] text-[0.875rem]'>
-                                                    <img src={Logout} alt="" />
-                                                    <span className='text-[0.875rem]'>Logout</span>
-                                                </a>
-                                            </form>
+                                            <button type='button' onClick={logout} className='flex items-center gap-[16px] p-[10px] text-[0.875rem]'>
+                                                <img src={Logout} alt="" />
+                                                <span className='text-[0.875rem]'>Logout</span>
+                                            </button>
                                         </li>
                                     </ul>
                                 </div>
@@ -100,9 +124,13 @@ function Navbar() {
                         <li className='nav-item'>
                             <a className='nav-link' href='/about'>About</a>
                         </li>
-                        <li className='nav-item'>
-                            <a className='nav-link' href='/register'>Sign Up</a>
-                        </li>
+                       {
+                        !auth?.access_token ? (
+                            <li className='nav-item'>
+                                <a className='nav-link' href='/register'>Sign Up</a>
+                            </li>
+                        ) : ''
+                       }
                     </ul>
 
                     <div className='flex  items-center space-x-6 mt-[10px] lg:mt-[0]'>
@@ -133,52 +161,47 @@ function Navbar() {
                         </a>
 
                        {
-                            login ? (
+                            auth?.user && !userIcon ? (
                                 <div className='group relative hidden lg:block'>
-                                    <button type='button' onClick={() => {
-                                        setAccountDropdown(!accountDropdown)
-                                    }
-                                    }>
-                                        <img src={User} alt="" />
+                                    <button type='button' >
+                                        <img src={(auth?.user?.picture) || User} alt="Profile Picture" className='rounded-[50%] h-[35px] w-[35px]' />
                                     </button>
                                     <div className= 'hidden group-hover:block w-[265px] h-[265px] backdrop-blur-md bg-black/40 absolute top-[40px] right-[10%] z-10 rounded-[4px] p-[20px]'>
                                         <ul className='text-white'>
                                             {/* manage account */}
-                                            <li>
+                                            <li className='hover:bg-[white] hover:text-[black] rounded-[4px]'>
                                                 <a href="/account/manage-account/profile" className='flex items-center gap-[16px] p-[10px] text-[0.875rem]'>
-                                                    <img src={Account} alt="" />
+                                                    <FontAwesomeIcon icon={faUser} className='text-[1.4rem]' />
                                                     <span className='text-[0.875rem]'>Manage My Account</span>
                                                 </a>
                                             </li>
                                             {/* orders */}
-                                            <li>
+                                            <li className='hover:bg-[white] hover:text-[black] rounded-[4px]'>
                                                 <a href="/account/orders" className='flex items-center gap-[16px] p-[10px] text-[0.875rem]'>
-                                                    <img src={OrderIcon} alt="" />
+                                                    <FontAwesomeIcon icon={faBagShopping} className='text-[1.4rem]' />
                                                     <span className='text-[0.875rem]'>My Order</span>
                                                 </a>
                                             </li>
                                             {/* cancellation */}
-                                            <li>
+                                            <li className='hover:bg-[white] hover:text-[black] rounded-[4px]'>
                                                 <a href="/account/cancellations" className='flex items-center gap-[16px] p-[10px] text-[0.875rem]'>
-                                                    <img src={CancellationIcon} alt="" />
+                                                    <FontAwesomeIcon icon={faXmark} className='text-[1.4rem]' />
                                                     <span className='text-[0.875rem]'>My Cancellations</span>
                                                 </a>
                                             </li>
                                             {/* My Reviews */}
-                                            <li>
+                                            <li className='hover:bg-[white] hover:text-[black] rounded-[4px]'>
                                                 <a href="/account/reviews" className='flex items-center gap-[16px] p-[10px] text-[0.875rem]'>
-                                                    <img src={ReviewIcon} alt="" />
+                                                    <FontAwesomeIcon icon={faStar} className='text-[1.4rem]' />
                                                     <span className='text-[0.875rem]'>My Reviews</span>
                                                 </a>
                                             </li>
                                             {/* logout */}
-                                            <li>
-                                                <form>
-                                                    <a href="" className='flex items-center gap-[16px] p-[10px] text-[0.875rem]'>
-                                                        <img src={Logout} alt="" />
-                                                        <span className='text-[0.875rem]'>Logout</span>
-                                                    </a>
-                                                </form>
+                                            <li className='hover:bg-[white] hover:text-[black] rounded-[4px]'>
+                                                <button type='button' onClick={logout} className='flex items-center gap-[16px] p-[10px] text-[0.875rem]'>
+                                                    <FontAwesomeIcon icon={faRightFromBracket} className='text-[1.4rem]' />
+                                                    <span className='text-[0.875rem]'>Logout</span>
+                                                </button>
                                             </li>
                                         </ul>
                                     </div>

@@ -1,16 +1,58 @@
-import {React, use, useRef, useState} from 'react'
+import {React, useEffect, useRef, useState} from 'react'
 import { faPencil } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import ProfilePics from '../../assets/images/profile-pics.jpg';
+import useAuth from '../../hooks/useAuth';
+
+// InputField
+function InputField({label, id, onChange, inputType, value}) {
+  return (
+    <div className="flex flex-col gap-[5px]">
+        <label htmlFor={id}>
+          {label}
+        </label>
+        <input
+          type={inputType}
+          id={id}
+          value={value}
+          onChange={onChange}
+          className="h-[50px] w-full bg-[#F5F5F5] rounded-[4px] focus:outline-0 p-[10px]"
+        />
+    </div>
+  )
+}
 
 function Profile() {
+  const { auth } = useAuth()
+
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
   const [videoContainer, setVideoContainer] = useState(false);
   const imageInput = useRef(null);
-  const [imageUrl, setImageUrl] = useState(ProfilePics);
+  const [imageUrl, setImageUrl] = useState(auth?.user?.picture);  
   // const [editProfilePics, setEditProfilePics] = useState(false);
+
+  const [formData, setFormData] = useState({
+    first_name: '',
+    last_name: '',
+    email: '',
+    email: '',
+    address: '',
+    new_password: '',
+    confirm_new_password: ''
+  })
+
+  useEffect(() => {
+    setFormData((prev) => ({...prev, 
+      first_name: auth?.user?.first_name,
+      last_name: auth?.user?.last_name,
+      email: auth?.user?.email,
+    }));
+  }, [])
   
+  const handleChange = (field, value) => {
+    setFormData((prev) => ({...prev, [field] : value}))
+  }
 
   const takePicture = () => {
     setVideoContainer(true);
@@ -96,54 +138,26 @@ function Profile() {
           <h3 className='text-[#DB4444] font-semibold text-center md:text-start text-[1.25rem]'>Edit Your Profile</h3>
           <div className='mt-[16px] grid grid-cols-1 md:grid-cols-2 gap-[10px] lg:gap-[50px]'>
               {/* first name */}
-              <div className="flex flex-col gap-[5px]">
-                  <label htmlFor="first-name">
-                    First Name
-                  </label>
-                  <input
-                    type="text"
-                    id="first-name"
-                    className="h-[50px] w-full bg-[#F5F5F5] rounded-[4px] focus:outline-0 p-[10px]"
-                  />
-              </div>
+              <InputField label='First Name' id='first_name' inputType='text' value={formData.first_name} onChange={(e) => {
+                handleChange('first_name', e.target.value)
+              }} />
 
               {/* last name */}
-              <div className="flex flex-col gap-[5px ">
-                  <label htmlFor="last-name">
-                    Last Name
-                  </label>
-                  <input
-                    type="text"
-                    id="last-name"
-                    className="h-[50px] w-full bg-[#F5F5F5] rounded-[4px] focus:outline-0 p-[10px]"
-                  />
-              </div>
+              <InputField label='Last Name' id='last_name' inputType='text' value={formData.last_name} onChange={(e) => {
+                handleChange('last_name', e.target.value)
+              }} />
           </div>
 
           <div className='mt-[16px] grid grid-cols-1 md:grid-cols-2 gap-[10px] lg:gap-[50px]'>
               {/* email  */}
-              <div className="flex flex-col gap-[5px]">
-                  <label htmlFor="email">
-                    Email
-                  </label>
-                  <input
-                    type="email"
-                    id="email"
-                    className="h-[50px] w-full bg-[#F5F5F5] rounded-[4px] focus:outline-0 p-[10px]"
-                  />
-              </div>
+              <InputField label='Email' id='email' inputType='email' value={formData.email} onChange={(e) => {
+                handleChange('email', e.target.value)
+              }} />
 
               {/* address */}
-              <div className="flex flex-col gap-[5px]">
-                  <label htmlFor="address">
-                    Address
-                  </label>
-                  <input
-                    type="text"
-                    id="address"
-                    className="h-[50px] w-full bg-[#F5F5F5] rounded-[4px] focus:outline-0 p-[10px]"
-                  />
-              </div>
+              <InputField label='Address' id='address' inputType='text' value={formData.address} onChange={(e) => {
+                handleChange('address', e.target.value)
+              }} />
           </div>
 
           {/* password changes */}
@@ -153,7 +167,9 @@ function Profile() {
               <input
                   type="password"
                   placeholder='Current Password'
-                  className="h-[50px] w-full bg-[#F5F5F5] rounded-[4px] focus:outline-0 p-[10px]"
+                  className="h-[50px] w-full text-gray-300 bg-[#F5F5F5] rounded-[4px] focus:outline-0 p-[10px]"
+                  value={1222334}
+                  readOnly
               />
 
               {/* new password */}
@@ -161,6 +177,10 @@ function Profile() {
                   type="password"
                   placeholder='New Password'
                   className="h-[50px] w-full bg-[#F5F5F5] rounded-[4px] focus:outline-0 p-[10px]"
+                  value={formData.new_password}
+                  onChange={(e) => {
+                    handleChange('new_password', e.target.value)
+                  }}
               />
 
               {/* confirm new password */}
@@ -168,12 +188,18 @@ function Profile() {
                   type="password"
                   placeholder='Confirm New Password'
                   className="h-[50px] w-full bg-[#F5F5F5] rounded-[4px] focus:outline-0 p-[10px]"
+                  value={formData.confirm_new_password}
+                  onChange={(e) => {
+                    handleChange('confirm_new_password', e.target.value)
+                  }}
               />
           </div>
 
           <div className='flex justify-end items-center mt-[24px] gap-[32px]'>
               <button className=''>Cancel</button>
-              <input type="submit" value="Save Changes" className='text-white bg-[#DB4444] w-[214px] h-[56px] rounded-[4px]'/>
+              <button type="submit" className='text-white bg-[#DB4444] w-[214px] h-[56px] rounded-[4px]'>
+                Save Changes
+              </button>
           </div>
           
         </form>
