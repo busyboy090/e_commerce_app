@@ -36,7 +36,6 @@ function Profile() {
     first_name: '',
     last_name: '',
     email: '',
-    email: '',
     address: '',
     new_password: '',
     confirm_new_password: ''
