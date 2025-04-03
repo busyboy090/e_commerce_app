@@ -5,8 +5,8 @@ import User from '../models/user.model.js';
 import { Op } from 'sequelize';
 import {OAuth2Client} from 'google-auth-library';
 import speakeasy from 'speakeasy';
-import nodemailer from 'nodemailer';
-import Otp from '../models/otp.model.js'
+import Otp from '../models/otp.model.js';
+import { sendOtpEmail } from './email.controller.js';
 
 const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 
@@ -259,24 +259,7 @@ export const verifyEmail = async (req, res) => {
                 await userByInOtpTable.save();
             }
 
-            // Configuration of nodemailer 
-            const transporter = nodemailer.createTransport({
-                service: 'Gmail',
-                auth: {
-                    user: process.env.EMAIL_USER,
-                    pass: process.env.EMAIL_PASSWORD
-                }
-            })
-
-            // Mail content
-            const mailOptions = {
-                to: email,
-                subject: 'Password Reset Otp',
-                text: `Your Requested code is here ${otp}`
-            }
-
-            // Send mail
-            await transporter.sendMail(mailOptions);
+            sendOtpEmail(user.email,'support@exclusive.com', user.first_name, otp, '10');
         }
 
         res.sendStatus(200);
@@ -352,7 +335,9 @@ export const resetPassword = async (req, res) => {
             await user.save()
 
             res.status(201).json({ msg: 'Password changed successfully'});
-            user.set('otp', null);
+            userByInOtpTable.set('otp', null);
+            userByInOtpTable.set('otp_secret_key', null);
+            await userByInOtpTable.save
         }
 
     } catch (err) {

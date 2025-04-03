@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OTP Email</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f8f8;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 600px;
+            background: white;
+            padding: 20px;
+            margin: auto;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        .banner {
+            width: 100%;
+            border-radius: 8px;
+        }
+
+        h2 {
+            color: #333;
+        }
+
+        p {
+            color: #666;
+            line-height: 1.5;
+        }
+
+        .otp-box {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0;
+        }
+
+        .otp-box span {
+            font-size: 24px;
+            font-weight: bold;
+            background: #f0f0f0;
+            padding: 15px;
+            margin: 5px;
+            border-radius: 5px;
+            width: 40px;
+            display: inline-block;
+            text-align: center;
+        }
+
+        .expiry {
+            font-weight: bold;
+        }
+
+        .team-link {
+            color: #6a0dad;
+            text-decoration: none;
+        }
+
+        footer {
+            margin-top: 20px;
+            font-size: 12px;
+            color: #777;
+        }
+
+        footer a {
+            text-decoration: none;
+            color: #6a0dad;
+        }
+
+        .social-icons {
+            border-top: 1px solid rgba(128, 128, 128, 0.5);
+            border-bottom:1px solid rgba(128, 128, 128, 0.5) ;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            gap: 10px;
+            width: 100%;
+        }
+
+        .social-icons a {
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-block: 20px;
+            background-color: #6a0dad;
+        }
+
+        .social-icons a i {
+            color: white;
+            font-size: 17px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h2 style="font-size: 60px; text-align: center;">EXCLUSIVE</h2>
+        </header>
+
+        <main>
+            <h2>Hi {{name}},</h2>
+            <p>Here is your One Time Password (OTP). <br>
+            Please enter this code to verify your email address for Exclusive.</p>
+
+            <div class="otp-box">
+                <span>{{otp1}}</span>
+                <span>{{otp2}}</span>
+                <span>{{otp3}}</span>
+                <span>{{otp4}}</span>
+                <span>{{otp5}}</span>
+                <span>{{otp6}}</span>
+            </div>
+
+            <p class="expiry">OTP will expire in <strong>{{expiry}} minutes</strong>.</p>
+
+            <p style="margin-top: 40px;">Best Regards,<br>
+                <a href="#" class="team-link">EXCLUSIVE team.</a>
+            </p>
+        </main>
+
+        <footer style="text-align: center; margin-top: 50px;">
+            <div class="social-icons">
+                <a href="#">
+                    <img src="cid:instagram" alt="instagram">
+                </a>
+                <a href="#">
+                    <img src="cid:facebook" alt="facebook">
+                </a>
+            </div>
+            <p>&copy; 2025 EXCLUSIVE. All rights reserved.</p>
+            <small>
+                You are receiving this mail because you registered on EXCLUSIVE.<br>
+                <a href="#">Privacy policy</a> | <a href="#">Terms of service</a> | <a href="#">Unsubscribe</a>
+            </small>
+        </footer>
+    </div>
+
+</body>
+</html>
