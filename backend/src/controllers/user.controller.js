@@ -6,6 +6,7 @@ import { Op } from 'sequelize';
 import {OAuth2Client} from 'google-auth-library';
 import speakeasy from 'speakeasy';
 import nodemailer from 'nodemailer';
+import Otp from '../models/otp.model.js'
 
 const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 
@@ -232,16 +233,31 @@ export const verifyEmail = async (req, res) => {
 
 
         if(user) {
+            // Generate a unique secret for the user
+            const otpSecret = speakeasy.generateSecret().base32;
+
             // Generate a secure reset token(otp)
             const otp = speakeasy.totp({
-                secret: process.env.OTP_SECRET_KEY,
+                secret: otpSecret,
                 encoding: 'base32',
                 digits: 6,  // Generates a 6-digit OTP
                 step: 600 // Sets the OTP validity period
             });
 
-            user.set('otp', otp);
-            await user.save();
+            // find the user in the otp table
+            const userByInOtpTable = await Otp.findOne({ where: { userId: user.id }});
+
+            if (!userByInOtpTable) {
+                await Otp.create({
+                    otp,
+                    otp_secret_key: otpSecret,
+                    userId: user.id
+                })
+            } else {
+                userByInOtpTable.set('otp', otp);
+                userByInOtpTable.set('otp_secret_key', otpSecret);
+                await userByInOtpTable.save();
+            }
 
             // Configuration of nodemailer 
             const transporter = nodemailer.createTransport({
@@ -282,11 +298,13 @@ export const verifyOtp = async (req, res) => {
 
         if (user) {
 
-            if( user.otp !== otp) return res.status(400).json({ msg: 'Invalid Otp'});
+            const userByInOtpTable = await Otp.findOne({ where: { userId: user.id }});
+
+            if(userByInOtpTable.otp !== otp) return res.status(400).json({ msg: 'Invalid Otp'});
 
 
             const isValid = speakeasy.totp.verify({
-                secret: process.env.OTP_SECRET_KEY,
+                secret: userByInOtpTable.otp_secret_key,
                 encoding: 'base32',
                 token: otp,
                 window: 1, // Allows a small time drift,
@@ -315,8 +333,10 @@ export const resetPassword = async (req, res) => {
         let user = await User.findOne({ where: { email }});
 
         if ( user ) {
+            const userByInOtpTable = await Otp.findOne({ where: { userId: user.id }});
+
             const isValid = speakeasy.totp.verify({
-                secret: process.env.OTP_SECRET_KEY,
+                secret: userByInOtpTable.otp_secret_key,
                 encoding: 'base32',
                 token: otp,
                 window: 1, // Allows a small time drift,

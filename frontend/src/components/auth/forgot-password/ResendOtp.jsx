@@ -1,69 +1,73 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useRef, useEffect } from 'react';
 import { api } from '../../../api/axios';
 
-function ResendOtp() {
-    const email = JSON.parse(localStorage.getItem('reset-password-email'));
+function startCountdown(durationInSeconds, setTime, endTime, setCountdownDisplay) {
+    const now = Date.now();
+    endTime.current = now + durationInSeconds * 1000;
+    setTime(true);
 
-    const navigate = useNavigate();
-    const [time, setTime] = useState(false);
-    const [countdownDisplay, setCountdownDisplay] = useState('');
-
-    useEffect(() => {
-        const endTime = localStorage.getItem("countdownEndTime");
-        if (endTime) {
-            const now = Date.now();
-            const remainingTime = Math.max(0, Math.floor((endTime - now) / 1000));
-            if (remainingTime > 0) {
-                setTime(true);
-                startCountdown(remainingTime);
-            }
-        }
-    }, []);
-
-    function startCountdown(durationInSeconds) {
+    const countdown = setInterval(() => {
         const now = Date.now();
-        const endTime = now + durationInSeconds * 1000;
-        localStorage.setItem('countdownEndTime', endTime);
-        setTime(true);
+        const timeLeft = Math.max(0, Math.floor((endTime.current - now) / 1000));
 
-        const countdown = setInterval(() => {
-            const now = Date.now();
-            const timeLeft = Math.max(0, Math.floor((endTime - now) / 1000));
+        const minutes = Math.floor(timeLeft / 60);
+        const seconds = timeLeft % 60;
+        setCountdownDisplay(`${minutes}:${seconds < 10 ? '0' : ''}${seconds}`);
 
-            const minutes = Math.floor(timeLeft / 60);
-            const seconds = timeLeft % 60;
-            setCountdownDisplay(`${minutes}:${seconds < 10 ? '0' : ''}${seconds}`);
+        if (timeLeft <= 0) {
+            clearInterval(countdown);
+            setTime(false);
+        }
+    }, 1000);
 
-            if (timeLeft <= 0) {
-                clearInterval(countdown);
-                setTime(false);
-                localStorage.removeItem("countdownEndTime");
-            }
-        }, 1000);
-    }
+    const resetTimer = () => {
+        clearInterval(countdown);
+        startCountdown(durationInSeconds, setTime, endTime, setCountdownDisplay); // Reset the countdown
+    };
+
+    return resetTimer;
+}
+
+function ResendOtp({ email }) {
+    const [time, setTime] = useState(true);
+    const [countdownDisplay, setCountdownDisplay] = useState('');
+    const endTime = useRef(null); 
 
     const sendNewCode = async () => {
         try {
-            const response = await api.post('/auth/forgot-password/email',
+            const response = await api.post('/auth/forgot-password/email', 
                 JSON.stringify({ email })
             );
 
             if (response.status === 200) {
-                startCountdown(180);
+                startCountdown(180, setTime, endTime, setCountdownDisplay); // Start countdown for 3 minutes
+                setKey((prev) => prev + 1); // Trigger the key update (presumably to reset OTP form/input)
             }
         } catch (err) {
             console.log(err);
         }
     };
 
+    // Cleanup when the component unmounts
+    useEffect(() => {
+        return () => {
+            if (endTime.current) clearInterval(endTime.current); // Clear the countdown if the component is unmounted
+        };
+    }, []);
+
+    console.log(time)
+
     return (
         <div className='flex justify-center gap-[10px] items-center mt-[20px]'>
-            <button type='button' disabled={time} onClick={sendNewCode}
-                className='text-[#DB4444] font-medium text-[1rem] disabled:text-[rgba(128,128,128,0.4)]'>
+            <p>Didn't receive a code? </p>
+            <button 
+                type='button' 
+                disabled={!time} 
+                onClick={sendNewCode}
+                className='text-[#DB4444] font-medium text-[1rem] disabled:text-[rgba(128,128,128,0.4)] underline'>
                 Resend code
             </button>
-            {time && <span>{countdownDisplay}</span>}
+            {time && <span className='font-medium'>{countdownDisplay}</span>}
         </div>
     );
 }

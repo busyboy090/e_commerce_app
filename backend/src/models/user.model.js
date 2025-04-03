@@ -36,27 +36,11 @@ const User = sequelize.define('users', {
             type: DataTypes.STRING,
             allowNull: true
         },
-        otp: {
-            type: DataTypes.INTEGER,
-            allowNull: true
-        },
         email_verified: {
             type: DataTypes.BOOLEAN,
             allowNull: false
         }
-    }, {timestamps: true}
+    }, {timestamps: true, tableName: 'users'}
 )
-
-// sync with the database
-const syncDatabase = async () => {
-    try {
-        await sequelize.sync();
-        console.log('Database & tables created!');
-    } catch (err) {
-        console.error('Error syncing database:', err)
-    }
-}
-
-syncDatabase()
 
 export default User;

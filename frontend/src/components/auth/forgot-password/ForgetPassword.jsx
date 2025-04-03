@@ -20,7 +20,7 @@ function ForgetPassword() {
             }
 
             {
-                verifyOtp ? <Otp email={email} otp={otp} setOtp={setOtp} setVerifyOtp={setVerifyOtp} setResetPassword={setResetPassword}  /> : ''
+                verifyOtp ? <Otp email={email} setVerifyEmail={setVerifyEmail} otp={otp} setOtp={setOtp} setVerifyOtp={setVerifyOtp} setResetPassword={setResetPassword}  /> : ''
             }
 
             {

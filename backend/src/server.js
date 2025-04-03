@@ -3,11 +3,25 @@ import dotenv from 'dotenv';
 import cors from 'cors';
 import authRoutes from './routes/auth.js';
 import cookieParser from 'cookie-parser';
+import sequelize from "./config/db.js";
+import Otp from "./models/otp.model.js";
 
 dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 5000;
+
+// sync with the database
+const syncDatabase = async () => {
+    try {
+        await sequelize.sync({ force: false });
+        console.log('Database & tables created!');
+    } catch (err) {
+        console.error('Error syncing database:', err)
+    }
+}
+
+syncDatabase()
 
 // Middleware
 app.use(cors({
