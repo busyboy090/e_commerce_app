@@ -4,7 +4,8 @@ import cors from 'cors';
 import authRoutes from './routes/auth.js';
 import cookieParser from 'cookie-parser';
 import sequelize from "./config/db.js";
-import Otp from "./models/otp.model.js";
+import productRoutes from './routes/product.js';
+import { tr } from "@faker-js/faker";
 
 dotenv.config();
 
@@ -14,7 +15,7 @@ const PORT = process.env.PORT || 5000;
 // sync with the database
 const syncDatabase = async () => {
     try {
-        await sequelize.sync({ force: false });
+        await sequelize.sync();
         console.log('Database & tables created!');
     } catch (err) {
         console.error('Error syncing database:', err)
@@ -34,6 +35,7 @@ app.use(express.json());
 app.use(express.json());
 app.use(cookieParser(process.env.COOKIE_SECRET));
 app.use('/api/auth', authRoutes);
+app.use('/api/products', productRoutes);
 
 app.listen(PORT, () => {
 	console.log(`Server running at http://localhost:${PORT}`);

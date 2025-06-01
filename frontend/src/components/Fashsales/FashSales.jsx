@@ -1,14 +1,13 @@
-import { React, useRef } from "react";
+import { React, useRef, useEffect, useState } from "react";
 import Countdown from "react-countdown";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight, faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import ProductCard from "../product/ProductCard";
-import Slider from "react-slick";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
+import { SwiperSlide, Swiper } from "swiper/react";
+import { Mousewheel, Navigation, Autoplay, Pagination, Grid } from "swiper/modules";
+import 'swiper/css';
 import "./FashSales.css";
-import Gamepad from "../../assets/products/Gamepad.svg";
-import WiredKeyboard from "../../assets/products/Wired-Keyboard.svg";
+import { api } from '../../api/axios'
 
 function FashSales() {
   const flashSalesEndDate = new Date();
@@ -16,68 +15,55 @@ function FashSales() {
 
   const formatNumber = (num) => String(num).padStart(2, "0");
 
-  const sliderRef = useRef(null);
+  const nextSlideRef = useRef();
+  const prevSlideRef = useRef();
 
   const discount = {
     isTrue: true,
   };
 
-  const settings = {
-    dots: false, // Show navigation dots
-    infinite: false, // Infinite loop
-    speed: 500, // Animation speed
-    slidesToShow: 4, // Show one slide at a time
-    slidesToScroll: 1, // Scroll one slide at a time
-    autoplay: true, // Auto slide
-    arrows: true, // Hide arrows
-    pauseOnHover: true, // Pause auto slide on hover
-    ref: sliderRef,
-    responsive: [
-      {
-        breakpoint: 1440, // Large desktops
-        settings: {
-          slidesToShow: 4,
-          arrows: true,
-        },
-      },
-      {
-        breakpoint: 1280, // Medium desktops
-        settings: {
-          slidesToShow: 4,
-        },
-      },
-      {
-        breakpoint: 1024, // Tablets
-        settings: {
-          slidesToShow: 4,
-        },
-      },
-      {
-        breakpoint: 890, // Tablets
-        settings: {
-          slidesToShow: 2.5,
-        },
-      },
-      {
-        breakpoint: 700, // Large phones & small tablets
-        settings: {
-          slidesToShow: 2.1,
-        },
-      },
-      {
-        breakpoint: 640, // Small phones
-        settings: {
-          slidesToShow: 2,
-        },
-      },
-      {
-        breakpoint: 480, // Extra small phones
-        settings: {
-          slidesToShow: 1,
-        },
-      },
-    ],
-  };
+  const swiperBreakPoint = {
+    320: {
+      slidesPerView: 1,
+      spaceBetween:10,
+    },
+    640: {
+      slidesPerView: 2,
+      spaceBetween: 15,
+    },
+    768: {
+      slidesPerView: 2.5,
+      spaceBetween:20
+    },
+    910: {
+      slidesPerView: 3,
+      spaceBetween:20
+    },
+    1024: {
+      slidesPerView: 4,
+      spaceBetween: 30
+    }
+  }
+
+  const [products, setProducts] = useState([])
+  
+  const fetchProduct = async () => {
+    try {
+
+      const response = await api.get('/products/paginate-products?limit=8');
+
+      setProducts(response?.data?.products);
+
+    } catch (error) {
+      console.log('Error fetching product', error)
+    }
+  }
+  
+  useEffect(() => {
+
+    fetchProduct();
+
+  },[])
 
   const productCardSettings = {
     wishlist: true,
@@ -145,21 +131,11 @@ function FashSales() {
           </div>
 
           <div className="flex gap-[10px] items-center">
-            <button
-              className="w-[46px] h-[46px] bg-[#F5F5F5] rounded-full"
-              onClick={() => {
-                sliderRef.current.slickPrev();
-              }}
-            >
+            <button className="w-[46px] h-[46px] bg-[#F5F5F5] rounded-full" ref={prevSlideRef}>
               <FontAwesomeIcon icon={faArrowLeft} />
             </button>
 
-            <button
-              className="w-[46px] h-[46px] bg-[#F5F5F5] rounded-full"
-              onClick={() => {
-                sliderRef.current.slickNext();
-              }}
-            >
+            <button className="w-[46px] h-[46px] bg-[#F5F5F5] rounded-full" ref={nextSlideRef}>
               <FontAwesomeIcon icon={faArrowRight} />
             </button>
           </div>
@@ -167,22 +143,29 @@ function FashSales() {
 
         {/* product */}
         <div className="product-list mb-[40px]">
-          <Slider {...settings} className="product-slider">
-            <ProductCard
-              image={Gamepad}
-              name="HAVIT HV-G92 Gamepad"
-              discount={discount}
-              {...productCardSettings}
-            />
-            <ProductCard image={WiredKeyboard} name="AK-900 Wired Keyboard" {...productCardSettings}/>
-            <ProductCard image={Gamepad} name="HAVIT HV-G92 Gamepad" {...productCardSettings} />
-            <ProductCard image={WiredKeyboard} name="AK-900 Wired Keyboard" {...productCardSettings}/>
-            <ProductCard image={Gamepad} name="HAVIT HV-G92 Gamepad" {...productCardSettings}/>
-            <ProductCard image={WiredKeyboard} name="AK-900 Wired Keyboard" {...productCardSettings} />
-            <ProductCard image={Gamepad} name="HAVIT HV-G92 Gamepad" {...productCardSettings}/>
-            <ProductCard image={WiredKeyboard} name="AK-900 Wired Keyboard" {...productCardSettings}/>
-          </Slider>
-        </div>
+          <Swiper modules={[Navigation, Autoplay, Mousewheel]} breakpoints={swiperBreakPoint} 
+            autoplay={{
+              delay: 2500,
+              disableOnInteraction: false, 
+            }}
+            mousewheel={{
+              forceToAxis: true
+            }}
+            onBeforeInit={(swiper) => {
+              swiper.params.navigation.prevEl = prevSlideRef.current;
+              swiper.params.navigation.nextEl = nextSlideRef.current;
+            }}
+          >
+            {
+              products.map((product, index) => (
+                <SwiperSlide key={index}>
+                  <ProductCard product={product} settings={productCardSettings} />
+                </SwiperSlide>
+              ))
+            }
+          </Swiper>
+      </div>
+        
 
         <a
           href="/product"

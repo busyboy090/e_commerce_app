@@ -15,21 +15,28 @@ const Otp = sequelize.define("otps",{
       type: DataTypes.STRING,
       allowNull: true,
     },
-    userId: {
+    user_id: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      unique: true,
       references: {
         model: "users",
-        key: "id",
+        key: "user_id",
       },
       onDelete: "CASCADE",
       onUpdate: "CASCADE",
     },
   },
-  {timestamps: true, tableName: 'otps'}
+  {
+    timestamps: true, 
+    tableName: 'otps',
+    indexes: [
+      {
+        unique: true,
+        fields: ['user_id']
+      },
+    ]
+  }
 );
 
-console.log(Otp)
 
 export default Otp;

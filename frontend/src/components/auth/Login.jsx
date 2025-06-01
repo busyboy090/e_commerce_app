@@ -82,9 +82,7 @@ function Login() {
           withCredentials: true
         }
       );
-
-      console.log(response)
-
+  
       const access_token = response?.data?.access_token;
       const user = response?.data?.user;
 

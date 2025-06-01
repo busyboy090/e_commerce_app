@@ -3,7 +3,7 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-const authMiddleware = (req, res, next) => {
+export const authMiddleware = (req, res, next) => {
   const token = req.header('Authorization');
   
   if (!token) {
@@ -18,5 +18,3 @@ const authMiddleware = (req, res, next) => {
     res.status(401).json({ msg: 'Invalid token' });
   }
 };
-
-export default authMiddleware;

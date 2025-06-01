@@ -75,7 +75,7 @@ export const googleLogin = async (req, res) => {
 
         
         // Generate JWT Refresh Token
-        const refresh_token = await jwt.sign({id: user.id}, process.env.REFRESH_TOKEN_SECRET, {expiresIn: '7d'} );
+        const refresh_token = await jwt.sign({id: user.user_id}, process.env.REFRESH_TOKEN_SECRET, {expiresIn: '7d'} );
 
         // Set cookie securely
         res.cookie('refresh_token', refresh_token, {
@@ -87,7 +87,7 @@ export const googleLogin = async (req, res) => {
         });
 
         // Generate JWT Access Token
-        const access_token = await jwt.sign({ id: user.id}, process.env.ACCESS_TOKEN_SECRET, {expiresIn: '15m'} );
+        const access_token = await jwt.sign({ id: user.user_id}, process.env.ACCESS_TOKEN_SECRET, {expiresIn: '15m'} );
         res.status(201).json({
             msg: 'Logged in successfully',
             access_token, 
@@ -128,7 +128,7 @@ export const loginUser = async (req,res) => {
         if (!isMatch) return res.status(401).json({ msg: errorMessage});
 
         // Generate JWT Refresh Token
-        const refresh_token = await jwt.sign({id: user.id}, process.env.REFRESH_TOKEN_SECRET, {expiresIn: '7d'} );
+        const refresh_token = await jwt.sign({id: user.user_id}, process.env.REFRESH_TOKEN_SECRET, {expiresIn: '7d'} );
 
         // Set cookie securely
         res.cookie('refresh_token', refresh_token, {
@@ -140,7 +140,7 @@ export const loginUser = async (req,res) => {
         });
 
         // Generate JWT Access Token
-        const access_token = await jwt.sign({ id: user.id}, process.env.ACCESS_TOKEN_SECRET, {expiresIn: '15m'} );
+        const access_token = await jwt.sign({ id: user.user_id}, process.env.ACCESS_TOKEN_SECRET, {expiresIn: '15m'} );
         res.json({
             access_token, 
             user: {
@@ -192,7 +192,7 @@ export const refreshUserAccessToken = async (req, res) => {
         if (!user) return res.status(401).json({ message: 'Invalid token!' });
 
         // Generate JWT Access Token
-        const access_token = await jwt.sign({ id: user.id}, process.env.ACCESS_TOKEN_SECRET, {expiresIn: '15m'} );
+        const access_token = await jwt.sign({ id: user.user_id}, process.env.ACCESS_TOKEN_SECRET, {expiresIn: '15m'} );
         res.status(200).json({
             access_token, 
             user: {
@@ -213,7 +213,7 @@ export const refreshUserAccessToken = async (req, res) => {
 // userdetails
 export const getUserDetails = async (req, res) => {
     try {
-      const user = await User.findByPk(req.user.id, { attributes: { exclude: ['password','id','createdAt','updatedAt'] } });
+      const user = await User.findByPk(req.user.user_id, { attributes: { exclude: ['password','id','createdAt','updatedAt'] } });
       res.json(user);
     } catch (err) {
       res.status(500).json({ msg: 'Server error' });
@@ -245,13 +245,13 @@ export const verifyEmail = async (req, res) => {
             });
 
             // find the user in the otp table
-            const userByInOtpTable = await Otp.findOne({ where: { userId: user.id }});
+            const userByInOtpTable = await Otp.findOne({ where: { user_id: user.user_id }});
 
             if (!userByInOtpTable) {
                 await Otp.create({
                     otp,
                     otp_secret_key: otpSecret,
-                    userId: user.id
+                    user_id: user.user_id
                 })
             } else {
                 userByInOtpTable.set('otp', otp);
@@ -281,7 +281,7 @@ export const verifyOtp = async (req, res) => {
 
         if (user) {
 
-            const userByInOtpTable = await Otp.findOne({ where: { userId: user.id }});
+            const userByInOtpTable = await Otp.findOne({ where: { user_id: user.user_id }});
 
             if(userByInOtpTable.otp !== otp) return res.status(400).json({ msg: 'Invalid Otp'});
 
@@ -316,7 +316,7 @@ export const resetPassword = async (req, res) => {
         let user = await User.findOne({ where: { email }});
 
         if ( user ) {
-            const userByInOtpTable = await Otp.findOne({ where: { userId: user.id }});
+            const userByInOtpTable = await Otp.findOne({ where: { user_id: user.user_id }});
 
             const isValid = speakeasy.totp.verify({
                 secret: userByInOtpTable.otp_secret_key,

@@ -1,4 +1,4 @@
-.active-link {
+.active-link, .nav-link:active, .nav-link:hover {
     text-decoration: underline !important;
-    text-underline-offset: 0.3em;
+    text-underline-offset: 0.6em;
 }

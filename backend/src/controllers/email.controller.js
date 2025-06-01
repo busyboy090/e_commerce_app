@@ -2,7 +2,6 @@ import nodemailer from 'nodemailer';
 import fs from 'fs';
 import path, { dirname} from 'path';
 import { fileURLToPath } from "url";
-import { type } from 'os';
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename);
@@ -33,26 +32,12 @@ export const sendOtpEmail = async (to, from, first_name, otp, expiry) => {
         }
     });
 
-    console.log(path.join(__dirname, "..", "..", "public", "icons", "instagram.svg"))
-
     // Email message
     let mailMessage = {
         from: `"Exclusive Team" ${from} `,  // Sender email
         to: to,  // Recipient email
         subject: "Your Reset Password OTP Code",
-        html: htmlTemplate,
-        attachments: [
-            {
-                filename: "facebook.svg",
-                path: path.join(__dirname, "..", "..", "public", "icons", "facebook.svg"),
-                cid: "facebook"
-            },
-            {
-                filename: "instagram.svg",
-                path: path.join(__dirname, "..", "..", "public", "icons", "instagram.svg"),
-                cid: "instagram"
-            }
-        ]
+        html: htmlTemplate,  // HTML content
     };
 
     // Send email

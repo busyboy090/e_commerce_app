@@ -1,55 +1,70 @@
-import { React, useRef } from "react";
+import { React, useRef, useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight, faArrowLeft } from "@fortawesome/free-solid-svg-icons";
-import Slider from "react-slick";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
 import ProductCard from "../product/ProductCard";
 import Gamepad from "../../assets/products/Gamepad.svg";
 import WiredKeyboard from "../../assets/products/Wired-Keyboard.svg";
 import "./product.css";
+import { SwiperSlide, Swiper } from "swiper/react";
+import { Mousewheel, Navigation, Autoplay, Pagination, Grid } from "swiper/modules";
+import 'swiper/css';
+import "swiper/css/grid";
+import {api} from '../../api/axios';
 
 function Product() {
-  const sliderRef = useRef(null);
+  const nextSlideRef = useRef();
+  const prevSlideRef = useRef();
   const discount = {
     isTrue: true,
   };
 
-  const settings = {
-    dots: false, // Show navigation dots
-    infinite: false, // Infinite loop
-    speed: 500, // Animation speed
-    slidesToShow: 3,
-    autoplay: false, // Auto slide
-    pauseOnHover: true, // Pause auto slide on hover
-    ref: sliderRef,
-    responsive: [
-      {
-        breakpoint: 890, // Tablets
-        settings: {
-          slidesToShow: 3,
-        },
+  const swiperBreakPoint = {
+    320: {
+      slidesPerView: 1,
+      spaceBetween:10,
+    },
+    640: {
+      slidesPerView: 2,
+      spaceBetween: 15,
+    },
+    768: {
+      slidesPerView: 2.5,
+      spaceBetween:20
+    },
+    910: {
+      slidesPerView: 3,
+      spaceBetween:20
+    },
+    1024: {
+      slidesPerView: 4,
+      spaceBetween: 30,
+      grid: {
+        rows: 2,
+        fill: 'row',
       },
-      {
-        breakpoint: 768, // Large phones & small tablets
-        settings: {
-          slidesToShow: 2.5,
-        },
-      },
-      {
-        breakpoint: 640, // Small phones
-        settings: {
-          slidesToShow: 2,
-        },
-      },
-      {
-        breakpoint: 480, // Extra small phones
-        settings: {
-          slidesToShow: 1,
-        },
-      },
-    ],
-  };
+      navigation:false,
+    }
+  }
+
+  const [products, setProducts] = useState([])
+
+  const fetchProduct = async () => {
+    try {
+
+      const response = await api.get('/products/paginate-products?limit=8');
+
+      setProducts(response?.data?.products);
+
+    } catch (error) {
+      console.log('Error fetching product')
+    }
+  }
+
+  useEffect(() => {
+
+    fetchProduct();
+
+  },[])
 
   const productCardSettings = {
     wishlist: true,
@@ -71,69 +86,39 @@ function Product() {
         </div>
 
         <div className="flex gap-[10px] items-center lg:hidden">
-          <button
-            className="w-[46px] h-[46px] bg-[#F5F5F5] rounded-full"
-            onClick={() => {
-              sliderRef.current.slickPrev();
-            }}
-          >
+          <button className="w-[46px] h-[46px] bg-[#F5F5F5] rounded-full" ref={prevSlideRef}>
             <FontAwesomeIcon icon={faArrowLeft} />
           </button>
 
-          <button
-            className="w-[46px] h-[46px] bg-[#F5F5F5] rounded-full"
-            onClick={() => {
-              sliderRef.current.slickNext();
-            }}
-          >
+          <button className="w-[46px] h-[46px] bg-[#F5F5F5] rounded-full" ref={nextSlideRef}>
             <FontAwesomeIcon icon={faArrowRight} />
           </button>
         </div>
       </div>
 
       {/* product */}
-      <div className="product-list mb-[40px] mt-[15px]">
-        <div className="lg:hidden">
-          <Slider {...settings} className="products">
-            <ProductCard
-              image={Gamepad}
-              name="HAVIT HV-G92 Gamepad"
-              discount={discount}
-              {...productCardSettings}
-            />
-            <ProductCard
-              image={WiredKeyboard}
-              name="AK-900 Wired Keyboard"
-              NewProduct={true}
-              {...productCardSettings}
-            />
-            <ProductCard image={Gamepad} name="HAVIT HV-G92 Gamepad" {...productCardSettings} />
-            <ProductCard image={WiredKeyboard} name="AK-900 Wired Keyboard" {...productCardSettings} />
-            <ProductCard image={Gamepad} name="HAVIT HV-G92 Gamepad" {...productCardSettings} />
-            <ProductCard image={WiredKeyboard} name="AK-900 Wired Keyboard"  {...productCardSettings}/>
-            <ProductCard image={Gamepad} name="HAVIT HV-G92 Gamepad" {...productCardSettings} />
-            <ProductCard image={WiredKeyboard} name="AK-900 Wired Keyboard" {...productCardSettings} />
-            <ProductCard image={WiredKeyboard} name="AK-900 Wired Keyboard" {...productCardSettings} />
-            <ProductCard image={Gamepad} name="HAVIT HV-G92 Gamepad" />
-            <ProductCard image={WiredKeyboard} name="AK-900 Wired Keyboard"  {...productCardSettings}/>
-          </Slider>
-        </div>
-
-        <div className="max-lg:hidden product-desktop">
-          <ProductCard
-            image={Gamepad}
-            name="HAVIT HV-G92 Gamepad"
-            NewProduct={true}
-            {...productCardSettings}
-          />
-          <ProductCard image={WiredKeyboard} name="AK-900 Wired Keyboard" {...productCardSettings} />
-          <ProductCard image={Gamepad} name="HAVIT HV-G92 Gamepad" {...productCardSettings} />
-          <ProductCard image={WiredKeyboard} name="AK-900 Wired Keyboard" {...productCardSettings} />
-          <ProductCard image={Gamepad} name="HAVIT HV-G92 Gamepad"  {...productCardSettings}/>
-          <ProductCard image={WiredKeyboard} name="AK-900 Wired Keyboard"  {...productCardSettings}/>
-          <ProductCard image={Gamepad} name="HAVIT HV-G92 Gamepad" {...productCardSettings}/>
-          <ProductCard image={WiredKeyboard} name="AK-900 Wired Keyboard" {...productCardSettings} />
-        </div>
+      <div className="product-list mb-[40px]">
+          <Swiper modules={[Navigation, Autoplay, Mousewheel, Grid]} breakpoints={swiperBreakPoint} 
+            autoplay={{
+              delay: 2500,
+              disableOnInteraction: false, 
+            }}
+            mousewheel={{
+              forceToAxis: true
+            }}
+            onBeforeInit={(swiper) => {
+              swiper.params.navigation.prevEl = prevSlideRef.current;
+              swiper.params.navigation.nextEl = nextSlideRef.current;
+            }}
+          >
+              {
+                products.map((product, index) => (
+                  <SwiperSlide key={index}>
+                    <ProductCard product={product} settings={productCardSettings} />
+                  </SwiperSlide>
+                ))
+              }
+          </Swiper>
       </div>
 
       <a

@@ -7,11 +7,11 @@ import Checkout from './components/checkout/Checkout';
 import NotFound from './components/NotFound'
 import Login from './components/auth/Login'
 import Register from './components/auth/Register';
-import Cart from './components/cart/Cart';
+import Cart from './components/cart/Cart.jsx';
 // import Dashboard from './components/dashboard/Dashboard'
 // import Admin from './components/admin/Admin'
 // import User from './components/user/User';
-import Wishlist from './components/wishlist/Wishlist';
+import Wishlist from './components/wishlist/Wishlist.jsx';
 import Layout from './components/Layout';
 import Account from './components/account/Account';
 import Profile from './components/account/Profile';

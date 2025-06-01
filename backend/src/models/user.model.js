@@ -2,7 +2,7 @@ import {DataTypes} from 'sequelize';
 import sequelize from '../config/db.js';
 
 const User = sequelize.define('users', {
-        id: {
+        user_id: {
             type: DataTypes.INTEGER, 
             autoIncrement: true,
             primaryKey: true,
@@ -20,7 +20,6 @@ const User = sequelize.define('users', {
 
         email: {
             type: DataTypes.STRING,
-            unique: true,
             allowNull: false
         },
 
@@ -40,7 +39,20 @@ const User = sequelize.define('users', {
             type: DataTypes.BOOLEAN,
             allowNull: false
         }
-    }, {timestamps: true, tableName: 'users'}
+    }, {
+        timestamps: true, 
+        tableName: 'users',
+        indexes: [
+            {
+                unique: true,
+                fields: ['email']
+            },
+            {
+                unique: true,
+                fields: ['phone']
+            }
+        ]
+    }
 )
 
 export default User;

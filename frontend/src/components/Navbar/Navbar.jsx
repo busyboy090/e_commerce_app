@@ -1,4 +1,4 @@
-import {React, useState} from 'react'
+import {React, useEffect, useState} from 'react'
 import SearchIcon from '../../assets/icons/search-icon.svg'
 import CartIcon from '../../assets/icons/cart-icon.svg'
 import WishlistIcon from '../../assets/icons/wishlist-icon.svg'
@@ -16,11 +16,20 @@ import { privateApi } from '../../api/axios';
 import { useNavigate } from 'react-router-dom';
 import useAuth from '../../hooks/useAuth';
 import { toast } from 'react-toastify';
+import { useCart } from '../../hooks/useCart';
+import { useWishList } from '../../hooks/useWishList';
 
 function Navbar() {
     const [toggle, setToggle] = useState(false);
     const [accountDropdown, setAccountDropdown] = useState(false)
     const URL = window.location.href;
+
+    const { cartItems } = useCart();
+    const { wishList } = useWishList();
+
+    const totalCartQuantity = cartItems.reduce((total, item) => total + item.quantity, 0); 
+    const totalWishList = wishList.length; 
+
 
     const userIcon = URL.includes('/login') || URL.includes('/register');
     
@@ -148,7 +157,7 @@ function Navbar() {
                         <a href="/wishlist" className={`${URL.includes('login') || URL.includes('register')  ? 'hidden' : ''} relative`}>
                             <img src={WishlistIcon} alt="Wishlist" className='skeleton'/>
                             <span className='bg-[#DB4444] rounded-full w-[18px] h-[18px] text-white text-[0.75rem] absolute top-[-1px] right-[-3px] flex items-center justify-center'>
-                                9
+                                { totalWishList }
                             </span>
                         </a>
                         
@@ -156,7 +165,7 @@ function Navbar() {
                         <a href="/cart" className={`${URL.includes('login') || URL.includes('register') ? 'hidden' : ''} relative`}>
                             <img src={CartIcon} alt="Cart" />
                             <span className='bg-[#DB4444] rounded-full w-[20px] h-[20px] text-white text-[0.8rem] absolute top-[-4px] right-[-3px] flex items-center justify-center'>
-                                99
+                                { totalCartQuantity }
                             </span>
                         </a>
 
@@ -164,7 +173,9 @@ function Navbar() {
                             auth?.user && !userIcon ? (
                                 <div className='group relative hidden lg:block'>
                                     <button type='button' >
-                                        <img src={(auth?.user?.picture) || User} alt="Profile Picture" className='rounded-[50%] h-[35px] w-[35px]' />
+                                        <img src={(auth?.user?.picture) || User} onError={(e) => {
+                                            e.target.src = User
+                                        }} alt="Profile Picture" className='rounded-[50%] h-[35px] w-[35px]' />
                                     </button>
                                     <div className= 'hidden group-hover:block w-[265px] h-[265px] backdrop-blur-md bg-black/40 absolute top-[40px] right-[10%] z-10 rounded-[4px] p-[20px]'>
                                         <ul className='text-white'>

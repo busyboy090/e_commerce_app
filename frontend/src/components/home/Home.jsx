@@ -18,7 +18,7 @@ function Home() {
       <Hero />
       <FashSales />
       <Categories />
-      <BestSellingProduct />
+      {/* <BestSellingProduct /> */}
 
       <div className="container bg-black p-[56px!important] flex max-lg:flex-col gap-[43px]">
         <div className="content lg:w-[443px]">

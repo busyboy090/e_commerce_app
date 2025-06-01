@@ -1,73 +1,39 @@
 import { React, useRef } from "react";
 import ProductCard from "./ProductCard";
-import Slider from "react-slick";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
 import "./BestSellingProduct.css";
 import Gamepad from "../../assets/products/Gamepad.svg";
 import WiredKeyboard from "../../assets/products/Wired-Keyboard.svg";
+import { SwiperSlide, Swiper } from "swiper/react";
+import { Autoplay, Mousewheel } from "swiper/modules";
+import 'swiper/css';
 
 function BestSellingProduct() {
   const discount = {
     isTrue: true,
   };
 
-  const settings = {
-    dots: false, // Show navigation dots
-    infinite: false, // Infinite loop
-    speed: 500, // Animation speed
-    slidesToShow: 4, // Show one slide at a time
-    slidesToScroll: 1, // Scroll one slide at a time
-    autoplay: true, // Auto slide
-    arrows: false, // Hide arrows
-    pauseOnHover: true, // Pause auto slide on hover
-
-    responsive: [
-      {
-        breakpoint: 1440, // Large desktops
-        settings: {
-          slidesToShow: 4,
-          arrows: true,
-        },
-      },
-      {
-        breakpoint: 1280, // Medium desktops
-        settings: {
-          slidesToShow: 4,
-        },
-      },
-      {
-        breakpoint: 1024, // Tablets
-        settings: {
-          slidesToShow: 4,
-        },
-      },
-      {
-        breakpoint: 890, // Tablets
-        settings: {
-          slidesToShow: 2.5,
-        },
-      },
-      {
-        breakpoint: 700, // Large phones & small tablets
-        settings: {
-          slidesToShow: 2.1,
-        },
-      },
-      {
-        breakpoint: 640, // Small phones
-        settings: {
-          slidesToShow: 2,
-        },
-      },
-      {
-        breakpoint: 480, // Extra small phones
-        settings: {
-          slidesToShow: 1,
-        },
-      },
-    ],
-  };
+  const swiperBreakPoint = {
+    320: {
+      slidesPerView: 1,
+      spaceBetween:10,
+    },
+    640: {
+      slidesPerView: 2,
+      spaceBetween: 15,
+    },
+    768: {
+      slidesPerView: 2.5,
+      spaceBetween:20
+    },
+    910: {
+      slidesPerView: 3,
+      spaceBetween:20
+    },
+    1024: {
+      slidesPerView: 4,
+      spaceBetween: 30,
+    }
+  }
 
   // product card settings
   const productCardSettings = {
@@ -100,19 +66,42 @@ function BestSellingProduct() {
         </div>
 
         {/* product */}
-        <div className="product-list mb-[40px] mt-[15px]">
-          <Slider {...settings} className="slick-container">
-            <ProductCard
-              image={Gamepad}
-              name="HAVIT HV-G92 Gamepad"
-              discount={discount}
-              {...productCardSettings}
-            />
-            <ProductCard image={WiredKeyboard} name="AK-900 Wired Keyboard" {...productCardSettings}/>
-            <ProductCard image={Gamepad} name="HAVIT HV-G92 Gamepad" {...productCardSettings}/>
-            <ProductCard image={WiredKeyboard} name="AK-900 Wired Keyboard" {...productCardSettings}/>
-          </Slider>
-        </div>
+        <div className="product-list mb-[40px]">
+          <Swiper modules={[Autoplay, Mousewheel]} breakpoints={swiperBreakPoint} 
+            autoplay={{
+              delay: 2500,
+              disableOnInteraction: false, 
+            }}
+            mousewheel={{
+              forceToAxis: true
+            }}
+          >
+              <SwiperSlide>
+                <ProductCard image={Gamepad} name="HAVIT HV-G92 Gamepad" {...productCardSettings} />
+              </SwiperSlide>
+              <SwiperSlide>
+                <ProductCard image={WiredKeyboard} name="AK-900 Wired Keyboard" {...productCardSettings} />
+              </SwiperSlide>
+              <SwiperSlide>
+                <ProductCard image={Gamepad} name="HAVIT HV-G92 Gamepad" {...productCardSettings} />
+              </SwiperSlide>
+              <SwiperSlide>
+                <ProductCard image={WiredKeyboard} name="AK-900 Wired Keyboard" {...productCardSettings} />
+              </SwiperSlide>
+              <SwiperSlide>
+                <ProductCard image={Gamepad} name="HAVIT HV-G92 Gamepad" {...productCardSettings} />
+              </SwiperSlide>
+              <SwiperSlide>
+                <ProductCard image={WiredKeyboard} name="AK-900 Wired Keyboard" {...productCardSettings} />
+              </SwiperSlide>
+              <SwiperSlide>
+                <ProductCard image={Gamepad} name="HAVIT HV-G92 Gamepad" {...productCardSettings} />
+              </SwiperSlide>
+              <SwiperSlide>
+                <ProductCard image={WiredKeyboard} name="AK-900 Wired Keyboard" {...productCardSettings} />
+              </SwiperSlide>
+          </Swiper>
+      </div>
       </div>
     </div>
   );
