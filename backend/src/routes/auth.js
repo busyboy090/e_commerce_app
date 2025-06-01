@@ -1,32 +1,43 @@
+<<<<<<< HEAD
 import express from 'express';
 import { authMiddleware } from '../middlewares/auth.middleware.js';
 import { loginUser, logoutUser, registerUser, getUserDetails, refreshUserAccessToken, googleLogin, verifyEmail, verifyOtp, resetPassword } from '../controllers/user.controller.js';
 import { validateRegister, validateLogin } from '../middlewares/validators.js';
+=======
+import express from "express";
+import authMiddleware from "../middlewares/auth.middleware.js";
+import {
+	registerUser,
+	googleLogin,
+	loginUser,
+	logoutUser,
+	refreshUserAccessToken,
+} from "../controllers/auth.controller.js";
+import { getUserDetails } from "../controllers/profile.controller.js";
+import {
+	verifyEmail,
+	verifyOtp,
+	resetPassword,
+} from "../controllers/password.controller.js";
+import { validateRegister, validateLogin } from "../middlewares/validators.js";
+>>>>>>> 7845db247ff58e810601e383dfc09bc00857a281
 
 const router = express.Router();
 
-// Register route 
-router.post('/register', validateRegister, registerUser);
+router.post("/register", validateRegister, registerUser);
 
-// Google login route
-router.post('/google-login', googleLogin)
+router.post("/google-login", googleLogin);
 
-// Login route
-router.post('/login', validateLogin, loginUser);
+router.post("/login", validateLogin, loginUser);
 
-// Logout route
-router.post('/logout', authMiddleware, logoutUser);
+router.post("/logout", authMiddleware, logoutUser);
 
-// Protected route
-router.get('/me', authMiddleware, getUserDetails);
+router.get("/me", authMiddleware, getUserDetails);
 
-// Refresh token route
-router.get('/refresh-token', refreshUserAccessToken);
+router.get("/refresh-token", refreshUserAccessToken);
 
-// Forgot password route
-router.post('/forgot-password/email', verifyEmail);
-router.post('/forgot-password/verify-otp', verifyOtp);
-router.post('/forgot-password/reset-password', resetPassword);
-
+router.post("/forgot-password/email", verifyEmail);
+router.post("/forgot-password/verify-otp", verifyOtp);
+router.post("/forgot-password/reset-password", resetPassword);
 
 export default router;
