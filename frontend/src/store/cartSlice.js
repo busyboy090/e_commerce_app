@@ -1,21 +1,63 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { api } from '../api/axios';
+import { privateApi } from '../api/axios';
 
 const initialState = {
   cartItems: JSON.parse(localStorage.getItem('exclusive_cart')) || [],
   products: [],
-  status: 'idle',
+  fetchCartFromDatabaseStatus: 'idle',
+  fetchProductsStatus: 'idle',
+  syncCartToDatabaseStatus: 'idle',
+
 };
+
+export const syncCartToDatabase = createAsyncThunk(
+  'cart/syncCartToDatabase',
+  async (cartItems) => {
+    console.log(cartItems)
+    try {
+      const response = await privateApi.post(
+        '/cart',
+        JSON.stringify({ cartItems}),
+        { headers: { 'Content-Type': 'application/json' } }
+      );
+
+      return null;
+    } catch (err) {
+      console.log(err);
+      return null;
+    }
+  }
+);
+
+export const fetchCartFromDatabase = createAsyncThunk(
+  'cart/fetchCartFromDatabase',
+  async () => {
+    try {
+      const response = await privateApi.get(
+        '/cart'
+      );
+      return response.data || [];
+    } catch (err) {
+      console.log(err);
+      return []
+    }
+  }
+);
 
 export const fetchProducts = createAsyncThunk(
   'cart/fetchProducts',
   async (productIds) => {
-    const response = await api.post(
-      '/products/multipleproducts',
-      JSON.stringify({ productIds }),
-      { headers: { 'Content-Type': 'application/json' } }
-    );
-    return response.data.products || [];
+    try {
+      const response = await privateApi.post(
+        '/products/multipleproducts',
+        JSON.stringify({ productIds }),
+        { headers: { 'Content-Type': 'application/json' } }
+      );
+      return response.data.products;
+    } catch (err) {
+      console.log(err);
+      return []
+    }
   }
 );
 
@@ -50,14 +92,34 @@ const cartSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(fetchProducts.pending, (state) => {
-        state.status = 'loading';
+        state.fetchProductsStatus = 'loading';
       })
       .addCase(fetchProducts.fulfilled, (state, action) => {
-        state.status = 'succeeded';
+        state.fetchProductsStatus = 'succeeded';
         state.products = action.payload;
       })
       .addCase(fetchProducts.rejected, (state) => {
-        state.status = 'failed';
+        state.fetchProductsStatus = 'failed';
+      })
+      .addCase(fetchCartFromDatabase.pending, (state) => {
+        state.fetchCartFromDatabaseStatus = 'loading';
+      })
+      .addCase(fetchCartFromDatabase.fulfilled, (state, action) => {
+        state.fetchCartFromDatabaseStatus = 'succeeded';
+        state.cartItems = action.payload.cartItems;
+        state.products = action.payload.products;
+      })
+      .addCase(fetchCartFromDatabase.rejected, (state) => {
+        state.fetchCartFromDatabaseStatus = 'failed';
+      })
+      .addCase(syncCartToDatabase.pending, (state) => {
+        state.syncCartToDatabaseStatus = 'loading';
+      })
+      .addCase(syncCartToDatabase.fulfilled, (state,) => {
+        state.syncCartToDatabaseStatus = 'succeeded';
+      })
+      .addCase(syncCartToDatabase.rejected, (state) => {
+        state.syncCartToDatabaseStatus = 'failed';
       });
   }
 });

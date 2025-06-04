@@ -3,161 +3,221 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { OAuth2Client } from "google-auth-library";
 import User from "../models/user.model.js";
-import { Op } from "sequelize";
 
-// Load environment variables
 dotenv.config();
 
 const googleClient = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 
-const registerUser = async (req, res) => {
-	try {
-		const { username, email, password } = req.body;
-		if (!username || !email || !password) {
-			return res.status(400).json({ message: "Missing required fields" });
-		}
+// register 
+const registerUser = async (req,res) => {
+   
+    try {
+        const {first_name, last_name, email, phone, password} = req.body;
 
-		// Check if user already exists
-		const existingUser = await User.findOne({ where: { email } });
-		if (existingUser) {
-			return res.status(400).json({ message: "User already exists" });
-		}
+        // Check if the user already exists
+        let user = await User.findOne(
+            {
+                where: {
+                    [Op.or]: [
+                        { email },
+                        { phone }
+                    ]
+                }
+            }
+        );
 
-		// Hash the password
-		const hashedPassword = await bcrypt.hash(password, 10);
+        if (user) return res.status(400).json({ msg: 'User already exists' })
+        
+        // Hash password
+        const hashedPassword = await bcrypt.hash(password, 10);
 
-		// Create new user
-		const user = await User.create({
-			username,
-			email,
-			password: hashedPassword,
-		});
+        // Register the user
+        user = await User.create({ first_name, last_name, email, phone, password: hashedPassword, email_verified: false});
 
-		res.status(201).json({
-			message: "User registered",
-			user: { id: user.id, username: user.username, email: user.email },
-		});
-	} catch (error) {
-		res.status(500).json({ message: error.message });
-	}
-};
+        res.status(201).json({ msg: 'User registered successfully'});
+    } catch (err) {
+        res.status(500).json({ msg: 'Server error'});
+    }
+}
 
-// Function to handle user login
-const loginUser = async (req, res) => {
-	try {
-		const { email, password } = req.body;
-		if (!email || !password) {
-			return res
-				.status(400)
-				.json({ message: "Missing email or password" });
-		}
-
-		const user = await User.findOne({ where: { email } });
-		if (!user) {
-			return res.status(400).json({ message: "Invalid credentials" });
-		}
-
-		const passwordMatch = await bcrypt.compare(password, user.password);
-		if (!passwordMatch) {
-			return res.status(400).json({ message: "Invalid credentials" });
-		}
-
-		// Generate access token
-		const accessToken = jwt.sign({ id: user.id }, process.env.JWT_SECRET, {
-			expiresIn: "15m",
-		});
-		// Generate refresh token
-		const refreshToken = jwt.sign(
-			{ id: user.id },
-			process.env.JWT_REFRESH_SECRET,
-			{ expiresIn: "7d" }
-		);
-
-		res.status(200).json({ accessToken, refreshToken });
-	} catch (error) {
-		res.status(500).json({ message: error.message });
-	}
-};
-
+// signin through google 
 const googleLogin = async (req, res) => {
-	try {
-		const { token } = req.body;
-		if (!token) {
-			return res.status(400).json({ message: "Missing Google token" });
-		}
+    try {
+        
+        const { token } = req.body;
 
-		const ticket = await googleClient.verifyIdToken({
-			idToken: token,
-			audience: process.env.GOOGLE_CLIENT_ID,
-		});
-		const payload = ticket.getPayload();
-		const { email, name } = payload;
+        if (!token) return res.status(400).json({ msg: 'Token is required'})
 
-		// Check if user exists
-		let user = await User.findOne({ where: { email } });
-		if (!user) {
-			user = await User.create({
-				username: name,
-				email,
-				password: bcrypt.hashSync(
-					Math.random().toString(36).slice(-8),
-					10
-				),
-			});
-		}
+        // get user details from google
+        const userInfo = await fetch(`https://www.googleapis.com/oauth2/v3/userinfo`, {
+            headers: { Authorization: `Bearer ${token}` },
+            timeout: 20000
+        }).then((res) => res.json());
 
-		const accessToken = jwt.sign({ id: user.id }, process.env.JWT_SECRET, {
-			expiresIn: "15m",
-		});
-		const refreshToken = jwt.sign(
-			{ id: user.id },
-			process.env.JWT_REFRESH_SECRET,
-			{ expiresIn: "7d" }
-		);
+        const { email, family_name, picture, given_name, email_verified } = userInfo;
+        
+        // Check if the user already exists
+        let user = await User.findOne({ where : {email}});
 
-		res.status(200).json({ accessToken, refreshToken });
-	} catch (error) {
-		res.status(500).json({ message: error.message });
-	}
+        if (!user) {
+            // Register the user
+            user = await User.create({ 
+                first_name : given_name,
+                last_name : family_name, 
+                email,
+                picture,
+                password: null,
+                email_verified
+            });
+        }
+
+        
+        // Generate JWT Refresh Token
+        const refresh_token = await jwt.sign({
+			id: user.user_id, 
+			email: user.email, 
+			firstName: user.first_name,
+			lastName: user.last_name,
+			picture: user.picture,
+			phone: user.phone
+		}, process.env.REFRESH_TOKEN_SECRET, {expiresIn: '7d'} );
+
+        // Set cookie securely
+        res.cookie('refresh_token', refresh_token, {
+            httpOnly: true,
+            secure: true,
+            sameSite: 'strict',
+            maxAge: 7 * 24 * 60 * 60 * 1000,
+            signed: true
+        });
+
+        // Generate JWT Access Token
+        const access_token = await jwt.sign({ id: user.user_id}, process.env.ACCESS_TOKEN_SECRET, {expiresIn: '15m'} );
+        res.status(201).json({
+            msg: 'Logged in successfully',
+            access_token, 
+            user: {
+                first_name : user.first_name,
+                last_name : user.last_name, 
+                email: user.email,
+                picture: user.picture,
+                phone: user.phone
+            },
+        });
+
+    } catch (err) {
+        console.error('Google registration error:', err);
+        res.status(500).json({
+            message: 'Server error'
+        });
+    }
 };
 
-// Function to handle user logout
-const logoutUser = async (req, res) => {
-	try {
-		res.status(200).json({ message: "User logged out successfully" });
-	} catch (error) {
-		res.status(500).json({ message: error.message });
-	}
-};
+// login
+const loginUser = async (req,res) => {
 
+    try {
+        const { email, password } = req.body;
+
+        // Check if the user exists
+        let user = await User.findOne({where: { email }});
+
+        let errorMessage = 'Invalid credentials';
+        if (!user) return res.status(401).json({ msg: errorMessage});
+
+        // check is password exists
+        if(!user?.password) return res.status(401).json({ msg: errorMessage});
+
+        // Compare passwords
+        const isMatch = await bcrypt.compare(password, user.password);
+        if (!isMatch) return res.status(401).json({ msg: errorMessage});
+
+		const payload = {
+			id: user.user_id, 
+			email: user.email, 
+			firstName: user.first_name,
+			lastName: user.last_name,
+			picture: user.picture,
+			phone: user.phone
+		}
+
+        // Generate JWT Refresh Token
+        const refresh_token = await jwt.sign(payload, process.env.REFRESH_TOKEN_SECRET, {expiresIn: '7d'} );
+
+        // Set cookie securely
+        res.cookie('refresh_token', refresh_token, {
+            httpOnly: true,
+            secure: true,
+            sameSite: 'strict',
+            maxAge: 7 * 24 * 60 * 60 * 1000,
+            signed: true
+        });
+
+        // Generate JWT Access Token
+        const access_token = await jwt.sign(payload, process.env.ACCESS_TOKEN_SECRET, {expiresIn: '15m'} );
+
+        res.json({
+            access_token, 
+            user: payload,
+            msg: 'Logged in successfully'
+        });
+
+    } catch (err) {
+        console.error(err)
+        res.status(500).json({ msg: 'Server error'});
+    }
+}
+
+// logout
+const logoutUser = async (req,res) => {
+    const refresh_token = req.signedCookies?.refresh_token;
+
+    if (!refresh_token) return res.status(401).json({ msg: 'No token, authorization denied'});
+
+    try {
+
+        res.clearCookie('refresh_token', { httpOnly: true, signed: true });
+        res.status(200).json({ msg: 'Logged out successfully'});
+
+    } catch (err) {
+        res.status(500).json({ msg: 'Server error'});
+    }
+
+
+}
+
+// refresh token
 const refreshUserAccessToken = async (req, res) => {
-	try {
-		const { refreshToken } = req.body;
-		if (!refreshToken) {
-			return res.status(400).json({ message: "Missing refresh token" });
+    const refreshToken = req.signedCookies.refresh_token;
+
+    if (!refreshToken) {
+        return res.status(401).json({ message: 'Invalid token!' });
+    }
+
+    try {
+        const decoded = jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET);
+        const user = decoded
+
+		const payload = {
+			id: user.id, 
+			email: user.email, 
+			firstName: user.firstName,
+			lastName: user.lastName,
+			picture: user.picture,
+			phone: user.phone
 		}
 
-		jwt.verify(
-			refreshToken,
-			process.env.JWT_REFRESH_SECRET,
-			(err, decoded) => {
-				if (err) {
-					return res
-						.status(401)
-						.json({ message: "Invalid refresh token" });
-				}
+        // Generate JWT Access Token
+        const access_token = await jwt.sign(payload, process.env.ACCESS_TOKEN_SECRET, {expiresIn: '15m'} );
 
-				const newAccessToken = jwt.sign(
-					{ id: decoded.id },
-					process.env.JWT_SECRET,
-					{ expiresIn: "15m" }
-				);
-				res.status(200).json({ accessToken: newAccessToken });
-			}
-		);
-	} catch (error) {
-		res.status(500).json({ message: error.message });
-	}
+        res.status(200).json({
+            access_token, 
+            user: payload
+        });
+
+    } catch (error) {
+        return res.status(500).json({ message: 'Server error' });
+    }
 };
 
 export {

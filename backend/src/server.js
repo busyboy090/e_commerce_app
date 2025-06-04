@@ -5,9 +5,12 @@ import authRoutes from './routes/auth.js';
 import cookieParser from 'cookie-parser';
 import sequelize from "./config/db.js";
 import productRoutes from './routes/product.js';
-import { tr } from "@faker-js/faker";
+import cartRoutes from './routes/cart.js';
+import './models/index.js'
+import './models/product/index.js'
 
 dotenv.config();
+
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -36,6 +39,7 @@ app.use(express.json());
 app.use(cookieParser(process.env.COOKIE_SECRET));
 app.use('/api/auth', authRoutes);
 app.use('/api/products', productRoutes);
+app.use('/api/cart', cartRoutes);
 
 app.listen(PORT, () => {
 	console.log(`Server running at http://localhost:${PORT}`);

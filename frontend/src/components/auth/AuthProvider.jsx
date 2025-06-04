@@ -45,16 +45,16 @@ function AuthProvider({ children }) {
             const isValid = verifyToken(auth.access_token);
             if (!isValid) refreshToken().then(setAuth);
         }
-    }, [auth?.access_token]);
+    }, [auth]);
 
     useLayoutEffect(() => {
         privateApi.interceptors.request.use(config => {
             if (auth?.access_token) {
-                config.headers.authorization = `Bearer ${auth.access_token}`;
+                config.headers['Authorization'] = `Bearer ${auth.access_token}`;
             }
             return config;
         });
-    }, [auth?.access_token]);
+    }, [auth]);
 
     if(loading) {
         return (

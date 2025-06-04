@@ -1,9 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import CartCard from './CartCard';
 import { useCart } from '../../hooks/useCart';
+import useAuth from '../../hooks/useAuth';
 
 function Cart() {
-  const { cartItems, products, fetchCartProducts } = useCart();
+  const { cartItems, products, fetchCartProducts, syncCartToDatabase, fetchCartFromDatabase } = useCart();
+  const { auth } = useAuth();
+
+  console.log(products)
 
   const [isCartEmpty, setIsCartEmpty] = useState(cartItems.length < 1);
 
@@ -39,9 +43,15 @@ function Cart() {
   useEffect(() => {
     const ids = cartItems.map(item => item.productId);
     if (ids.length > 0) {
-      fetchCartProducts(ids);
+      
+      if(auth?.user) {
+        syncCartToDatabase(cartItems)
+        fetchCartFromDatabase()
+      }else {
+        fetchCartProducts(ids);
+      }
     }
-  }, [cartItems]);
+  }, []);
 
   return (
     <div className='container mt-[60px!important] mb-[140px!important]'>

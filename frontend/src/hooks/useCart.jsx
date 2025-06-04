@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { fetchProducts, addProductToCart, removeProductFromCart, updateProductQuantity,clearCart } from "../store/cartSlice";
+import { fetchProducts, addProductToCart, removeProductFromCart, updateProductQuantity,clearCart, syncCartToDatabase, fetchCartFromDatabase } from "../store/cartSlice";
 
 export const useCart = () => {
     const dispatch = useDispatch();
@@ -12,7 +12,9 @@ export const useCart = () => {
       removeFromCart: (id) => dispatch(removeProductFromCart(id)),
       updateCart: (id, q) => dispatch(updateProductQuantity({ productId: id, quantity: q })),
       clearCart: () => dispatch(clearCart()),
-      fetchCartProducts: (ids) => dispatch(fetchProducts(ids))
+      fetchCartProducts: (ids) => dispatch(fetchProducts(ids)),
+      syncCartToDatabase: (cartItems) => dispatch(syncCartToDatabase(cartItems)),
+      fetchCartFromDatabase: () => dispatch(fetchCartFromDatabase())
     };
 };
   

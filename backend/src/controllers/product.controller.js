@@ -25,7 +25,7 @@ export const createProduct = async (req, res) => {
 
     // Check if any field is missing
     if (!name || !description || !price || !stock || !category || colors.length < 1) {
-      return res.status(400).json({ message: "Missing required fields" });
+      return res.status(400).json({ msg: "Missing required fields" });
     }
 
     // Check if the category exists
