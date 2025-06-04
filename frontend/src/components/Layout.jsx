@@ -5,12 +5,9 @@ import Footer from './Footer/Footer';
 import { ToastContainer} from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import useAuth from '../hooks/useAuth';
-import { privateApi } from '../api/axios';
 
 function Layout() {
-  const { setAuth } = useAuth();
   
-
   return (
     <>
         <ToastContainer

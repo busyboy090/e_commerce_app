@@ -4,7 +4,7 @@ import { InputField } from "./components";
 import { validateText } from "../../utils/validator";
 import { toast } from "react-toastify";
 import { useNavigate, useLocation } from "react-router-dom";
-import { api} from '../../api/axios';
+import api from '../../api/axios';
 import useAuth from "../../hooks/useAuth";
 import { CheckboxField } from "../account/address-book/AddressForm";
 import { encryptData, decryptData} from "../Encryption";
@@ -34,7 +34,7 @@ function Login() {
   const isValid = useRef(false);
   const [loading, setLoading] = useState(false);
 
-  const  { setAuth } = useAuth();
+  const  { login } = useAuth();
   const [rememberMe, setRememberMe] = useState(false);
 
   const navigate = useNavigate();
@@ -100,7 +100,7 @@ function Login() {
       }
 
       // save the userdetais
-      setAuth({user , access_token});
+      login(response?.data);
 
       // show notification
       toast.success(response?.data?.msg);

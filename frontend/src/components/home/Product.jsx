@@ -2,14 +2,12 @@ import { React, useRef, useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight, faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import ProductCard from "../product/ProductCard";
-import Gamepad from "../../assets/products/Gamepad.svg";
-import WiredKeyboard from "../../assets/products/Wired-Keyboard.svg";
 import "./product.css";
 import { SwiperSlide, Swiper } from "swiper/react";
 import { Mousewheel, Navigation, Autoplay, Pagination, Grid } from "swiper/modules";
 import 'swiper/css';
 import "swiper/css/grid";
-import {api} from '../../api/axios';
+import api from '../../api/axios';
 
 function Product() {
   const nextSlideRef = useRef();

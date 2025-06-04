@@ -1,12 +1,12 @@
 import React from 'react';
-import { api } from '../../api/axios';
+import api from '../../api/axios';
 import useAuth from '../../hooks/useAuth';
 import { useGoogleLogin } from '@react-oauth/google';
 import { toast } from 'react-toastify';
 import { useNavigate, useLocation } from 'react-router-dom';
 
 function GoogleLogin() {
-    const { setAuth } = useAuth();
+    const { login } = useAuth();
 
     const navigate = useNavigate();
     const location = useLocation();
@@ -27,7 +27,7 @@ function GoogleLogin() {
             const token = response?.data?.access_token;
             const user = response?.data?.user
     
-            setAuth({user, access_token: token });
+            login(response?.data);
     
             toast.success(response?.data?.msg);
     

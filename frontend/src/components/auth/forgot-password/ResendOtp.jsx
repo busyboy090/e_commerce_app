@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { api } from '../../../api/axios';
+import api from '../../../api/axios';
 
 function startCountdown(durationInSeconds, setTime, endTime, setCountdownDisplay) {
     const now = Date.now();

@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { api } from '../api/axios';
+import api from '../api/axios';
 
 const initialState = {
   wishList: JSON.parse(localStorage.getItem('exclusive_wishList')) || [],

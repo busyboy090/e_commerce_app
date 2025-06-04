@@ -4,9 +4,8 @@ import PhoneInput from "react-phone-input-2";
 import './register.css';
 import { validateEmail, validatePassword, validateText } from "../../utils/validator";
 import { InputField } from "./components";
-import { api } from '../../api/axios';
+import api from '../../api/axios';
 import { toast } from "react-toastify";
-import useAuth from "../../hooks/useAuth";
 import { useNavigate, useLocation } from "react-router-dom";
 import GoogleLogin from "./GoogleLogin";
 
@@ -33,7 +32,6 @@ function Register() {
   const isValid = useRef(false);
   const [loading, setLoading] = useState(false);
 
-  const { setAuth} = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
   const from = location.state?.from?.pathname || '/'
@@ -57,36 +55,6 @@ function Register() {
 
     isValid.current = Object.values(newErrors).every(value => value === true);
   }
-
-  // // signup through google 
-  // const handleOAuthSubmit = useGoogleLogin({
-  //   onSuccess: async (googleResponse) => {
-  //     const { access_token } = googleResponse;
-
-  //     try {
-  //       const response = await api.post('/auth/google/register',
-  //         JSON.stringify({ token: access_token})
-  //       )
-
-        
-  //       localStorage.setItem('authenticated', JSON.stringify(true));
-
-  //       const token = response?.data?.access_token;
-  //       const user = response?.data?.user
-
-  //       setAuth({user, access_token: token });
-
-  //       toast.success(response?.data?.msg);
-
-  //       // Redirect
-  //       navigate(from, { replace: true });
-  //     } catch (err) {
-  //       toast.error(err?.response?.data?.msg);
-  //       console.log(err)
-  //     }
-  //   }, 
-  //   onError: () => console.log('Failed')
-  // })
 
   // submit the form
   const handleSubmit = async (e) => {

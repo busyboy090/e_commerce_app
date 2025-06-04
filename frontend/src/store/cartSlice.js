@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { privateApi } from '../api/axios';
+import api from '../api/axios';
 
 const initialState = {
   cartItems: JSON.parse(localStorage.getItem('exclusive_cart')) || [],
@@ -20,6 +20,10 @@ export const syncCartToDatabase = createAsyncThunk(
         JSON.stringify({ cartItems}),
         { headers: { 'Content-Type': 'application/json' } }
       );
+
+      if(response.status === 201) {
+        localStorage.removeItem('exclusive_cart')
+      }
 
       return null;
     } catch (err) {
@@ -91,36 +95,15 @@ const cartSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(fetchProducts.pending, (state) => {
-        state.fetchProductsStatus = 'loading';
-      })
       .addCase(fetchProducts.fulfilled, (state, action) => {
         state.fetchProductsStatus = 'succeeded';
         state.products = action.payload;
-      })
-      .addCase(fetchProducts.rejected, (state) => {
-        state.fetchProductsStatus = 'failed';
-      })
-      .addCase(fetchCartFromDatabase.pending, (state) => {
-        state.fetchCartFromDatabaseStatus = 'loading';
       })
       .addCase(fetchCartFromDatabase.fulfilled, (state, action) => {
         state.fetchCartFromDatabaseStatus = 'succeeded';
         state.cartItems = action.payload.cartItems;
         state.products = action.payload.products;
       })
-      .addCase(fetchCartFromDatabase.rejected, (state) => {
-        state.fetchCartFromDatabaseStatus = 'failed';
-      })
-      .addCase(syncCartToDatabase.pending, (state) => {
-        state.syncCartToDatabaseStatus = 'loading';
-      })
-      .addCase(syncCartToDatabase.fulfilled, (state,) => {
-        state.syncCartToDatabaseStatus = 'succeeded';
-      })
-      .addCase(syncCartToDatabase.rejected, (state) => {
-        state.syncCartToDatabaseStatus = 'failed';
-      });
   }
 });
 

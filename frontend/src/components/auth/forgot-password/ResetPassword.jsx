@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { faArrowLeft, faEyeSlash, faEye } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { toast } from 'react-toastify';
-import { api } from '../../../api/axios';
+import api from '../../../api/axios';
 
 
 // InputField 

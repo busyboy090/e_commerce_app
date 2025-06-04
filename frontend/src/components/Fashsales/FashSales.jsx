@@ -7,7 +7,7 @@ import { SwiperSlide, Swiper } from "swiper/react";
 import { Mousewheel, Navigation, Autoplay, Pagination, Grid } from "swiper/modules";
 import 'swiper/css';
 import "./FashSales.css";
-import { api } from '../../api/axios'
+import api from '../../api/axios'
 
 function FashSales() {
   const flashSalesEndDate = new Date();

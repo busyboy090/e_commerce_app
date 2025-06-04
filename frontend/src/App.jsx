@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { BrowserRouter as Router, Route, Routes} from 'react-router-dom';
 import Home from './components/home/Home';
 import Checkout from './components/checkout/Checkout';
@@ -20,8 +20,53 @@ import AddNewAddress from './components/account/address-book/AddNewAddress';
 import EditAddress from './components/account/address-book/EditAddress';
 import ProtectedRoute from './components/auth/ProtectedRoute';
 import ForgetPassword from './components/auth/forgot-password/ForgetPassword';
+import useAuth from './hooks/useAuth.jsx';
+import api from './api/axios.js';
 
 function App() {
+  const [isLoading, setIsLoading] = useState(true);
+  const { refreshToken, access_token, login, logout, isAuthenticated} = useAuth();
+
+  // Refresh token on app load
+  useEffect(() => {
+    const fetchToken = async () => {
+      try {
+        await refreshToken();
+      } catch (error) {
+        console.error('Failed to refresh token:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    
+    fetchToken();
+  }, []);
+
+  api.interceptors.request.use((config) => {
+      if(access_token) config.headers['Authorization'] = `Bearer ${access_token}`
+
+      return config
+  })
+
+  api.interceptors.response.use((res) => res, async (error) => {
+      const originalRequest = error.config;
+      if (error.response?.status === 401 && !originalRequest._retry) {
+          originalRequest._retry = true;
+          try {
+              const response = await refreshToken();
+              if (response.payload) {
+                  const token = response.payload.access_token;
+                  login(response);
+                  originalRequest.headers['Authorization'] = `Bearer ${token}`;
+                  return api(originalRequest);
+              }
+          } catch (err) {
+              console.error('Failed to refresh token:', err);
+              logout()
+          }
+      }
+      return Promise.reject(error); 
+  });
 
   return (
     <>

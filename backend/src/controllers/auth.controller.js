@@ -189,7 +189,6 @@ const logoutUser = async (req,res) => {
 // refresh token
 const refreshUserAccessToken = async (req, res) => {
     const refreshToken = req.signedCookies.refresh_token;
-
     if (!refreshToken) {
         return res.status(401).json({ message: 'Invalid token!' });
     }

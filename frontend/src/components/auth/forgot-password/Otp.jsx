@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect} from 'react'
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { toast } from 'react-toastify';
-import { api } from '../../../api/axios';
+import api from '../../../api/axios';
 import ResendOtp from './ResendOtp';
 
 // InputField Component
