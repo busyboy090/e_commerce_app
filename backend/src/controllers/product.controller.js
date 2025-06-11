@@ -9,6 +9,7 @@ import Type from "../models/product/type.model.js";
 import ProductVariant from "../models/product/product-variant.model.js";
 import Review from "../models/product/review.model.js";
 import sequelize from "../config/db.js";
+import Size from "../models/product/size.model.js";
 
 export const createProduct = async (req, res) => {
   try {
@@ -148,6 +149,12 @@ export const getRandomProducts = async (req, res) => {
           required: false,
           separate: true
         },
+        {
+          model: ProductVariant,
+          attributes: ['variant_id', 'color_id', 'size_id', 'price', 'stock', 'sku'],
+          required: false,
+          separate: true
+        }
       ],
       group: ['products.product_id'],
       subQuery: false
@@ -239,39 +246,58 @@ export const getMultipleProducts = async (req, res) => {
 }
 
 export const getProductById = async (req, res) => {
-  const { id } = req.query;
+  const { id } = req.params;
 
   if (!id) return res.status(400).json({ msg: 'Product id is required' });
 
   try {
     const product = await Product.findOne({
       where: { product_id: id },
+      order: [['product_id', 'DESC']],
       attributes: [
-        "product_id",
-        "name",
-        "description",
-        "price",
-        "stock",
-        "rating",
-        "reviews",
+        'product_id',
+        'name',
+        'description',
+        [
+          sequelize.literal(`
+            CASE 
+              WHEN AVG(reviews.rating) IS NULL THEN NULL
+              ELSE ROUND((ROUND(AVG(reviews.rating) * 2, 0)) / 2, 1)
+            END
+          `),
+          'averageRating'
+        ],
+        [sequelize.fn('COUNT', sequelize.col('reviews.review_id')), 'totalReviews']
       ],
       include: [
         {
-          model: ProductColor,
-          attributes: ["image"],
-          required: false,
-          include: [
-            {
-              model: Color,
-              attributes: ["name", "hex_code"],
-            },
-          ],
+          model: Review,
+          attributes: [],
+          required: false
         },
         {
-          model: Category,
-          attributes: ["name"]
+          model: ProductColor,
+          include: [{
+            model: Color,
+            attributes: ['color_id', 'name', 'hex_code']
+          }],
+          attributes: ['id', 'image'],
+          required: false,
+          separate: true
+        },
+        {
+          model: ProductVariant,
+          include: [{
+            model: Size,
+            attributes: ['size_id', 'size',]
+          }],
+          attributes: ['variant_id', 'color_id', 'price', 'stock', 'sku'],
+          required: false,
+          separate: true
         }
       ],
+      group: ['products.product_id'],
+      subQuery: false
     });
 
     if (!product) {

@@ -10,14 +10,16 @@ function CartCard({ product }) {
 
   const [qty, setQty] = useState(quantity);
   const [showComponent, setShowComponent] = useState(true);
-
+  
   const { removeFromCart, updateCart } = useCart();
-
-  // Update cart context whenever quantity changes
   useEffect(() => {
-    updateCart(productId, qty );
+    const id = setTimeout(() => {
+      updateCart(productId, qty);
+    }, 500);
+  
+    return () => clearTimeout(id);
   }, [qty]);
-
+  
   const increment = () => {
     if (qty < 10) setQty(qty + 1);
   };
@@ -38,22 +40,25 @@ function CartCard({ product }) {
   };
 
   return (
-    <div className="grid grid-cols-4 w-full py-[24px] shadow items-center px-[20px] md:px-[40px]">
-      <div className="flex max-md:flex-col items-center relative">
-        <button
-          type="button"
-          className="absolute left-[1px] md:left-[-10px] top-[-3px]"
-          onClick={handleDelete}
-        >
-          <img src={DeleteCart} alt="Delete Icon" />
-        </button>
-        <img src={image} alt={`${name}-image`} className="w-[60px] h-[60px]" />
-        <span className="md:ms-[20px] text-center">{name}</span>
-      </div>
+    <tr className="h-[100px] shadow px-[20px] md:px-[40px]">
+      
+      <td className='w-[300px] text-center ps-5'>
+        <div className="flex max-md:flex-col items-center relative">
+          <button
+            type="button"
+            className="absolute left-[1px] md:left-[-10px] top-[-3px]"
+            onClick={handleDelete}
+          >
+            <img src={DeleteCart} alt="Delete Icon" />
+          </button>
+          <img src={image} alt={`${name}-image`} className="w-[60px] h-[60px]" />
+          <span className="md:ms-[20px] text-center">{name}</span>
+        </div>
+      </td>
 
-      <p className="font-normal text-center">{formatCurrency(price)}</p>
+      <td className="font-normal text-center">{formatCurrency(price)}</td>
 
-      <div className="font-normal text-center">
+      <td className="font-normal text-center flex justify-center items-center h-[100px]">
         <div className="w-[72px] h-[44px] py-[10px] border border-[rgba(0,0,0,0.4)] rounded-[4px] relative">
           <select
             value={qty}
@@ -72,12 +77,12 @@ function CartCard({ product }) {
             <FontAwesomeIcon icon={faChevronDown} onClick={decrement} className="cursor-pointer" />
           </div>
         </div>
-      </div>
+      </td>
 
-      <p className="font-normal text-center ms-[15px] lg:text-center lg:ms-[190px]">
+      <td className="font-normal text-center ms-[15px] lg:text-center">
         {formatCurrency(price * qty)}
-      </p>
-    </div>
+      </td>
+    </tr>
   );
 }
 

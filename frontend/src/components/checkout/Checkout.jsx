@@ -6,10 +6,43 @@ import './checkout.css';
 import Bkash from '../../assets/payment-method-logo/bkash.svg'
 import Visa from '../../assets/payment-method-logo/visa.svg'
 import Mastercard from '../../assets/payment-method-logo/mastercard.svg'
-import Nagad from '../../assets/payment-method-logo/nagad.svg'
+import Nagad from '../../assets/payment-method-logo/nagad.svg';
+import { useCart } from '../../hooks/useCart';
+import {generateCart} from '../../utils/cart.utils.js';
+import CheckoutCartCard from "./CheckoutCartCard";
+import { formatCurrency } from "../../utils/money.js";
+
+function InputField({label,id,onChange, value, type}) {
+  return (
+    <div className="flex flex-col gap-[5px]">
+      <label htmlFor={id} className="text-[rgba(0,0,0,0.5)]">
+        {label}
+      </label>
+      <input
+        type={type}
+        id={id}
+        value={value}
+        onChange={onChange}
+        className="h-[50px] w-full bg-[#F5F5F5] rounded-[4px] focus:outline-0 p-[10px]"
+      />
+    </div>
+  )
+}
 
 function Checkout() {
+  const [formData, setFormData] = useState({
+
+  }) 
   const [isChecked, setIsChecked] = useState(false);
+  const {products, cartItems} = useCart();
+  const cart = generateCart(products, cartItems);
+  const totalProduct = cart.reduce((total, item) => total + item.quantity, 0);
+  const cartSubTotal = cart.reduce((total, item) => total + item.price * item.quantity, 0).toFixed(2);
+  const cartTotal = cart.reduce((total, item) => total + item.price * item.quantity, 0).toFixed(2);
+
+  const handleChange = (field,value) => {
+    setFormData((prev) => ({...prev, [field]: value}));
+  }
   return (
     <div className="container mb-[50px!important] lg:mb-[100px!important]">
       <p className="my-[40px] lg:my-[80px]">Home / checkout</p>
@@ -20,97 +53,25 @@ function Checkout() {
           <form>
             <div className="flex flex-col gap-[20px]">
               {/* first name */}
-              <div className="flex flex-col gap-[5px]">
-                <label htmlFor="first-name" className="text-[rgba(0,0,0,0.5)]">
-                  First Name*
-                </label>
-                <input
-                  type="text"
-                  id="first-name"
-                  className="h-[50px] w-full bg-[#F5F5F5] rounded-[4px] focus:outline-0 p-[10px]"
-                />
-              </div>
+              <InputField type='text' label='First Name*' id='first-name' onChange={handleChange} value={formData.first_Name}/>
 
               {/* company name */}
-              <div className="flex flex-col gap-[5px]">
-                <label
-                  htmlFor="company-name"
-                  className="text-[rgba(0,0,0,0.5)]"
-                >
-                  Company Name
-                </label>
-                <input
-                  type="text"
-                  id="company-name"
-                  className="h-[50px] w-full bg-[#F5F5F5] rounded-[4px] focus:outline-0 p-[10px]"
-                />
-              </div>
+              <InputField type='text' label='Company Name*' id='company-name' onChange={handleChange} value={formData.company_Name}/>
 
               {/* street address */}
-              <div className="flex flex-col gap-[5px]">
-                <label
-                  htmlFor="street-address"
-                  className="text-[rgba(0,0,0,0.5)]"
-                >
-                  Street Address*
-                </label>
-                <input
-                  type="text"
-                  id="street-address"
-                  className="h-[50px] w-full bg-[#F5F5F5] rounded-[4px] focus:outline-0 p-[10px]"
-                />
-              </div>
+              <InputField type='text' label='Street Address*' id='street-address' onChange={handleChange} value={formData.street_address}/>
 
               {/* Apartment, floor, etc. (optional)*/}
-              <div className="flex flex-col gap-[5px]">
-                <label htmlFor="apartment" className="text-[rgba(0,0,0,0.5)]">
-                  Apartment, floor, etc. (optional)
-                </label>
-                <input
-                  type="text"
-                  id="apartment"
-                  className="h-[50px] w-full bg-[#F5F5F5] rounded-[4px] focus:outline-0 p-[10px]"
-                />
-              </div>
-
+              <InputField type='text' label='Apartment, floor, etc. (optional)' id='apartment' onChange={handleChange} value={formData.apartment}/>
+              
               {/* Town / City */}
-              <div className="flex flex-col gap-[5px]">
-                <label htmlFor="Town/City" className="text-[rgba(0,0,0,0.5)]">
-                  Town/City*
-                </label>
-                <input
-                  type="text"
-                  id="Town/City"
-                  className="h-[50px] w-full bg-[#F5F5F5] rounded-[4px] focus:outline-0 p-[10px]"
-                />
-              </div>
+              <InputField type='text' label='Town/City*' id='town/city' onChange={handleChange} value={formData.town_city}/>
 
               {/* Phone Number* */}
-              <div className="flex flex-col gap-[5px]">
-                <label
-                  htmlFor="phone-number"
-                  className="text-[rgba(0,0,0,0.5)]"
-                >
-                  Phone Number
-                </label>
-                <input
-                  type="tel"
-                  id="phone-number"
-                  className="h-[50px] w-full bg-[#F5F5F5] rounded-[4px] focus:outline-0 p-[10px]"
-                />
-              </div>
-
+              <InputField type='tel' label='Phone Number' id='phone-number' onChange={handleChange} value={formData.phone_number}/>
+              
               {/* Email Address*/}
-              <div className="flex flex-col gap-[5px]">
-                <label htmlFor="email" className="text-[rgba(0,0,0,0.5)]">
-                  Email Address
-                </label>
-                <input
-                  type="email"
-                  id="email"
-                  className="h-[50px] w-full bg-[#F5F5F5] rounded-[4px] focus:outline-0 p-[10px]"
-                />
-              </div>
+              <InputField type='email' label='Email' id='email' onChange={handleChange} value={formData.email}/>
 
               <div className="flex gap-[16px] items-center">
                 <div className="relative mt-[6px]">
@@ -144,38 +105,21 @@ function Checkout() {
 
         <div className="col-span-12 md:col-span-5 lg:col-span-6 mt-[25px]">
           <div className="lg:w-[70%] flex flex-col gap-[32px]">
-            <div className="flex justify-between items-center">
-              <div className="flex gap-[24px] items-center">
-                <img
-                  src={Gamepad}
-                  alt="Gamepad"
-                  className="w-[54px] h-[54px]"
-                />
-                <span>LCD Monitor</span>
-              </div>
-              <p>$650</p>
-            </div>
-
-            <div className="flex justify-between items-center">
-              <div className="flex gap-[24px] items-center">
-                <img
-                  src={Gamepad}
-                  alt="Gamepad"
-                  className="w-[54px] h-[54px]"
-                />
-                <span>LCD Monitor</span>
-              </div>
-              <p>$650</p>
-            </div>
-
+            
+            {
+              cart.map((product) => (
+                <CheckoutCartCard product={product} key={product.productId} />
+              ))
+            }
+          
             <p className="flex justify-between border-b-2 border-[rgba(0,0,0,0.1)] rounded-[4px] pb-[20px] items-center">
-              Subtotal <span>$540</span>
+              Subtotal <span>{formatCurrency(cartSubTotal)}</span>
             </p>
             <p className="flex justify-between border-b-2 border-[rgba(0,0,0,0.1)] rounded-[4px] pb-[20px] items-center">
               Shipping <span>Free</span>
             </p>
             <p className="flex justify-between items-center">
-              Total <span>$540</span>
+              Total <span>{formatCurrency(cartTotal)}</span>
             </p>
 
             {/* payment options */}

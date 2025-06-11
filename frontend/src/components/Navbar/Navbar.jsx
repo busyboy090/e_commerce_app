@@ -42,11 +42,14 @@ function Navbar() {
         
         try {
             const response = await api.post('/auth/logout');
-            logout()
             
             toast.success(response?.data?.message);
 
-            navigate('/login', { replace: true});
+            if(response.status === 200) {
+                logout()
+                navigate('/login', { replace: true});
+            }
+
         } catch(err) {
             console.log(err)
         } 

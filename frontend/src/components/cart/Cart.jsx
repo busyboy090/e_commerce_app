@@ -2,37 +2,18 @@ import React, { useEffect, useState } from 'react';
 import CartCard from './CartCard';
 import { useCart } from '../../hooks/useCart';
 import useAuth from '../../hooks/useAuth';
+import { generateCart } from '../../utils/cart.utils.js';
 
 function Cart() {
-  const { cartItems, products, fetchCartProducts, syncCartToDatabase, fetchCartFromDatabase } = useCart();
-  const { auth } = useAuth();
-
-  console.log(products)
+  const { cartItems, products, fetchCartProducts, syncCartToDatabase, fetchCartFromDatabase} = useCart();
+  const { user, isAuthenticated } = useAuth();
+  let cart;
 
   const [isCartEmpty, setIsCartEmpty] = useState(cartItems.length < 1);
 
-  // Join cartItems with product details
-  const itemMap = new Map(cartItems.map((item) => [item.productId, item]));
-
-  const cart = products
-    .map((product) => {
-      const item = itemMap.get(product.product_id);
-      if (!item) return 1;
-
-      const price = Number(product?.product_variants?.[0]?.price || 0);
-      const subtotal = (price * item.quantity).toFixed(2);
-
-      return {
-        productId: item.productId,
-        name: product.name,
-        quantity: item.quantity,
-        price,
-        image: product?.product_colors?.[0]?.image || '',
-        subtotal,
-      };
-    })
-    .filter(Boolean);
-
+  cart = generateCart(products, cartItems)
+  
+ 
   const totalProduct = cart.reduce((total, item) => total + item.quantity, 0);
   const cartTotal = cart.reduce((total, item) => total + item.price * item.quantity, 0).toFixed(2);
 
@@ -41,17 +22,17 @@ function Cart() {
   }, [totalProduct]);
 
   useEffect(() => {
-    const ids = cartItems.map(item => item.productId);
-    if (ids.length > 0) {
-      
-      if(auth?.user) {
-        syncCartToDatabase(cartItems)
-        fetchCartFromDatabase()
-      }else {
-        fetchCartProducts(ids);
+    const ids = cartItems.map((item) => item.productId);
+
+    if (isAuthenticated) {
+      fetchCartFromDatabase();
+    }else {
+      if (ids.length > 0) {
+        fetchProducts(ids)
       }
     }
-  }, []);
+
+  }, [isAuthenticated, cartItems.length]);
 
   return (
     <div className='container mt-[60px!important] mb-[140px!important]'>
@@ -59,7 +40,23 @@ function Cart() {
 
       {!isCartEmpty ? (
         <>
-          <div className='mt-[60px] flex flex-col gap-[40px] mb-[24px]'>
+          <table className='w-full mt-[60px] mb-[24px]'>
+            <thead>
+              <tr className='shadow px-[20px] md:px-[40px] h-[72px]'>
+                <th className='font-normal'>Product</th>
+                <th className='font-normal text-center'>Price</th>
+                <th className='font-normal text-center'>Quantity</th>
+                <th className='font-normal text-center'>Subtotal</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              {cart.map((product) => (
+                <CartCard product={product} key={product.productId} />
+              ))}
+            </tbody>
+          </table>
+          {/* <div className='mt-[60px] flex flex-col gap-[40px] mb-[24px]'>
             <div className='grid grid-cols-4 w-full h-[72px] shadow items-center px-[20px] md:px-[40px]'>
               <p className='font-normal'>Product</p>
               <p className='font-normal text-center'>Price</p>
@@ -67,10 +64,10 @@ function Cart() {
               <p className='font-normal text-end'>Subtotal</p>
             </div>
 
-            {cart.map((product, index) => (
-              <CartCard product={product} key={index} />
+            {cart.map((product) => (
+              <CartCard product={product} key={product.productId} />
             ))}
-          </div>
+          </div> */}
 
           <div className='flex justify-end items-center mb-[80px]'>
             <a

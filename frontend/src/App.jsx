@@ -1,4 +1,5 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useLayoutEffect, useState } from 'react'
+import Loading from './components/Loading.jsx';
 import { BrowserRouter as Router, Route, Routes} from 'react-router-dom';
 import Home from './components/home/Home';
 import Checkout from './components/checkout/Checkout';
@@ -22,13 +23,16 @@ import ProtectedRoute from './components/auth/ProtectedRoute';
 import ForgetPassword from './components/auth/forgot-password/ForgetPassword';
 import useAuth from './hooks/useAuth.jsx';
 import api from './api/axios.js';
+import { useCart } from './hooks/useCart.jsx';
+import ProdutcDetails from './components/productdetails/ProdutcDetails.jsx';
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
   const { refreshToken, access_token, login, logout, isAuthenticated} = useAuth();
+  const { cartItems, syncCartToDatabase, fetchCartFromDatabase, products } = useCart();
 
   // Refresh token on app load
-  useEffect(() => {
+  useLayoutEffect(() => {
     const fetchToken = async () => {
       try {
         await refreshToken();
@@ -38,35 +42,61 @@ function App() {
         setIsLoading(false);
       }
     };
+
+    const authenticate = JSON.parse(localStorage.getItem('exclusive_authenticate'));
+
+    if(authenticate) {
+      fetchToken();
+    }
     
-    fetchToken();
   }, []);
 
   api.interceptors.request.use((config) => {
-      if(access_token) config.headers['Authorization'] = `Bearer ${access_token}`
+    if(access_token) config.headers['Authorization'] = `Bearer ${access_token}`
 
-      return config
+    return config
   })
 
-  api.interceptors.response.use((res) => res, async (error) => {
+  api.interceptors.response.use(
+    (res) => res,
+    async (error) => {
       const originalRequest = error.config;
+  
       if (error.response?.status === 401 && !originalRequest._retry) {
-          originalRequest._retry = true;
-          try {
-              const response = await refreshToken();
-              if (response.payload) {
-                  const token = response.payload.access_token;
-                  login(response);
-                  originalRequest.headers['Authorization'] = `Bearer ${token}`;
-                  return api(originalRequest);
-              }
-          } catch (err) {
-              console.error('Failed to refresh token:', err);
-              logout()
+        originalRequest._retry = true;
+  
+        try {
+          const response = await refreshToken();
+          if (response?.payload?.access_token) {
+            const token = response.payload.access_token;
+  
+            login(response.payload); // save new token
+            originalRequest.headers['Authorization'] = `Bearer ${token}`;
+            return api(originalRequest); // retry original request
           }
+        } catch (err) {
+          console.error('Token refresh failed');
+          logout();
+          return Promise.reject(err); // important to break loop
+        }
       }
-      return Promise.reject(error); 
-  });
+  
+      return Promise.reject(error);
+    }
+  );
+
+
+  useEffect(() => {
+    if(isAuthenticated) {
+      fetchCartFromDatabase()
+    }
+  }, [isAuthenticated, cartItems.length])
+
+  if(isLoading) {
+    return (
+      <Loading />
+    )
+  }
 
   return (
     <>
@@ -81,6 +111,7 @@ function App() {
             <Route path='wishlist' element={<Wishlist />} />
             <Route path='cart' element={<Cart />}></Route>
             <Route path='forgot-password' element={<ForgetPassword />}></Route>
+            <Route path='product/:id' element={<ProdutcDetails />} />
 
             {/* Protected routes */}
             <Route element={<ProtectedRoute />}>
@@ -91,8 +122,8 @@ function App() {
               <Route path='account/manage-account/address-book/edit-address/:id' element={<Account component={<Address component={<EditAddress/>} />} />}></Route>
             </Route>
 
-            {/* Missing Routes */}
-            <Route path='*' element={<NotFound />} />
+           {/* Missing Routes */}
+           <Route path='*' element={<NotFound />} />
           </Route>
           {/* <Route path='/about' element={<About />} />
           <Route path='/contact' element={<Contact />} />

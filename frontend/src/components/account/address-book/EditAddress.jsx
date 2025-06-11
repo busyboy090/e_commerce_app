@@ -7,6 +7,7 @@ function EditAddress() {
     const [searchParams] = useSearchParams();
 
     const id = searchParams.get('id');
+    
     const data = {
       firstName: 'Busayo',
       lastName: 'Ale',

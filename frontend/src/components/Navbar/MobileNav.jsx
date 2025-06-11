@@ -11,7 +11,7 @@ function MobileNav({user, logout}) {
             <button type='button'>
                 <img src={(user?.picture) || User} onError={(e) => {
                     e.target.src = User
-                }} alt="" />
+                }} alt="" className='rounded-[50%] h-[35px] w-[35px]' />
             </button>
             <div className='hidden group-hover:block w-[265px] h-[265px] backdrop-blur-md bg-black/40 absolute top-[40px] right-[10%] z-10 rounded-[4px] p-[20px]'>
                 <ul className='text-white'>

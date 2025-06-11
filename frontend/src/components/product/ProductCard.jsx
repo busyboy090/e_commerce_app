@@ -16,6 +16,7 @@ import DeleteIcon from '../../assets/icons/icon-delete.svg';
 import { toast } from "react-toastify";
 import { useCart } from "../../hooks/useCart";
 import { useWishList } from "../../hooks/useWishList";
+import useAuth from '../../hooks/useAuth';
 
 function ProductCard({ product, settings }) {
   const image = product?.product_colors[0]?.image;
@@ -27,6 +28,7 @@ function ProductCard({ product, settings }) {
 
  const { addToCart } = useCart();
  const { addToWishList, removeFromWishList, wishList } = useWishList();
+
 
   // Check if product exists
   const productExists = (productId) => {
@@ -63,7 +65,9 @@ function ProductCard({ product, settings }) {
   return (
     <div className="mt-[40px]" ref={productCard}>
       <div className="max-sm:w-[100%] snap-center w-[270px] bg-[#F5F5F5] h-[250px] relative rounded-[4px] overflow-hidden product-card">
-        <div ref={imageContainer}>
+        <div ref={imageContainer} onClick={() => {
+          window.location.href = `/product/${productId}`; 
+        }}>
           <img className="product-image" src={image} alt="Gamepad" onError={() => {
           imageContainer.current.classList.add('image-skeleton')
         }} />
@@ -138,8 +142,9 @@ function ProductCard({ product, settings }) {
             ) : ''
           }
         </div>
-        <button type="button" className="gap-[8px] add-to-cart bg-black h-[41px] w-[100%] text-white flex justify-center items-center absolute bg-opacity-50 rounded-b-[inherit]" onClick={() => {
-          addToCart(productId)
+        <button type="button" className="gap-[8px] add-to-cart bg-black h-[41px] w-[100%] text-white flex justify-center items-center absolute bg-opacity-50 rounded-b-[inherit]" onClick={(e) => {
+          addToCart(productId, 1)
+
           toast.success('Product added to cart successfully')
         }}>
           <img src={CartIcon} alt="Add To Cart" />

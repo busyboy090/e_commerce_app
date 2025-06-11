@@ -4,6 +4,7 @@ import api from '../api/axios';
 const initialState = {
   cartItems: JSON.parse(localStorage.getItem('exclusive_cart')) || [],
   products: [],
+  cart: [],
   fetchCartFromDatabaseStatus: 'idle',
   fetchProductsStatus: 'idle',
   syncCartToDatabaseStatus: 'idle',
@@ -13,19 +14,48 @@ const initialState = {
 export const syncCartToDatabase = createAsyncThunk(
   'cart/syncCartToDatabase',
   async (cartItems) => {
-    console.log(cartItems)
     try {
-      const response = await privateApi.post(
+      const response = await api.post(
         '/cart',
         JSON.stringify({ cartItems}),
         { headers: { 'Content-Type': 'application/json' } }
       );
 
-      if(response.status === 201) {
-        localStorage.removeItem('exclusive_cart')
-      }
-
+      return response?.data;
+    } catch (err) {
+      console.log(err);
       return null;
+    }
+  }
+);
+
+export const updateCartProductQuantity = createAsyncThunk(
+  'cart/updateCartProductQuantity',
+  async ({productId , quantity}) => {
+
+    try {
+      const response = await api.put(
+        `/cart/${productId}`,
+        {quantity},
+      );
+
+      return response?.data;
+    } catch (err) {
+      console.log(err);
+      return null;
+    }
+  }
+);
+
+export const deleteCartProductFromDatabase = createAsyncThunk(
+  'cart/deleteCartProductFromDatabase',
+  async (productId) => {
+    try {
+      const response = await api.delete(
+        `/cart/${productId}`,
+      );
+
+      return response?.data;
     } catch (err) {
       console.log(err);
       return null;
@@ -37,10 +67,10 @@ export const fetchCartFromDatabase = createAsyncThunk(
   'cart/fetchCartFromDatabase',
   async () => {
     try {
-      const response = await privateApi.get(
+      const response = await api.get(
         '/cart'
       );
-      return response.data || [];
+      return response.data;
     } catch (err) {
       console.log(err);
       return []
@@ -52,11 +82,12 @@ export const fetchProducts = createAsyncThunk(
   'cart/fetchProducts',
   async (productIds) => {
     try {
-      const response = await privateApi.post(
+      const response = await api.post(
         '/products/multipleproducts',
         JSON.stringify({ productIds }),
         { headers: { 'Content-Type': 'application/json' } }
       );
+      console.log(response.data)
       return response.data.products;
     } catch (err) {
       console.log(err);
@@ -101,8 +132,28 @@ const cartSlice = createSlice({
       })
       .addCase(fetchCartFromDatabase.fulfilled, (state, action) => {
         state.fetchCartFromDatabaseStatus = 'succeeded';
-        state.cartItems = action.payload.cartItems;
-        state.products = action.payload.products;
+        state.cartItems = action.payload.cartItems.map((item) => { 
+          return { productId: item.product_id, quantity: item.quantity}
+        });
+        state.products = action.payload.products.map((product) =>  product.products);
+      })
+      .addCase(syncCartToDatabase.fulfilled, (state, action) => {
+        state.cartItems = action.payload.cartItems.map((item) => { 
+          return { productId: item.product_id, quantity: item.quantity}
+        });
+        state.products = action.payload.products.map((product) =>  product.products);
+      })
+      .addCase(updateCartProductQuantity.fulfilled, (state, action) => {
+        state.cartItems = action.payload.cartItems.map((item) => { 
+          return { productId: item.product_id, quantity: item.quantity}
+        });
+        state.products = action.payload.products.map((product) =>  product.products);
+      })
+      .addCase(deleteCartProductFromDatabase.fulfilled, (state, action) => {
+        state.cartItems = action.payload.cartItems.map((item) => { 
+          return { productId: item.product_id, quantity: item.quantity}
+        });
+        state.products = action.payload.products.map((product) =>  product.products);
       })
   }
 });

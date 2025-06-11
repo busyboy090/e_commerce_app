@@ -26,10 +26,7 @@ const router = express.Router();
 router.post("/", createProduct);
 
 // Route to get random products
-router.get("/", getRandomProducts);
-
-// Route to get product by Id
-router.get("/", getProductById);
+router.get("/randomProducts", getRandomProducts);
 
 // Route to get multiple products
 router.post("/multipleproducts", getMultipleProducts);
@@ -73,5 +70,7 @@ router.post("/category", createCategories);
 // Route to get all categories
 router.get("/categories", getAllCategories);
 
+// Route to get product by Id
+router.get("/:id", getProductById);
 
 export default router;
