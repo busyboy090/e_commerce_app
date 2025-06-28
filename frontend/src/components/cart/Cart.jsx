@@ -28,7 +28,7 @@ function Cart() {
       fetchCartFromDatabase();
     }else {
       if (ids.length > 0) {
-        fetchProducts(ids)
+        fetchCartProducts(ids)
       }
     }
 
@@ -40,7 +40,7 @@ function Cart() {
 
       {!isCartEmpty ? (
         <>
-          <table className='w-full mt-[60px] mb-[24px]'>
+          <table className='w-full mt-[60px] mb-[24px] border-separate border-spacing-y-4'>
             <thead>
               <tr className='shadow px-[20px] md:px-[40px] h-[72px]'>
                 <th className='font-normal'>Product</th>
@@ -56,19 +56,6 @@ function Cart() {
               ))}
             </tbody>
           </table>
-          {/* <div className='mt-[60px] flex flex-col gap-[40px] mb-[24px]'>
-            <div className='grid grid-cols-4 w-full h-[72px] shadow items-center px-[20px] md:px-[40px]'>
-              <p className='font-normal'>Product</p>
-              <p className='font-normal text-center'>Price</p>
-              <p className='font-normal text-center'>Quantity</p>
-              <p className='font-normal text-end'>Subtotal</p>
-            </div>
-
-            {cart.map((product) => (
-              <CartCard product={product} key={product.productId} />
-            ))}
-          </div> */}
-
           <div className='flex justify-end items-center mb-[80px]'>
             <a
               href='/shop'

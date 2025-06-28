@@ -1,17 +1,20 @@
-import Product from "../models/product/product.model.js";
-import Color from "../models/product/color.model.js";
-import ProductColor from "../models/product/product-color.model.js";
-import "../models/product/index.js";
-import { fn, Op, col } from "sequelize";
-import Category from "../models/product/category.model.js";
-import Brand from '../models/product/brand.model.js';
-import Type from "../models/product/type.model.js";
-import ProductVariant from "../models/product/product-variant.model.js";
-import Review from "../models/product/review.model.js";
-import sequelize from "../config/db.js";
-import Size from "../models/product/size.model.js";
+const db = require('../models/index.js');
+const { fn, Op, col, } = require("sequelize");
+const productService = require('../services/productService.js');
 
-export const createProduct = async (req, res) => {
+
+const {
+  Product,
+  Color,
+  Category,
+  Brand,
+  Type,
+  ProductVariant,
+  Review,
+  Size
+} = db;
+
+const createProduct = async (req, res) => {
   try {
     const {
       name,
@@ -91,10 +94,23 @@ export const createProduct = async (req, res) => {
 };
 
 
-export const getRandomProducts = async (req, res) => {
+const getRandomProducts = async (req, res) => {
   const { limit = 8 } = req.query;
+  
   try {
+
+    // Get total count of products
+    const totalProducts = await Product.count();
+
+    if(totalProducts < 1) {
+      return res.status(200).json({
+        totalProducts: products.length,
+        products: []
+      });
+    }
+
     const offset = Math.floor(Math.random() * (await Product.count() - limit ));
+    console.log(offset)
 
     // First get paginated product IDs
     const productIdsResult = await Product.findAll({
@@ -114,54 +130,10 @@ export const getRandomProducts = async (req, res) => {
 
     const productIds = productIdsResult.map(p => p.product_id);
 
-    // Then get full product data with all relationships
-    const products = await Product.findAll({
-      where: { product_id: productIds },
-      order: [['product_id', 'DESC']],
-      attributes: [
-        'product_id',
-        'name',
-        'description',
-        [
-          sequelize.literal(`
-            CASE 
-              WHEN AVG(reviews.rating) IS NULL THEN NULL
-              ELSE ROUND((ROUND(AVG(reviews.rating) * 2, 0)) / 2, 1)
-            END
-          `),
-          'averageRating'
-        ],
-        [sequelize.fn('COUNT', sequelize.col('reviews.review_id')), 'totalReviews']
-      ],
-      include: [
-        {
-          model: Review,
-          attributes: [],
-          required: false
-        },
-        {
-          model: ProductColor,
-          include: [{
-            model: Color,
-            attributes: ['color_id', 'name', 'hex_code']
-          }],
-          attributes: ['id', 'image'],
-          required: false,
-          separate: true
-        },
-        {
-          model: ProductVariant,
-          attributes: ['variant_id', 'color_id', 'size_id', 'price', 'stock', 'sku'],
-          required: false,
-          separate: true
-        }
-      ],
-      group: ['products.product_id'],
-      subQuery: false
-    });
+    console.log(productIds);
 
-    // Get total count of products
-    const totalProducts = await Product.count();
+    // Then get full product data with all relationships
+    const products = await productService.getProductById(productIds);
 
     res.status(200).json({
       totalProducts: products.length,
@@ -178,7 +150,7 @@ export const getRandomProducts = async (req, res) => {
 
 }
 
-export const getMultipleProducts = async (req, res) => {
+const getMultipleProducts = async (req, res) => {
   const { productIds } = req.body;
 
   if (productIds.length < 1 || !productIds) return res.status(400).json({ msg: "field can't be empty"});
@@ -186,50 +158,7 @@ export const getMultipleProducts = async (req, res) => {
   try {
   
     // Then get full product data with all relationships
-    const products = await Product.findAll({
-      where: { product_id: productIds },
-      order: [['product_id', 'DESC']],
-      attributes: [
-        'product_id',
-        'name',
-        'description',
-        [
-          sequelize.literal(`
-            CASE 
-              WHEN AVG(reviews.rating) IS NULL THEN NULL
-              ELSE ROUND((ROUND(AVG(reviews.rating) * 2, 0)) / 2, 1)
-            END
-          `),
-          'averageRating'
-        ],
-        [sequelize.fn('COUNT', sequelize.col('reviews.review_id')), 'totalReviews']
-      ],
-      include: [
-        {
-          model: Review,
-          attributes: [],
-          required: false
-        },
-        {
-          model: ProductColor,
-          include: [{
-            model: Color,
-            attributes: ['color_id', 'name', 'hex_code']
-          }],
-          attributes: ['id', 'image'],
-          required: false,
-          separate: true
-        },
-        {
-          model: ProductVariant,
-          attributes: ['variant_id', 'color_id', 'size_id', 'price', 'stock', 'sku'],
-          required: false,
-          separate: true
-        }
-      ],
-      group: ['products.product_id'],
-      subQuery: false
-    });
+    const products = await getProductById(productIds);
 
     res.status(200).json({
       products
@@ -245,7 +174,7 @@ export const getMultipleProducts = async (req, res) => {
 
 }
 
-export const getProductById = async (req, res) => {
+const getProductById = async (req, res) => {
   const { id } = req.params;
 
   if (!id) return res.status(400).json({ msg: 'Product id is required' });
@@ -314,7 +243,7 @@ export const getProductById = async (req, res) => {
   }
 };
 
-export const updateProduct = async (req, res) => {
+const updateProduct = async (req, res) => {
   const { id } = req.query;
   const { name, description, price, stock, rating, reviews } =
     req.body;
@@ -347,7 +276,7 @@ export const updateProduct = async (req, res) => {
   }
 };
 
-export const deleteProduct = async (req, res) => {
+const deleteProduct = async (req, res) => {
   const { id } = req.query;
 
   if(!id) return res.status(400).json({ message: "Product ID is required" });
@@ -372,7 +301,7 @@ export const deleteProduct = async (req, res) => {
 };
 
 // search product by their names
-export const searchProducts = async (req, res) => {
+const searchProducts = async (req, res) => {
   const { query } = req.query;
 
   if (!query) return res.status(400).json({ msg: 'Search params is required'});
@@ -422,7 +351,7 @@ export const searchProducts = async (req, res) => {
 };
 
 // filter products by category, min-price, max-price
-export const filterProducts = async (req, res) => {
+const filterProducts = async (req, res) => {
   const { category, minPrice, maxPrice } = req.query;
 
   if(!category && !minPrice && !maxPrice) {
@@ -482,7 +411,7 @@ export const filterProducts = async (req, res) => {
 };
 
 // sort product
-export const sortProducts = async (req, res) => {
+const sortProducts = async (req, res) => {
   const { sortBy } = req.query; // sortBy can be 'price' or 'rating'
 
   if(!sortBy) return res.status(400).json({ message: "Sort parameter is required" });
@@ -532,7 +461,7 @@ export const sortProducts = async (req, res) => {
 };
 
 // paginate products
-export const paginateProducts = async (req, res) => {
+const paginateProducts = async (req, res) => {
   const { page = 1, limit = 10 } = req.query;
 
   try {
@@ -641,7 +570,7 @@ export const paginateProducts = async (req, res) => {
 };
 
 // get product colors by product id
-export const getProductColors = async (req, res) => {
+const getProductColors = async (req, res) => {
   const { id } = req.params;
 
   if(!id) return res.status(400).json({ message: "Product ID is required" });
@@ -672,7 +601,7 @@ export const getProductColors = async (req, res) => {
 };
 
 // update product color by id
-export const updateProductColor = async (req, res) => {
+const updateProductColor = async (req, res) => {
   const { id } = req.params;
   const { color_id, image } = req.body;
 
@@ -700,7 +629,7 @@ export const updateProductColor = async (req, res) => {
 };
 
 // delete product color by id
-export const deleteProductColor = async (req, res) => {
+const deleteProductColor = async (req, res) => {
   const { id } = req.params;
 
   if (!id) return res.status(400).json({ message: "Product ID is required" });
@@ -725,7 +654,7 @@ export const deleteProductColor = async (req, res) => {
 };
 
 // create a product color by product id and color id
-export const createProductColor = async (req, res) => {
+const createProductColor = async (req, res) => {
   const { product_id, color_id, image } = req.body;
 
     if (!product_id || !color_id || !image) {
@@ -752,7 +681,7 @@ export const createProductColor = async (req, res) => {
 };
 
 // get product by category
-export const getProductByCategory = async (req, res) => {
+const getProductByCategory = async (req, res) => {
   const { category } = req.query;
 
   if (!category) {
@@ -807,7 +736,7 @@ export const getProductByCategory = async (req, res) => {
 };
 
 // get product by product name
-export const getProductByName = async (req, res) => {
+const getProductByName = async (req, res) => {
   const { name } = req.query;
 
   try {
@@ -853,7 +782,7 @@ export const getProductByName = async (req, res) => {
 };
 
 // get product by product price range
-export const getProductByPriceRange = async (req, res) => {
+const getProductByPriceRange = async (req, res) => {
   const { minPrice, maxPrice } = req.query;
 
   try {
@@ -906,7 +835,7 @@ export const getProductByPriceRange = async (req, res) => {
 };
 
 // get product by product stock
-export const getProductByStock = async (req, res) => {
+const getProductByStock = async (req, res) => {
   const { stock } = req.query;
 
   try {
@@ -954,7 +883,7 @@ export const getProductByStock = async (req, res) => {
 };
 
 // get product by ratings
-export const getProductByRating = async (req, res) => {
+const getProductByRating = async (req, res) => {
   const { rating } = req.query;
 
   try {
@@ -1002,7 +931,7 @@ export const getProductByRating = async (req, res) => {
 };
 
 // get product by reviews
-export const getProductByReviews = async (req, res) => {
+const getProductByReviews = async (req, res) => {
   const { reviews } = req.query;
 
   try {
@@ -1050,7 +979,7 @@ export const getProductByReviews = async (req, res) => {
 };
 
 // get product by category and price
-export const getProductByCategoryAndPrice = async (req, res) => {
+const getProductByCategoryAndPrice = async (req, res) => {
   const { category, minPrice, maxPrice } = req.query;
 
   try {
@@ -1106,7 +1035,7 @@ export const getProductByCategoryAndPrice = async (req, res) => {
 };
 
 // get product by category and stock
-export const getProductByCategoryAndStock = async (req, res) => {
+const getProductByCategoryAndStock = async (req, res) => {
   const { category, stock } = req.query;
 
   try {
@@ -1157,7 +1086,7 @@ export const getProductByCategoryAndStock = async (req, res) => {
 };
 
 // create categories
-export const createCategories = async (req, res) => {
+const createCategories = async (req, res) => {
   const { names } = req.body;
 
   if (!names) return res.status(400).json({ msg: 'Category name '})
@@ -1186,7 +1115,7 @@ export const createCategories = async (req, res) => {
 }
 
 // get all categories
-export const getAllCategories = async (req, res) => {
+const getAllCategories = async (req, res) => {
 
   try {
 
@@ -1205,4 +1134,32 @@ export const getAllCategories = async (req, res) => {
   }
 
 
+}
+
+
+module.exports = {
+  createProduct,
+  getRandomProducts,
+  getMultipleProducts,
+  getProductById,
+  updateProduct,
+  deleteProduct,
+  searchProducts,
+  filterProducts,
+  sortProducts,
+  paginateProducts,
+  getProductColors,
+  updateProductColor,
+  deleteProductColor,
+  createProductColor,
+  getProductByCategory,
+  getProductByName,
+  getProductByPriceRange,
+  getProductByStock,
+  getProductByRating,
+  getProductByReviews,
+  getProductByCategoryAndPrice,
+  getProductByCategoryAndStock,
+  createCategories,
+  getAllCategories,
 }

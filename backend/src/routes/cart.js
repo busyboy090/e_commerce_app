@@ -1,14 +1,19 @@
-import express from 'express';
-import { getCart, updateCartProductQuantity, deleteCartProductFromCart, addProductToCart } from '../controllers/cart.controller.js';
-import { authMiddleware } from '../middlewares/auth.middleware.js';
+const express = require("express");
+const {
+  getCart,
+  updateCartProductQuantity,
+  deleteCartProductFromCart,
+  addProductToCart,
+} = require("../controllers/cart.controller.js");
+const { authMiddleware } = require("../middlewares/auth.middleware.js");
 
 const router = express.Router();
 
-router.use(authMiddleware)
+router.use(authMiddleware);
 
-router.post('/', addProductToCart);
-router.get('/', getCart);
-router.put('/:productId', updateCartProductQuantity);
-router.delete('/:productId', deleteCartProductFromCart);
+router.post("/", addProductToCart);
+router.get("/", getCart);
+router.put("/:productId", updateCartProductQuantity);
+router.delete("/:productId", deleteCartProductFromCart);
 
-export default router
+module.exports = router;

@@ -1,29 +1,16 @@
-import express from "express";
-import dotenv from 'dotenv';
-import cors from 'cors';
-import cookieParser from 'cookie-parser';
-import sequelize from "./config/db.js";
-import routes from './routes/index.js';
-import './models/index.js'
-import './models/product/index.js'
+const express = require('express');
+require('dotenv').config();
+const cors = require('cors');
+const cookieParser = require('cookie-parser');
+const routes = require('./routes/index.js');
+const errorHandler = require('./middlewares/error.middleware.js');
+const deleteExpiredRecords = require('../src/jobs/deleteExpiredRecords.js');
+const userAgent = require('express-useragent')
 
-dotenv.config();
-
+deleteExpiredRecords();
 
 const app = express();
 const PORT = process.env.PORT || 5000;
-
-// sync with the database
-const syncDatabase = async () => {
-    try {
-        await sequelize.sync();
-        console.log('Database & tables created!');
-    } catch (err) {
-        console.error('Error syncing database:', err)
-    }
-}
-
-syncDatabase()
 
 // Middleware
 app.use(cors({
@@ -32,9 +19,11 @@ app.use(cors({
 	methods: ['GET', 'POST', 'PUT', 'DELETE'],
 	allowedHeaders: ['Content-type', 'Authorization']
 }));
+app.use(userAgent.express());
 app.use(express.json());
 app.use(cookieParser(process.env.COOKIE_SECRET));
 app.use(routes);
+app.use(errorHandler);
 
 app.listen(PORT, () => {
 	console.log(`Server running at http://localhost:${PORT}`);

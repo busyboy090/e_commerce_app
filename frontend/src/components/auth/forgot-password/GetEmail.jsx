@@ -16,8 +16,13 @@ function GetEmail(props) {
 
     try {
 
-      const response = await api.post('/auth/forgot-password/email',
-        JSON.stringify({email})
+      const response = await api.post('/auth/forgot-password',
+        JSON.stringify({email}),
+        {
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        }
       );
 
       if(response.status === 200) {

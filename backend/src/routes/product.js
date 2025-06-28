@@ -1,5 +1,5 @@
-import express from "express";
-import {
+const express = require("express");
+const {
   createProduct,
   getRandomProducts,
   getProductById,
@@ -17,8 +17,8 @@ import {
   createCategories,
   getAllCategories,
   getMultipleProducts
-} from "../controllers/product.controller.js";
-import { authMiddleware } from "../middlewares/auth.middleware.js";
+} = require("../controllers/product.controller.js");
+const { authMiddleware } = require("../middlewares/auth.middleware.js");
 
 const router = express.Router();
 
@@ -73,4 +73,4 @@ router.get("/categories", getAllCategories);
 // Route to get product by Id
 router.get("/:id", getProductById);
 
-export default router;
+module.exports = router

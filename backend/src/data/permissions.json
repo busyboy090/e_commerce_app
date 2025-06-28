@@ -1,0 +1,70 @@
+{
+    "permissions": [
+        { "name": "create_users", "description": "Create new user accounts" },
+        { "name": "edit_users", "description": "Edit existing user accounts" },
+        { "name": "deactivate_users", "description": "Disable or ban users" },
+        { "name": "assign_roles", "description": "Assign roles or positions to admins" },
+        { "name": "view_user_profiles", "description": "View details of any user" },
+        { "name": "approve_admin_profiles", "description": "Approve or reject admin registrations" },
+      
+        { "name": "add_products", "description": "Add products to the marketplace" },
+        { "name": "edit_products", "description": "Edit product details" },
+        { "name": "approve_products", "description": "Approve vendor product listings" },
+        { "name": "reject_products", "description": "Reject or unpublish product listings" },
+        { "name": "delete_products", "description": "Delete products" },
+        { "name": "feature_products", "description": "Mark products as featured" },
+        { "name": "manage_categories", "description": "Create/edit product categories" },
+        { "name": "moderate_reviews", "description": "Moderate customer reviews" },
+      
+        { "name": "view_orders", "description": "View orders and statuses" },
+        { "name": "manage_orders", "description": "Update or cancel orders" },
+        { "name": "cancel_orders", "description": "Cancel customer or vendor orders" },
+        { "name": "update_order_status", "description": "Change order delivery or processing status" },
+        { "name": "track_delivery", "description": "Track logistics or delivery updates" },
+        { "name": "assign_logistics", "description": "Assign delivery providers" },
+      
+        { "name": "view_sales_reports", "description": "View sales data and performance" },
+        { "name": "export_sales_reports", "description": "Download reports" },
+        { "name": "analyze_performance", "description": "Analyze key KPIs" },
+        { "name": "access_dashboard_metrics", "description": "View admin dashboard" },
+      
+        { "name": "view_transactions", "description": "View all transaction records" },
+        { "name": "process_withdrawals", "description": "Mark payouts as processed" },
+        { "name": "approve_withdrawals", "description": "Approve vendor withdrawal requests" },
+        { "name": "manage_commissions", "description": "Set or edit vendor commission rates" },
+        { "name": "view_invoices", "description": "Access customer and vendor invoices" },
+      
+        { "name": "approve_vendors", "description": "Approve vendor applications" },
+        { "name": "ban_vendors", "description": "Deactivate or ban vendors" },
+        { "name": "edit_vendor_profiles", "description": "Edit vendor details" },
+        { "name": "view_vendor_reports", "description": "View vendor analytics" },
+        { "name": "verify_vendor_documents", "description": "Approve business verification documents" },
+      
+        { "name": "respond_tickets", "description": "Reply to customer/vendor support tickets" },
+        { "name": "close_tickets", "description": "Close resolved tickets" },
+        { "name": "view_customer_complaints", "description": "See escalated support cases" },
+        { "name": "process_refunds", "description": "Handle customer refund requests" },
+      
+        { "name": "manage_countries", "description": "Edit countries, phone codes, currencies" },
+        { "name": "manage_currencies", "description": "Add or edit supported currencies" },
+        { "name": "configure_settings", "description": "Modify platform-wide settings" },
+        { "name": "manage_shipping_zones", "description": "Create or edit delivery regions" },
+      
+        { "name": "view_activity_logs", "description": "View platform activity logs" },
+        { "name": "monitor_admin_activity", "description": "Track admin actions" },
+        { "name": "view_login_history", "description": "See user and admin login records" },
+        { "name": "manage_access_control", "description": "Update permission rules or access limits" },
+      
+        { "name": "edit_homepage_banners", "description": "Change homepage banners and slides" },
+        { "name": "manage_blog_posts", "description": "Add or edit blog content" },
+        { "name": "manage_static_pages", "description": "Update about, contact, policy pages" },
+        { "name": "edit_faq", "description": "Edit FAQ section" },
+        { "name": "manage_terms_and_policies", "description": "Update legal documents" },
+      
+        { "name": "manage_discounts", "description": "Create discount codes and offers" },
+        { "name": "create_campaigns", "description": "Launch marketing campaigns" },
+        { "name": "manage_affiliates", "description": "Approve and manage affiliate users" },
+        { "name": "edit_seo_settings", "description": "Update site titles, tags, meta info" },
+        { "name": "send_newsletters", "description": "Send mass email updates or promos" }
+    ] 
+}

@@ -41,7 +41,6 @@ function CartCard({ product }) {
 
   return (
     <tr className="h-[100px] shadow px-[20px] md:px-[40px]">
-      
       <td className='w-[300px] text-center ps-5'>
         <div className="flex max-md:flex-col items-center relative">
           <button

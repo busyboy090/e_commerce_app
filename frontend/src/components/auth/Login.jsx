@@ -141,7 +141,7 @@ function Login() {
                 </div>
 
                 {/* Forgot password */} 
-                <a href="/forgot-password" className="text-[#DB4444] block">Forgot Password?</a>
+                <a href={`/forgot-password?email=${formData.email}`} className="text-[#DB4444] block">Forgot Password?</a>
             </div>
 
             {/* login button to submit the Form */}

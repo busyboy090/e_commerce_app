@@ -1,0 +1,210 @@
+{
+  "categories": [
+    {
+      "name": "Electronics",
+      "description": "Devices and gadgets for everyday use.",
+      "image": "https://source.unsplash.com/300x300/?electronics",
+      "types": [
+        {
+          "name": "Smartphones",
+          "description": "Latest smartphones with smart features.",
+          "sizes": ["4.7", "5.5", "6.1", "6.7"],
+          "unit": "inches"
+        },
+        {
+          "name": "Laptops",
+          "description": "Portable computers for work and play.",
+          "sizes": ["13", "15", "17"],
+          "unit": "inches"
+        },
+        {
+          "name": "Televisions",
+          "description": "LED, OLED, and Smart TVs in various sizes.",
+          "sizes": ["32", "43", "55", "65"],
+          "unit": "inches"
+        },
+        {
+          "name": "Headphones",
+          "description": "Over-ear, in-ear and wireless audio gear."
+        }
+      ]
+    },
+    {
+      "name": "Fashion",
+      "description": "Trendy and classic styles for all genders and ages.",
+      "image": "https://source.unsplash.com/300x300/?fashion",
+      "types": [
+        {
+          "name": "Men's Clothing",
+          "description": "Tops, bottoms, suits and casuals for men.",
+          "sizes": ["S", "M", "L", "XL"],
+          "unit": "label"
+        },
+        {
+          "name": "Women's Clothing",
+          "description": "Dresses, tops, trousers, and skirts.",
+          "sizes": ["XS", "S", "M", "L", "XL"],
+          "unit": "label"
+        },
+        {
+          "name": "Shoes",
+          "description": "Casual and formal footwear.",
+          "sizes": ["38", "39", "40", "41", "42", "43"],
+          "unit": "EU"
+        },
+        {
+          "name": "Bags",
+          "description": "Handbags, backpacks, and purses."
+        }
+      ]
+    },
+    {
+      "name": "Home & Kitchen",
+      "description": "Essentials and tools for your home and kitchen.",
+      "image": "https://source.unsplash.com/300x300/?kitchen",
+      "types": [
+        {
+          "name": "Furniture",
+          "description": "Chairs, tables, beds and more.",
+          "sizes": ["Small", "Medium", "Large"],
+          "unit": "label"
+        },
+        {
+          "name": "Appliances",
+          "description": "Electrical tools for kitchen and home.",
+          "sizes": ["5", "10", "15", "20"],
+          "unit": "L"
+        },
+        {
+          "name": "Lighting",
+          "description": "Bulbs, LED panels, and lamps."
+        }
+      ]
+    },
+    {
+      "name": "Books",
+      "description": "Printed and digital reading materials.",
+      "image": "https://source.unsplash.com/300x300/?books",
+      "types": [
+        {
+          "name": "Fiction",
+          "description": "Novels, stories, and literature."
+        },
+        {
+          "name": "Educational",
+          "description": "School and academic resources."
+        }
+      ]
+    },
+    {
+      "name": "Beauty & Personal Care",
+      "description": "Products for grooming and wellness.",
+      "image": "https://source.unsplash.com/300x300/?beauty",
+      "types": [
+        {
+          "name": "Skincare",
+          "description": "Creams, cleansers and treatments.",
+          "sizes": ["50", "100", "200"],
+          "unit": "ml"
+        },
+        {
+          "name": "Fragrances",
+          "description": "Perfumes and deodorants.",
+          "sizes": ["30", "50", "100"],
+          "unit": "ml"
+        }
+      ]
+    },
+    {
+      "name": "Sports & Outdoors",
+      "description": "Fitness and adventure gear.",
+      "image": "https://source.unsplash.com/300x300/?sports",
+      "types": [
+        {
+          "name": "Sportswear",
+          "description": "Activewear for gym and sports.",
+          "sizes": ["S", "M", "L", "XL"],
+          "unit": "label"
+        },
+        {
+          "name": "Footwear",
+          "description": "Shoes for running and outdoor.",
+          "sizes": ["40", "41", "42", "43"],
+          "unit": "EU"
+        }
+      ]
+    },
+    {
+      "name": "Toys & Games",
+      "description": "Fun and educational items for kids.",
+      "image": "https://source.unsplash.com/300x300/?toys",
+      "types": [
+        {
+          "name": "Educational Toys",
+          "description": "Toys that boost thinking and creativity.",
+          "sizes": ["Small", "Medium", "Large"],
+          "unit": "label"
+        },
+        {
+          "name": "Board Games",
+          "description": "Games for families and groups."
+        }
+      ]
+    },
+    {
+      "name": "Automotive",
+      "description": "Car and motorcycle parts and accessories.",
+      "image": "https://source.unsplash.com/300x300/?automotive",
+      "types": [
+        {
+          "name": "Tires & Wheels",
+          "description": "Rims and tires for all vehicles.",
+          "sizes": ["14", "15", "16", "17"],
+          "unit": "inches"
+        },
+        {
+          "name": "Car Electronics",
+          "description": "Audio, navigation and sensors."
+        }
+      ]
+    },
+    {
+      "name": "Health & Household",
+      "description": "Wellness and home care essentials.",
+      "image": "https://source.unsplash.com/300x300/?health",
+      "types": [
+        {
+          "name": "Vitamins & Supplements",
+          "description": "Health boosters and immunity support.",
+          "sizes": ["30", "60", "90"],
+          "unit": "capsules"
+        },
+        {
+          "name": "Cleaning Products",
+          "description": "Detergents and disinfectants.",
+          "sizes": ["500", "750", "1000"],
+          "unit": "ml"
+        }
+      ]
+    },
+    {
+      "name": "Grocery & Gourmet Food",
+      "description": "Everyday food items and gourmet treats.",
+      "image": "https://source.unsplash.com/300x300/?grocery",
+      "types": [
+        {
+          "name": "Beverages",
+          "description": "Soft drinks, juices, and water.",
+          "sizes": ["250", "500", "1000"],
+          "unit": "ml"
+        },
+        {
+          "name": "Snacks",
+          "description": "Chips, biscuits, and finger foods.",
+          "sizes": ["50", "100", "200"],
+          "unit": "g"
+        }
+      ]
+    }
+  ]
+}

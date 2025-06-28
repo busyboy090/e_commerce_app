@@ -1,0 +1,236 @@
+{
+    "positions": [
+      {
+        "title": "Chief Executive Officer (CEO)",
+        "department": "Executive Management",
+        "level": "super",
+        "description": "Leads the platform strategy, growth, and major decision-making.",
+        "permissions": [
+          "configure_settings",
+          "assign_roles",
+          "view_sales_reports",
+          "view_activity_logs",
+          "manage_users",
+          "approve_admin_profiles"
+        ]
+      },
+      {
+        "title": "Chief Operating Officer (COO)",
+        "department": "Executive Management",
+        "level": "executive",
+        "description": "Oversees daily operations and ensures departmental alignment.",
+        "permissions": [
+          "view_sales_reports",
+          "manage_orders",
+          "approve_withdrawals",
+          "approve_vendors"
+        ]
+      },
+      {
+        "title": "Platform Administrator",
+        "department": "Executive Management",
+        "level": "super",
+        "description": "Manages system settings, access control, and core platform functions.",
+        "permissions": [
+          "manage_access_control",
+          "configure_settings",
+          "assign_roles",
+          "view_login_history"
+        ]
+      },
+      {
+        "title": "Product Manager",
+        "department": "Product Management",
+        "level": "manager",
+        "description": "Oversees product categories, specifications, and structure.",
+        "permissions": [
+          "add_products",
+          "edit_products",
+          "manage_categories",
+          "approve_products",
+          "feature_products"
+        ]
+      },
+      {
+        "title": "Product Moderator",
+        "department": "Product Management",
+        "level": "moderator",
+        "description": "Approves, edits, or rejects vendor-submitted products.",
+        "permissions": [
+          "approve_products",
+          "reject_products",
+          "moderate_reviews"
+        ]
+      },
+      {
+        "title": "Inventory Analyst",
+        "department": "Product Management",
+        "level": "staff",
+        "description": "Monitors stock levels and suggests restocking strategies.",
+        "permissions": [
+          "view_orders",
+          "view_sales_reports"
+        ]
+      },
+      {
+        "title": "Vendor Manager",
+        "department": "Vendor Management",
+        "level": "manager",
+        "description": "Manages vendor onboarding, performance, and support.",
+        "permissions": [
+          "approve_vendors",
+          "ban_vendors",
+          "edit_vendor_profiles",
+          "verify_vendor_documents"
+        ]
+      },
+      {
+        "title": "Vendor Support Officer",
+        "department": "Vendor Management",
+        "level": "support",
+        "description": "Handles vendor inquiries, issues, and basic guidance.",
+        "permissions": [
+          "respond_tickets",
+          "view_vendor_reports"
+        ]
+      },
+      {
+        "title": "Order Fulfillment Officer",
+        "department": "Order & Fulfillment",
+        "level": "staff",
+        "description": "Monitors order progress and ensures timely fulfillment.",
+        "permissions": [
+          "manage_orders",
+          "update_order_status",
+          "track_delivery"
+        ]
+      },
+      {
+        "title": "Customer Support Agent",
+        "department": "Customer Service",
+        "level": "support",
+        "description": "Provides help to customers via chat, phone, or email.",
+        "permissions": [
+          "respond_tickets",
+          "close_tickets",
+          "process_refunds"
+        ]
+      },
+      {
+        "title": "Finance Officer",
+        "department": "Finance",
+        "level": "staff",
+        "description": "Tracks platform transactions and reconciles financial data.",
+        "permissions": [
+          "view_transactions",
+          "view_invoices"
+        ]
+      },
+      {
+        "title": "Payout Manager",
+        "department": "Finance",
+        "level": "manager",
+        "description": "Manages vendor earnings, withdrawal requests, and commissions.",
+        "permissions": [
+          "process_withdrawals",
+          "approve_withdrawals",
+          "manage_commissions"
+        ]
+      },
+      {
+        "title": "Sales Analyst",
+        "department": "Sales",
+        "level": "staff",
+        "description": "Analyzes product and vendor sales trends and performance.",
+        "permissions": [
+          "view_sales_reports",
+          "export_sales_reports",
+          "analyze_performance"
+        ]
+      },
+      {
+        "title": "Marketing Manager",
+        "department": "Marketing",
+        "level": "manager",
+        "description": "Leads campaigns, ad strategy, and user acquisition.",
+        "permissions": [
+          "create_campaigns",
+          "manage_discounts",
+          "send_newsletters",
+          "manage_affiliates"
+        ]
+      },
+      {
+        "title": "Affiliate Program Manager",
+        "department": "Marketing",
+        "level": "manager",
+        "description": "Manages affiliate partnerships and influencer promotions.",
+        "permissions": [
+          "manage_affiliates",
+          "view_sales_reports"
+        ]
+      },
+      {
+        "title": "Content Manager",
+        "department": "Content Management",
+        "level": "manager",
+        "description": "Oversees homepage banners, CMS pages, and content updates.",
+        "permissions": [
+          "edit_homepage_banners",
+          "manage_static_pages",
+          "manage_terms_and_policies"
+        ]
+      },
+      {
+        "title": "SEO Specialist",
+        "department": "Content Management",
+        "level": "staff",
+        "description": "Improves product visibility through search optimization.",
+        "permissions": [
+          "edit_seo_settings",
+          "manage_static_pages"
+        ]
+      },
+      {
+        "title": "Compliance Officer",
+        "department": "Security & Compliance",
+        "level": "moderator",
+        "description": "Ensures the platform follows legal, tax, and privacy laws.",
+        "permissions": [
+          "view_login_history",
+          "monitor_admin_activity"
+        ]
+      },
+      {
+        "title": "HR Manager",
+        "department": "Human Resources",
+        "level": "manager",
+        "description": "Oversees admin hiring, policies, and performance reviews.",
+        "permissions": [
+          "create_users",
+          "edit_users",
+          "deactivate_users",
+          "approve_admin_profiles"
+        ]
+      },
+      {
+        "title": "IT Support Specialist",
+        "department": "IT & Infrastructure",
+        "level": "support",
+        "description": "Solves internal technical issues and admin support tickets.",
+        "permissions": [
+          "respond_tickets"
+        ]
+      },
+      {
+        "title": "System Administrator",
+        "department": "IT & Infrastructure",
+        "level": "developer",
+        "description": "Manages platform servers, databases, and backups.",
+        "permissions": [
+          "view_logs",
+          "manage_access_control"
+        ]
+      }
+    ]      
+}

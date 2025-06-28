@@ -1,59 +1,68 @@
-import dotenv from "dotenv";
-import nodemailer from "nodemailer";
-import speakeasy from "speakeasy";
-import bcrypt from "bcryptjs";
-import User from "../models/user.model.js";
+require('dotenv').config();
+const speakeasy = require("speakeasy");
+const bcrypt = require('bcryptjs');
+const db = require('../models/index.js');
+const { sendResetPasswordOtpEmail } = require("../services/emailService.js");
 
-dotenv.config();
+const { User, Otp } = db
 
-export const verifyEmail = async (req, res) => {
-	try {
-		const { email } = req.body;
+const sendResetPasswordOtp = async (req, res) => {
+	const { email } = req.body;
 
-		const user = await User.findOne({ email });
-		if (!user) {
-			return res.status(404).json({ message: "User not found." });
-		}
+	if (!email) return res.status(400).json({ msg: 'Email is required'})
 
-		const secret = speakeasy.generateSecret({ length: 20 });
-		const otp = speakeasy.totp({
-			secret: secret.base32,
-			encoding: "base32",
-			step: 300,
-		});
+    try {
+        let user = await User.findOne({ where: { email }});
 
-		user.otp = otp;
-		user.otpCreatedAt = new Date();
-		await user.save();
+        if(user) {
+            // Generate a unique secret for the user
+            const otpSecret = speakeasy.generateSecret(
+				{
+					name: `Exclusive (${user.email})`,
+					length: 20,
+				}
+			).base32;
 
-		let transporter = nodemailer.createTransport({
-			host: process.env.EMAIL_HOST,
-			port: process.env.EMAIL_PORT,
-			secure: process.env.EMAIL_SECURE === "true",
-			auth: {
-				user: process.env.EMAIL_USER,
-				pass: process.env.EMAIL_PASS,
-			},
-		});
+            // Generate a secure reset token(otp)
+            const otp = speakeasy.totp({
+                secret: otpSecret,
+                encoding: 'base32',
+                digits: 6,  // Generates a 6-digit OTP
+                step: 600 // Sets the OTP validity period
+            });
 
-		// Send the OTP email
-		await transporter.sendMail({
-			from: process.env.EMAIL_FROM,
-			to: email,
-			subject: "Password Reset OTP",
-			text: `Your OTP for password reset is ${otp}. It is valid for 5 minutes.`,
-		});
+            // find the user in the otp table
+            const userOtpDetails = await Otp.findOne({ where: { user_id: user.user_id }});
 
-		res.status(200).json({ message: "OTP sent to your email." });
-	} catch (error) {
-		res.status(500).json({
-			message: "Could not send OTP.",
-			error: error.message,
-		});
-	}
-};
+            if (!userOtpDetails) {
+                await Otp.create({
+                    otp,
+                    otp_secret_key: otpSecret,
+                    user_id: user.user_id
+                })
+            } else {
+                userOtpDetails.set('otp', otp);
+                userOtpDetails.set('otp_secret_key', otpSecret);
+                await userOtpDetails.save();
+            }
 
-export const verifyOtp = async (req, res) => {
+            const result = await sendResetPasswordOtpEmail(user.email,'support@exclusive.com', user.first_name, otp, '10');
+
+			console.log(result.info)
+
+			if (result.success) {
+				res.sendStatus(200);
+			} else {
+				return res.status(500).json({ msg: 'Server error'})
+			}
+        }
+    } catch (err) {
+        return res.status(500).json({ msg: 'Server error'})
+    }
+
+}
+
+const verifyOtp = async (req, res) => {
 	try {
 		const { email, otp } = req.body;
 
@@ -82,7 +91,7 @@ export const verifyOtp = async (req, res) => {
 	}
 };
 
-export const resetPassword = async (req, res) => {
+const resetPassword = async (req, res) => {
 	try {
 		const { email, newPassword } = req.body;
 
@@ -108,3 +117,9 @@ export const resetPassword = async (req, res) => {
 		});
 	}
 };
+
+module.exports = {
+	sendResetPasswordOtp,
+	verifyOtp,
+	resetPassword
+}

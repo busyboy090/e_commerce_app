@@ -1,0 +1,57 @@
+{
+    "departments": [
+        {
+          "name": "Executive Management",
+          "description": "Oversees the entire platform, settings, and system-wide decisions."
+        },
+        {
+          "name": "Product Management",
+          "description": "Handles product creation, approval, category structure, and inventory rules."
+        },
+        {
+          "name": "Vendor Management",
+          "description": "Manages vendor registration, verification, compliance, and relationships."
+        },
+        {
+          "name": "Order & Fulfillment",
+          "description": "Oversees order processing, delivery tracking, returns, and logistics."
+        },
+        {
+          "name": "Customer Service",
+          "description": "Handles customer queries, complaints, returns, and support tickets."
+        },
+        {
+          "name": "Finance",
+          "description": "Manages payments, vendor payouts, commissions, refunds, and billing."
+        },
+        {
+          "name": "Sales",
+          "description": "Tracks product/vendor sales performance, generates revenue reports."
+        },
+        {
+          "name": "Marketing",
+          "description": "Runs promotions, newsletters, banners, and affiliate programs."
+        },
+        {
+          "name": "Content Management",
+          "description": "Maintains homepage content, footer links, terms, FAQs, and CMS pages."
+        },
+        {
+          "name": "Security & Compliance",
+          "description": "Monitors system access, fraud detection, and regulatory compliance."
+        },
+        {
+          "name": "Analytics & Reporting",
+          "description": "Collects data for user behavior, sales performance, and traffic insights."
+        },
+        {
+          "name": "Human Resources",
+          "description": "Manages admin accounts, roles, onboarding, and internal evaluations."
+        },
+        {
+          "name": "IT & Infrastructure",
+          "description": "Maintains platform stability, hosting, backups, and tech support."
+        }
+    ]
+      
+}

@@ -7,17 +7,34 @@ import ResendOtp from './ResendOtp';
 
 // InputField Component
 function InputField({ input, nextInput, backInput }) {
+    let disable = true;
+    
+    if(backInput) {
+        disable = backInput.current.value ? false : true
+    } else {
+        disable = false
+    }
+
     const handleKeyDown = (e) => {
         if (!/[0-9]/.test(e.key)) {
             e.preventDefault();
         } else {
             e.preventDefault();
             input.current.value = e.key;
+
+            if(nextInput) {
+                nextInput.current.disabled = false
+            }
+
             if (input.current.value && nextInput) nextInput.current.focus();
         }
 
         if (e.key === 'Backspace') {
             input.current.value = '';
+            if(nextInput) {
+                nextInput.current.disabled = true
+            }
+
             if (backInput && !input.current.value) {
                 backInput.current.focus();
             }
@@ -34,6 +51,7 @@ function InputField({ input, nextInput, backInput }) {
             maxLength='1'
             ref={input}
             onKeyDown={handleKeyDown}
+            disabled={disable}
         />
     );
 }
@@ -90,7 +108,7 @@ function Otp(props) {
             </p>
 
             <div className='mt-[25px] flex gap-[15px] justify-center'>
-                <InputField input={input1} nextInput={input2} />
+                <InputField input={input1} nextInput={input2}/>
                 <InputField input={input2} backInput={input1} nextInput={input3} />
                 <InputField input={input3} backInput={input2} nextInput={input4} />
                 <InputField input={input4} backInput={input3} nextInput={input5} />

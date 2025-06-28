@@ -47,6 +47,8 @@ function App() {
 
     if(authenticate) {
       fetchToken();
+    }else {
+      setIsLoading(false)
     }
     
   }, []);

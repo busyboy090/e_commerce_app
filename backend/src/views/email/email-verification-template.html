@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email Verification</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f8f8;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 600px;
+            background: white;
+            padding: 20px;
+            margin: auto;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        .banner {
+            width: 100%;
+            border-radius: 8px;
+        }
+
+        h2 {
+            color: #333;
+        }
+
+        p {
+            color: #666;
+            line-height: 1.5;
+        }
+
+        .otp-box {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0;
+        }
+
+        .otp-box span {
+            font-size: 24px;
+            font-weight: bold;
+            background: #f0f0f0;
+            padding: 15px;
+            margin: 5px;
+            border-radius: 5px;
+            width: 40px;
+            display: inline-block;
+            text-align: center;
+        }
+
+        .expiry {
+            font-weight: bold;
+        }
+
+        .team-link {
+            color: #6a0dad;
+            text-decoration: none;
+        }
+
+        footer {
+            margin-top: 20px;
+            font-size: 12px;
+            color: #777;
+        }
+
+        footer a {
+            text-decoration: none;
+            color: #6a0dad;
+        }
+
+        .social-icons {
+            border-top: 1px solid rgba(128, 128, 128, 0.5);
+            border-bottom:1px solid rgba(128, 128, 128, 0.5) ;
+            text-align: center;
+            width: 100%;
+            position: relative;
+        }
+
+        .social-icons div {
+            margin: 0 auto;
+        }
+
+        .social-icons div a {
+            width: 34px;
+            height: 34px;
+            display: inline-block;
+            margin: 0 5px;
+        }
+
+        .social-icons a img {
+            margin: 20px 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .verify-email {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 50px;
+            border-radius: 40px;
+            background-color: #6a0dad;
+            color: white;
+            margin-top: 50px;
+            margin-bottom: 50px;
+            text-decoration: none;
+            font-size: 1rem;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h2 style="font-size: 60px; text-align: center;">EXCLUSIVE</h2>
+        </header>
+
+        <main>
+            <h2>Hi {{name}},</h2>
+            <p>Here is your link to verify your email. <br>
+            Please click this link to verify your email address for Exclusive.</p>
+
+            <a class="verify-email" href={{link}}>Verify Email</a>
+
+            <p class="expiry">This link will expire in <strong>{{expiry}} hours</strong>.</p>
+
+            <p style="margin-top: 40px;">Best Regards,<br>
+                <a href="#" class="team-link">EXCLUSIVE team.</a>
+            </p>
+        </main>
+
+        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMQAAADECAYAAADApo5rAAAAAklEQVR4AewaftIAAAiuSURBVO3BQY4cOxYEwXCi7n9ln8YsiLciQGRWS/oIM/yRqvq/laraVqpqW6mqbaWqtpWq2laqalupqm2lqraVqtpWqmpbqaptpaq2laraVqpqW6mq7ZOHgPwmNROQSc0JkCfUTEAmNROQ36TmBMg3qZmA/CY1T6xU1bZSVdtKVW2fvEzNm4C8Sc0EZFIzATlRMwGZ1ExATtT8JjUnQE7U3FDzJiBvWqmqbaWqtpWq2j75MiA31DwBZFIzAbmhZgJyA8gNIJOaCcik5oaaG2omIG8CckPNN61U1bZSVdtKVW2f/OPUnACZ1ExAJiBPqLkBZFIzAZnUTEAmNSdATtRMQCY1E5BJzb9spaq2laraVqpq++QfB2RSM6k5UTMBOVFzAuSGmifUnACZ1NxQMwGZ1PyXrFTVtlJV20pVbZ98mZpvUvNNak6AnKg5ATKpmdRMQCY1J2pOgExqTtS8Sc3fZKWqtpWq2laqavvkZUB+E5BJzQRkUjMBmdRMQCY1J2omIJOaG0AmNROQSc0EZFJzA8ikZgIyqTkB8jdbqaptpaq2lara8Ef+w4CcqJmATGomIJOaJ4BMap4AcqLmTUAmNf+ylaraVqpqW6mq7ZOHgExqToD8S4BMak6A3FBzA8iJmieAnKiZ1ExAJjUnQCY1E5Abap5Yqaptpaq2laraPnkZkBtqbgCZ1LxJzQRkAvI3UXMC5ETNDSAnak6AnACZ1ExAvmmlqraVqtpWqmr75CE1N4DcAPImIJOaG2omIJOaG0BO1DyhZgJyouYGkAnIpOZEzQTkRM03rVTVtlJV20pVbZ88BOREzQ0gk5oJyATkTUAmNROQSc0EZFIzATlRc6JmAjKpmYBMak6ATGomIJOaEyAnQP4mK1W1rVTVtlJV2ydfBuQJIJOaEyCTmgnIE2pO1NxQcwPIE0AmNZOaEzUTkCfU3AByouaJlaraVqpqW6mqDX/ki4A8oeYEyBNq3gTkCTV/MyCTmhtAbqiZgJyoeWKlqraVqtpWqmr75GVA3gRkUnNDzQmQSc0JkBM1J0BuALmh5gTIpGYCcqLmBpATNROQEzUTkDetVNW2UlXbSlVt+CMvAjKpOQEyqTkBMqmZgJyoeQLIpGYCMqk5ATKpOQEyqZmATGpOgExqToBMaiYgJ2omIE+oedNKVW0rVbWtVNX2yUNAJjUTkCeATGreBGRSc6LmTWpOgExqbgA5UfMEkEnNDTVPAJnUPLFSVdtKVW0rVbXhjzwAZFJzA8iJmjcBOVEzAZnUTED+JDUnQG6oOQEyqZmATGpOgExq/qSVqtpWqmpbqartk4fUnACZ1ExqToBMaiYgk5oJyKRmAnKi5pvU3AByAuRvAmRS8wSQEzVPrFTVtlJV20pVbZ88BGRSM6k5ATKpmdTcADKpOVFzA8iJmhtATtScADlRMwGZ1ExA3qTmCSCTmm9aqaptpaq2lara8EdeBOREzQ0gk5obQE7UfBOQSc0JkEnNCZATNSdAJjVvAvKb1DyxUlXbSlVtK1W1ffJlap5QMwE5UXMDyImaCcik5kTNBGRSM6mZgJyomYCcAJnUTEBuqJmATGomIDfU/KaVqtpWqmpbqaoNf+SLgExqJiBPqDkBcqJmAvImNSdAnlAzAZnUTEBO1PwmIJOaP2mlqraVqtpWqmr75JcBmdRMQCY1E5C/iZoJyAmQEzVPqJmATGomIBOQSc0E5Ak1J0CeUPPESlVtK1W1rVTVhj/yFwHyhJoJyKTmBMgTaiYgk5ongNxQMwGZ1HwTkEnNCZATNd+0UlXbSlVtK1W14Y88AOREzQmQEzUTkG9ScwLkhpobQG6omYA8oeYGkDepmYBMar5ppaq2laraVqpq++Rlap5QMwE5UTMBmdRMQCY1J0BuqDkB8oSaCcgTaiYgN9TcADKpmYBMaiYgJ2qeWKmqbaWqtpWq2j55GZAbaiYgk5oJyJuA3FDzhJoJyKTmCTUTkBtqbgCZ1JyomYCcADlR86aVqtpWqmpbqaoNf+QvBuREzQmQSc0EZFLzJiA31ExAJjUnQE7UPAFkUnMCZFJzAmRS85tWqmpbqaptpaq2Tx4CMql5k5oJyATkRM0E5AaQEzU31ExAbgA5UTMBuQHkRM2bgExqToBMat60UlXbSlVtK1W1ffIyIE+omYBMak6ATEBO1DwB5E1AJjUTkEnNE0AmNROQCcik5k1AJjUnQCY1T6xU1bZSVdtKVW2ffJmaCcikZgIyqZmATGomNROQJ9ScAHlCzQTkRM0EZFJzAuRNQCY1k5oJyImaCciJmjetVNW2UlXbSlVtn3wZkEnNDSA3gNwAcqJmAjKpeQLICZBJzaTmhpoJyJuA/MtWqmpbqaptpao2/JF/GJAn1ExAbqiZgDyhZgIyqTkBckPNDSAnam4AeULNm1aqalupqm2lqrZPHgLym9ScqJmATGomIJOaEyAnak6ATGomIJOaJ9TcAPImIJOav9lKVW0rVbWtVNX2ycvUvAnIE2omICdAJjWTmgnIpGYCckPNDSDfpOYEyImaJ9T8ppWq2laqalupqu2TLwNyQ82bgExqToCcADkBMqmZgExAbqh5AsgNIDeAfBOQEzVPrFTVtlJV20pVbZ/8xwCZ1JwAuaHmBMgEZFIzAZnUTEAmIJOaCcgE5IaaEyA31NwA8ietVNW2UlXbSlVtn/zj1ExAJiAnaiYgJ0AmNSdqJiCTmhtqJiBPqLmh5gTICZATNROQ37RSVdtKVW0rVbV98mVq/iQ1J0AmNROQG2pO1NxQc0PNDSCTmgnIpOZEzYmaCciJmhMgb1qpqm2lqraVqto+eRmQ3wRkUnMC5IaaJ4DcUDMBOVEzAZnUnKg5UTMBOVFzAuQGkEnNpOZNK1W1rVTVtlJVG/5IVf3fSlVtK1W1rVTVtlJV20pVbStVta1U1bZSVdtKVW0rVbWtVNW2UlXbSlVtK1W1rVTV9j9+j5mjV+fjHwAAAABJRU5ErkJggg==" alt="">
+
+        <footer style="text-align: center; margin-top: 50px;">
+            <div class="social-icons">
+                <div>
+                    <a href="#">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" alt="instagram">
+                    </a>
+                    <a href="#">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg" alt="facebook">
+                    </a>
+                </div>
+            </div>
+            <p>&copy; 2025 EXCLUSIVE. All rights reserved.</p>
+            <small>
+                You are receiving this mail because you registered on EXCLUSIVE.<br>
+                <a href="#">Privacy policy</a> | <a href="#">Terms of service</a> | <a href="#">Unsubscribe</a>
+            </small>
+        </footer>
+    </div>
+
+</body>
+</html>

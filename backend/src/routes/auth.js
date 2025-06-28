@@ -1,36 +1,30 @@
-import express from "express";
-import { validateRegister, validateLogin } from "../middlewares/validators.js";
-import { authMiddleware } from "../middlewares/auth.middleware.js";
-import {
-  registerUser,
-  googleLogin,
-  loginUser,
-  logoutUser,
-  refreshUserAccessToken,
-} from "../controllers/auth.controller.js";
-import { getUserDetails } from "../controllers/profile.controller.js";
-import {
-  verifyEmail,
-  verifyOtp,
-  resetPassword,
-} from "../controllers/password.controller.js";
+const express = require("express");
+const validationMiddleware = require("../middlewares/validators.js");
+const authMiddleware = require("../middlewares/auth.middleware.js");
+const authController = require("../controllers/auth.controller.js");
 
 const router = express.Router();
 
-router.post("/register", validateRegister, registerUser);
+router.post(
+    "/reset-password",
+    authMiddleware.verifyOtp,
+    authController.resetPassword
+);
 
-router.post("/google-login", googleLogin);
+router.get("/verify-email", authController.verifyEmail);
 
-router.post("/login", validateLogin, loginUser);
+router.post("/google-login", authController.googleLogin);
 
-router.post("/logout", authMiddleware, logoutUser);
+router.post("/login", validationMiddleware.validateLogin, authController.loginUser);
 
-router.get("/me", authMiddleware, getUserDetails);
+router.get("/refresh-token", authController.refreshTokens);
 
-router.get("/refresh-token", refreshUserAccessToken);
+router.use(authMiddleware.authMiddleware);
 
-router.post("/forgot-password/email", verifyEmail);
-router.post("/forgot-password/verify-otp", verifyOtp);
-router.post("/forgot-password/reset-password", resetPassword);
+router.post("/logout", authController.logoutUser);
 
-export default router;
+router.get('/enable2fa', authController.enable2fa);
+
+router.get('/disable2fa', authController.disable2fa);
+
+module.exports = router;

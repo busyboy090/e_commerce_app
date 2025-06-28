@@ -1,0 +1,179 @@
+{
+    "types": [
+        {
+          "category": "Electronics",
+          "category_description": "Devices and gadgets for everyday use.",
+          "category_image": "https://source.unsplash.com/300x300/?electronics",
+          "type": "Smartphones",
+          "type_description": "Latest mobile phones with smart features."
+        },
+        {
+          "category": "Electronics",
+          "category_description": "Devices and gadgets for everyday use.",
+          "category_image": "https://source.unsplash.com/300x300/?electronics",
+          "type": "Laptops",
+          "type_description": "Portable computers for work and entertainment."
+        },
+        {
+          "category": "Electronics",
+          "category_description": "Devices and gadgets for everyday use.",
+          "category_image": "https://source.unsplash.com/300x300/?electronics",
+          "type": "Televisions",
+          "type_description": "Smart and LED TVs in multiple sizes."
+        },
+        {
+          "category": "Electronics",
+          "category_description": "Devices and gadgets for everyday use.",
+          "category_image": "https://source.unsplash.com/300x300/?electronics",
+          "type": "Headphones",
+          "type_description": "Wired and wireless audio devices."
+        },
+        {
+          "category": "Fashion",
+          "category_description": "Clothing and accessories for all styles and seasons.",
+          "category_image": "https://source.unsplash.com/300x300/?fashion",
+          "type": "Men's Clothing",
+          "type_description": "Formal and casual wear for men."
+        },
+        {
+          "category": "Fashion",
+          "category_description": "Clothing and accessories for all styles and seasons.",
+          "category_image": "https://source.unsplash.com/300x300/?fashion",
+          "type": "Women's Clothing",
+          "type_description": "Stylish and traditional wear for women."
+        },
+        {
+          "category": "Fashion",
+          "category_description": "Clothing and accessories for all styles and seasons.",
+          "category_image": "https://source.unsplash.com/300x300/?fashion",
+          "type": "Shoes",
+          "type_description": "Footwear for different occasions and outfits."
+        },
+        {
+          "category": "Fashion",
+          "category_description": "Clothing and accessories for all styles and seasons.",
+          "category_image": "https://source.unsplash.com/300x300/?fashion",
+          "type": "Bags",
+          "type_description": "Handbags, backpacks, and purses."
+        },
+        {
+          "category": "Home & Kitchen",
+          "category_description": "Everything you need to equip and organize your home.",
+          "category_image": "https://source.unsplash.com/300x300/?kitchen",
+          "type": "Furniture",
+          "type_description": "Tables, chairs, sofas and more."
+        },
+        {
+          "category": "Home & Kitchen",
+          "category_description": "Everything you need to equip and organize your home.",
+          "category_image": "https://source.unsplash.com/300x300/?kitchen",
+          "type": "Appliances",
+          "type_description": "Kitchen and home electrical devices."
+        },
+        {
+          "category": "Home & Kitchen",
+          "category_description": "Everything you need to equip and organize your home.",
+          "category_image": "https://source.unsplash.com/300x300/?kitchen",
+          "type": "Lighting",
+          "type_description": "Indoor and outdoor lighting solutions."
+        },
+        {
+          "category": "Books",
+          "category_description": "A wide range of literature and educational content.",
+          "category_image": "https://source.unsplash.com/300x300/?books",
+          "type": "Fiction",
+          "type_description": "Novels, stories, and creative writing."
+        },
+        {
+          "category": "Books",
+          "category_description": "A wide range of literature and educational content.",
+          "category_image": "https://source.unsplash.com/300x300/?books",
+          "type": "Educational",
+          "type_description": "Books for learning and academic study."
+        },
+        {
+          "category": "Beauty & Personal Care",
+          "category_description": "Skincare, makeup, and wellness essentials.",
+          "category_image": "https://source.unsplash.com/300x300/?beauty",
+          "type": "Skincare",
+          "type_description": "Creams, moisturizers, and treatments."
+        },
+        {
+          "category": "Beauty & Personal Care",
+          "category_description": "Skincare, makeup, and wellness essentials.",
+          "category_image": "https://source.unsplash.com/300x300/?beauty",
+          "type": "Fragrances",
+          "type_description": "Perfumes, deodorants, and mists."
+        },
+        {
+          "category": "Sports & Outdoors",
+          "category_description": "Gear for fitness, training, and outdoor adventures.",
+          "category_image": "https://source.unsplash.com/300x300/?sports",
+          "type": "Sportswear",
+          "type_description": "Clothing for workouts and sports."
+        },
+        {
+          "category": "Sports & Outdoors",
+          "category_description": "Gear for fitness, training, and outdoor adventures.",
+          "category_image": "https://source.unsplash.com/300x300/?sports",
+          "type": "Footwear",
+          "type_description": "Running shoes, cleats, and sports sneakers."
+        },
+        {
+          "category": "Toys & Games",
+          "category_description": "Fun, educational, and interactive toys for all ages.",
+          "category_image": "https://source.unsplash.com/300x300/?toys",
+          "type": "Educational Toys",
+          "type_description": "Toys that support learning and development."
+        },
+        {
+          "category": "Toys & Games",
+          "category_description": "Fun, educational, and interactive toys for all ages.",
+          "category_image": "https://source.unsplash.com/300x300/?toys",
+          "type": "Board Games",
+          "type_description": "Classic and modern games for groups."
+        },
+        {
+          "category": "Automotive",
+          "category_description": "Everything for your car or motorbike.",
+          "category_image": "https://source.unsplash.com/300x300/?automotive",
+          "type": "Tires & Wheels",
+          "type_description": "All sizes of tires and rims."
+        },
+        {
+          "category": "Automotive",
+          "category_description": "Everything for your car or motorbike.",
+          "category_image": "https://source.unsplash.com/300x300/?automotive",
+          "type": "Car Electronics",
+          "type_description": "Speakers, navigation, and sensors."
+        },
+        {
+          "category": "Health & Household",
+          "category_description": "Medical, hygiene, and household essentials.",
+          "category_image": "https://source.unsplash.com/300x300/?health",
+          "type": "Vitamins & Supplements",
+          "type_description": "Health and immunity boosters."
+        },
+        {
+          "category": "Health & Household",
+          "category_description": "Medical, hygiene, and household essentials.",
+          "category_image": "https://source.unsplash.com/300x300/?health",
+          "type": "Cleaning Products",
+          "type_description": "Disinfectants and detergents."
+        },
+        {
+          "category": "Grocery & Gourmet Food",
+          "category_description": "Staple food items and gourmet selections.",
+          "category_image": "https://source.unsplash.com/300x300/?grocery",
+          "type": "Beverages",
+          "type_description": "Soft drinks, juice, tea, and water."
+        },
+        {
+          "category": "Grocery & Gourmet Food",
+          "category_description": "Staple food items and gourmet selections.",
+          "category_image": "https://source.unsplash.com/300x300/?grocery",
+          "type": "Snacks",
+          "type_description": "Quick bites, chips, and cookies."
+        }
+    ]  
+}

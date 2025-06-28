@@ -1,0 +1,44 @@
+{
+    "levels": [
+        {
+          "code": "super",
+          "name": "Super Admin",
+          "description": "Full system access with all permissions"
+        },
+        {
+          "code": "executive",
+          "name": "Executive",
+          "description": "Oversees department heads and global platform settings"
+        },
+        {
+          "code": "manager",
+          "name": "Manager",
+          "description": "Manages a department and handles key approvals"
+        },
+        {
+          "code": "moderator",
+          "name": "Moderator",
+          "description": "Can approve or reject content submitted by users or vendors"
+        },
+        {
+          "code": "staff",
+          "name": "Staff",
+          "description": "Performs standard administrative tasks"
+        },
+        {
+          "code": "support",
+          "name": "Support Agent",
+          "description": "Handles support tickets and user requests"
+        },
+        {
+          "code": "auditor",
+          "name": "Auditor",
+          "description": "Read-only access to logs and reports"
+        },
+        {
+          "code": "developer",
+          "name": "Developer",
+          "description": "Access to technical and system-level tools"
+        }
+    ]      
+}

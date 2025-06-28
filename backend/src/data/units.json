@@ -1,0 +1,14 @@
+{
+    "units": [
+      { "code": "inches", "name": "Inches", "symbol": "in", "example": ["32", "43", "55"] },
+      { "code": "cm", "name": "Centimeters", "symbol": "cm", "example": ["100", "150", "200"] },
+      { "code": "mm", "name": "Millimeters", "symbol": "mm", "example": ["10", "50", "100"] },
+      { "code": "ml", "name": "Milliliters", "symbol": "ml", "example": ["100", "250", "500"] },
+      { "code": "L", "name": "Liters", "symbol": "L", "example": ["1", "2", "5"] },
+      { "code": "g", "name": "Grams", "symbol": "g", "example": ["100", "500", "1000"] },
+      { "code": "kg", "name": "Kilograms", "symbol": "kg", "example": ["1", "2", "5"] },
+      { "code": "years", "name": "Age in Years","symbol": "yr", "example": ["2", "4", "6", "10"] },
+      { "code": "capsules", "name": "Capsules", "symbol": "cap", "example": ["30", "60", "90"] }
+    ]
+}
+  

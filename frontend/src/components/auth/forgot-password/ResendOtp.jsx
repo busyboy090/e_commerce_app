@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import api from '../../../api/axios';
 
-function startCountdown(durationInSeconds, setTime, endTime, setCountdownDisplay) {
+function startCountdown(durationInSeconds, setTime, endTime, countdownDisplay) {
     const now = Date.now();
     endTime.current = now + durationInSeconds * 1000;
     setTime(true);
@@ -12,7 +12,7 @@ function startCountdown(durationInSeconds, setTime, endTime, setCountdownDisplay
 
         const minutes = Math.floor(timeLeft / 60);
         const seconds = timeLeft % 60;
-        setCountdownDisplay(`${minutes}:${seconds < 10 ? '0' : ''}${seconds}`);
+        countdownDisplay.current.innerHTML = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
 
         if (timeLeft <= 0) {
             clearInterval(countdown);
@@ -29,19 +29,23 @@ function startCountdown(durationInSeconds, setTime, endTime, setCountdownDisplay
 }
 
 function ResendOtp({ email }) {
-    const [time, setTime] = useState(true);
-    const [countdownDisplay, setCountdownDisplay] = useState('');
+    const [time, setTime] = useState(false);
+    const countdownDisplay = useRef();
     const endTime = useRef(null); 
 
     const sendNewCode = async () => {
         try {
-            const response = await api.post('/auth/forgot-password/email', 
-                JSON.stringify({ email })
+            const response = await api.post('/auth/forgot-password', 
+                JSON.stringify({ email }),
+                {
+                    headers:{
+                        'Content-Type': 'application/json'
+                    }
+                }
             );
 
             if (response.status === 200) {
-                startCountdown(180, setTime, endTime, setCountdownDisplay); // Start countdown for 3 minutes
-                setKey((prev) => prev + 1); // Trigger the key update (presumably to reset OTP form/input)
+                startCountdown(180, setTime, endTime, countdownDisplay); // Start countdown for 3 minutes
             }
         } catch (err) {
             console.log(err);
@@ -55,19 +59,20 @@ function ResendOtp({ email }) {
         };
     }, []);
 
-    console.log(time)
-
     return (
         <div className='flex justify-center gap-[10px] items-center mt-[20px]'>
             <p>Didn't receive a code? </p>
-            <button 
-                type='button' 
-                disabled={!time} 
-                onClick={sendNewCode}
-                className='text-[#DB4444] font-medium text-[1rem] disabled:text-[rgba(128,128,128,0.4)] underline'>
-                Resend code
-            </button>
-            {time && <span className='font-medium'>{countdownDisplay}</span>}
+            {
+                time ? (
+                    <button 
+                        type='button'
+                        onClick={sendNewCode}
+                        className='text-[#DB4444] font-medium text-[1rem] disabled:text-[rgba(128,128,128,0.4)] underline'>
+                        Resend code
+                    </button>
+                ) : <p className='text-[#DB4444] font-medium text-[1rem]'>Resend in</p>
+            }
+            {time && <span className='font-medium' ref={countdownDisplay}></span>}
         </div>
     );
 }

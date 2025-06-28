@@ -62,7 +62,7 @@ function ProdutcDetails() {
       <div className="grid grid-cols-12 gap-4">
         <div className='col-span-3 space-y-4'>
           {product?.product_colors.map((color, index) => (
-            <div className='bg-[#F5F5F5] h-[138px] w-full rounded-xl'>
+            <div className='bg-[#F5F5F5] h-[138px] w-full rounded-xl' key={index}>
               <img
                 key={index}
                 src={color.image}

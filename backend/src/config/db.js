@@ -1,24 +1,25 @@
-import {Sequelize} from 'sequelize';
-import dotenv from 'dotenv';
+require('dotenv').config()
 
-dotenv.config();
-
-const sequelize = new Sequelize(
-    process.env.MYSQL_DB,
-    process.env.MYSQL_USER,
-    process.env.MYSQL_PASSWORD,
-    {
-        host: process.env.MYSQL_HOST,
-        dialect: 'mysql',
-        logging: false, // Disable logging queries in the console
-    }
-);
-
-try {
-    await sequelize.authenticate();
-    console.log('Mysql Connected');
-} catch (err) {
-    console.error('Mysql Connection Error:', err);
+module.exports = {
+  "development": {
+    "username": process.env.DB_USERNAME,
+    "password": process.env.DB_PASSWORD || null,
+    "database": process.env.DB_NAME,
+    "host": process.env.DB_HOST,
+    "dialect": process.env.DB_DIALECT || 'mysql'
+  },
+  "test": {
+    "username": process.env.DB_USERNAME,
+    "password": process.env.DB_PASSWORD || null,
+    "database": process.env.DB_NAME,
+    "host": process.env.DB_HOST,
+    "dialect": process.env.DB_DIALECT || 'mysql'
+  },
+  "production": {
+    "username": process.env.DB_USERNAME,
+    "password": process.env.DB_PASSWORD || null,
+    "database": process.env.DB_NAME,
+    "host": process.env.DB_HOST,
+    "dialect": process.env.DB_DIALECT || 'mysql'
+  }
 }
-
-export default sequelize;
