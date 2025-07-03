@@ -29,3 +29,14 @@ export function validatePassword(password,confirmation_password) {
         return true
     }
 }
+
+export function validateNumber(number) {
+    console.log(typeof number)
+    if(!number) {
+        return 'This field is required';
+    } else if (typeof number !== 'number') {
+        return "This field must be an integer";
+    } else {
+        return true
+    }
+}

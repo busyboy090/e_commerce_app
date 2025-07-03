@@ -4,6 +4,7 @@ module.exports = (sequelize, DataTypes) => {
   class Permission extends Model {
     static associate(models) {
       Permission.hasMany(models.LevelPermission, { foreignKey: 'permission_id', as: 'levels'});
+      Permission.hasMany(models.UserPermission, { foreignKey: 'permission_id', as: 'user'})
     }
   }
 

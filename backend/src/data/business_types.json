@@ -1,0 +1,65 @@
+{
+    "business_types": [
+        {
+          "id": 1,
+          "name": "Retail",
+          "value": "retail",
+          "description": "Sells products directly to consumers"
+        },
+        {
+          "id": 2,
+          "name": "Wholesale",
+          "value": "wholesale",
+          "description": "Sells products in bulk to other businesses"
+        },
+        {
+          "id": 3,
+          "name": "Manufacturer",
+          "value": "manufacturer",
+          "description": "Produces goods and sells directly or via resellers"
+        },
+        {
+          "id": 4,
+          "name": "Dropshipper",
+          "value": "dropshipper",
+          "description": "Sells products without holding inventory"
+        },
+        {
+          "id": 5,
+          "name": "Service Provider",
+          "value": "service_provider",
+          "description": "Offers digital or physical services"
+        },
+        {
+          "id": 6,
+          "name": "Franchisee",
+          "value": "franchisee",
+          "description": "Operates under a larger brand or franchise"
+        },
+        {
+          "id": 7,
+          "name": "Distributor",
+          "value": "distributor",
+          "description": "Distributes products to retailers or resellers"
+        },
+        {
+          "id": 8,
+          "name": "Online Seller",
+          "value": "online_seller",
+          "description": "Sells through online platforms only"
+        },
+        {
+          "id": 9,
+          "name": "Handmade / Artisan",
+          "value": "artisan",
+          "description": "Creates and sells handmade or custom products"
+        },
+        {
+          "id": 10,
+          "name": "Aggregator",
+          "value": "aggregator",
+          "description": "Groups products from multiple sellers under one brand"
+        }
+      ]
+      
+}

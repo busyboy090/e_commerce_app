@@ -3,8 +3,9 @@ const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
     class ProductImage extends Model {
         static associate (models) {
-            ProductImage.belongsTo(models.Product, { foreignKey: 'product_id', as: 'productImages'});
-            ProductImage.belongsTo(models.Color, { foreignKey: 'color_id', as: 'colors'})
+            ProductImage.belongsTo(models.Product, { foreignKey: 'product_id', as: 'product'});
+            ProductImage.belongsTo(models.Color, { foreignKey: 'color_id', as: 'color'})
+            ProductImage.belongsTo(models.ProductVariant, { foreignKey: 'product_image_id', as: 'productVariant'})
         }
     }
 
@@ -27,8 +28,19 @@ module.exports = (sequelize, DataTypes) => {
                 onDelete: 'CASCADE',
                 onUpdate: 'CASCADE'
             },
+
+            color_id: {
+                type: DataTypes.INTEGER,
+                allowNull: false,
+                references: {
+                    model: 'colors',
+                    key: 'color_id'
+                },
+                onDelete: 'CASCADE',
+                onUpdate: 'CASCADE'
+            },
         
-            product_image: {
+            image: {
                 type: DataTypes.STRING,
                 allowNull: false,
             },

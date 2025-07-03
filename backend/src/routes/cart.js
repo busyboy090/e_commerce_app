@@ -5,11 +5,11 @@ const {
   deleteCartProductFromCart,
   addProductToCart,
 } = require("../controllers/cart.controller.js");
-const { authMiddleware } = require("../middlewares/auth.middleware.js");
+const authMiddleware = require("../middlewares/auth.middleware.js");
 
 const router = express.Router();
 
-router.use(authMiddleware);
+router.use(authMiddleware.authMiddleware);
 
 router.post("/", addProductToCart);
 router.get("/", getCart);

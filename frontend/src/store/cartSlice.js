@@ -132,10 +132,10 @@ const cartSlice = createSlice({
       })
       .addCase(fetchCartFromDatabase.fulfilled, (state, action) => {
         state.fetchCartFromDatabaseStatus = 'succeeded';
-        state.cartItems = action.payload.cartItems.map((item) => { 
+        state.cartItems = action.payload.map((item) => { 
           return { productId: item.product_id, quantity: item.quantity}
         });
-        state.products = action.payload.products.map((product) =>  product.products);
+        state.products = action.payload.map((product) =>  product.products);
       })
       .addCase(syncCartToDatabase.fulfilled, (state, action) => {
         state.cartItems = action.payload.cartItems.map((item) => { 

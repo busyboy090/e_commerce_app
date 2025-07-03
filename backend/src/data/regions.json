@@ -1,139 +1,26 @@
-{
-  "regions": [
-    {
-      "name": "North Africa",
-      "code": "NAF",
-      "continent_id": 1
-    },
-    {
-      "name": "West Africa",
-      "code": "WAF",
-      "continent_id": 1
-    },
-    {
-      "name": "East Africa",
-      "code": "EAF",
-      "continent_id": 1
-    },
-    {
-      "name": "Central Africa",
-      "code": "CAF",
-      "continent_id": 1
-    },
-    {
-      "name": "Southern Africa",
-      "code": "SAF",
-      "continent_id": 1
-    },
-    {
-      "name": "East Asia",
-      "code": "EAS",
-      "continent_id": 3
-    },
-    {
-      "name": "South Asia",
-      "code": "SAS",
-      "continent_id": 3
-    },
-    {
-      "name": "Southeast Asia",
-      "code": "SEAS",
-      "continent_id": 3
-    },
-    {
-      "name": "Central Asia",
-      "code": "CAS",
-      "continent_id": 3
-    },
-    {
-      "name": "Western Asia",
-      "code": "WAS",
-      "continent_id": 3
-    },
-    {
-      "name": "Northern Europe",
-      "code": "NEU",
-      "continent_id": 5
-    },
-    {
-      "name": "Western Europe",
-      "code": "WEU",
-      "continent_id": 5
-    },
-    {
-      "name": "Southern Europe",
-      "code": "SEU",
-      "continent_id": 5
-    },
-    {
-      "name": "Eastern Europe",
-      "code": "EEU",
-      "continent_id": 5
-    },
-    {
-      "name": "Northern America",
-      "code": "NAM",
-      "continent_id": 6
-    },
-    {
-      "name": "Central America",
-      "code": "CAM",
-      "continent_id": 6
-    },
-    {
-      "name": "Caribbean",
-      "code": "CAR",
-      "continent_id": 6
-    },
-    {
-      "name": "Andean States",
-      "code": "AND",
-      "continent_id": 7
-    },
-    {
-      "name": "Southern Cone",
-      "code": "SOC",
-      "continent_id": 7
-    },
-    {
-      "name": "Brazil",
-      "code": "BRA",
-      "continent_id": 7
-    },
-    {
-      "name": "Australia and New Zealand",
-      "code": "ANZ",
-      "continent_id": 4
-    },
-    {
-      "name": "Melanesia",
-      "code": "MEL",
-      "continent_id": 4
-    },
-    {
-      "name": "Micronesia",
-      "code": "MIC",
-      "continent_id": 4
-    },
-    {
-      "name": "Polynesia",
-      "code": "POL",
-      "continent_id": 4
-    },
-    {
-      "name": "Antarctic Peninsula",
-      "code": "ANTP",
-      "continent_id": 2
-    },
-    {
-      "name": "East Antarctica",
-      "code": "EANT",
-      "continent_id": 2
-    },
-    {
-      "name": "West Antarctica",
-      "code": "WANT",
-      "continent_id": 2
-    }
-  ]
-}
+[
+  {
+    "region_id": 1,
+    "name": "Asia"
+  },
+  {
+    "region_id": 2,
+    "name": "Europe"
+  },
+  {
+    "region_id": 3,
+    "name": "Africa"
+  },
+  {
+    "region_id": 4,
+    "name": "Oceania"
+  },
+  {
+    "region_id": 5,
+    "name": "Americas"
+  },
+  {
+    "region_id": 6,
+    "name": "Antarctic"
+  }
+]

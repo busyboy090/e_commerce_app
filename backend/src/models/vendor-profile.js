@@ -8,7 +8,8 @@ module.exports = (sequelize, DataTypes) => {
             VendorProfile.belongsTo(models.User, { foreignKey: 'verified_by', as: 'verifiedBy'});
             VendorProfile.belongsTo(models.Country, {foreignKey: 'country_id', as: 'country'});
             VendorProfile.belongsTo(models.State, {foreignKey: 'state_id', as: 'state'});
-            VendorProfile.belongsTo(models.City, {foreignKey: 'city_id', as: 'city'});   
+            VendorProfile.belongsTo(models.City, {foreignKey: 'city_id', as: 'city'});
+            VendorProfile.belongsTo(models.BusinessType, { foreignKey: 'business_type_id', as: 'businessType'})
         }
     }
 
@@ -30,9 +31,20 @@ module.exports = (sequelize, DataTypes) => {
             onUpdate: "CASCADE",
         },
 
-        store_name: {
+        business_name: {
             type: DataTypes.STRING,
             allowNull: false
+        },
+
+        business_type_id: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+            references: {
+              model: 'business_types',
+              key: 'business_type_id'
+            },
+            onDelete: 'CASCADE',
+            onDelete: 'CASCADE'
         },
 
         is_verified: {

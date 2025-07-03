@@ -7,7 +7,8 @@ module.exports = (sequelize, DataTypes) => {
             Country.hasMany(models.VendorBankDetails, {foreignKey: 'country_id', as: 'vendor_bank_details'});
             Country.hasMany(models.State, { foreignKey: 'country_id', as: 'states'});
             Country.belongsTo(models.Currency, { foreignKey: 'currency_id', as: 'currency'});
-            Country.belongsTo(models.Region, { foreignKey: 'region_id', as: 'region'})
+            Country.belongsTo(models.SubRegion, { foreignKey: 'sub_region_id', as: 'subRegion'});
+            Country.hasMany(models.Address, { foreignKey: 'country_id', as: 'addresses'});
         }
     }
 
@@ -33,23 +34,23 @@ module.exports = (sequelize, DataTypes) => {
 
             currency_id: {
                 type: DataTypes.INTEGER,
-                allowNull: false,
+                allowNull: true,
                 references: {
                   model: 'currencies',
                   key: 'currency_id'
                 },
-                onDelete: 'CASCADE',
+                onDelete: 'SET NULL',
                 onUpdate: 'CASCADE'
             },
 
-            region_id: {
+            sub_region_id: {
                 type: DataTypes.INTEGER,
-                allowNull: false,
+                allowNull: true,
                 references: {
-                  model: 'regions',
-                  key: 'region_id'
+                  model: 'sub_regions',
+                  key: 'sub_region_id'
                 },
-                onDelete: 'CASCADE',
+                onDelete: 'SET NULL',
                 onUpdate: 'CASCADE'
             },
 

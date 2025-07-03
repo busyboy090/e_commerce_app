@@ -5,7 +5,7 @@ module.exports = (sequelize, DataTypes) => {
         static associate(models) {
             // Define associations here if needed
             Size.belongsTo(models.Type, { foreignKey: 'type_id', as: 'types' });
-            Size.belongsTo(models.SizeStandard, { foreignKey: 'size_standard_is', as: 'sizeStandards' });
+            Size.belongsTo(models.SizeStandard, { foreignKey: 'size_standard_id', as: 'sizeStandard' });
         }
     }
 

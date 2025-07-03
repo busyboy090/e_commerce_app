@@ -18,12 +18,12 @@ module.exports = {
 
       country_id: {
         type: Sequelize.INTEGER,
-        allowNull: false,
+        allowNull: true,
         references: {
           model: 'countries',
           key: 'country_id'
         },
-        onUpdate: 'CASCADE',
+        onUpdate: 'SET NULL',
         onDelete: 'CASCADE'
       },
 

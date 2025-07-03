@@ -6,6 +6,7 @@ const adminRoutes = require('./admin.js');
 const vendorRoutes = require('./vendor.js');
 const customerRoutes = require('./customer.js');
 const userRoutes = require('./user.js');
+const countryRoutes = require('./country.js');
 
 const router = express.Router();
 
@@ -15,6 +16,7 @@ router.use('/products', productRoutes);
 router.use('/cart', cartRoutes);
 router.use('/customer', customerRoutes);
 router.use('/vendor', vendorRoutes);
-router.use('/admin', adminRoutes)
+router.use('/admin', adminRoutes);
+router.use('/country', countryRoutes);
 
 module.exports = router;

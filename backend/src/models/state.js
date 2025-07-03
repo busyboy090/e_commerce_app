@@ -7,6 +7,7 @@ module.exports = (sequelize,DataTypes) => {
             State.hasMany(models.City, { foreignKey: 'state_id', as: 'cities'});
             State.hasMany(models.CustomerProfile, { foreignKey: 'state_id', as: 'customerState'});
             State.hasMany(models.VendorProfile, { foreignKey: 'state_id', as: 'vendorState'});
+            State.hasMany(models.Address, { foreignKey: 'state_id', as: 'addresses'});
         }
     }
 
@@ -27,12 +28,12 @@ module.exports = (sequelize,DataTypes) => {
 
             country_id: {
                 type: DataTypes.INTEGER,
-                allowNull: false,
+                allowNull: true,
                 references: {
                     model: 'countries',
                     key: 'country_id'
                 },
-                onDelete: 'CASCADE',
+                onDelete: 'SET NULL',
                 onUpdate: 'CASCADE'
             }
         },

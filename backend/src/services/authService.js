@@ -13,6 +13,8 @@ const AppError = require("../utils/appError.js");
 const bcrypt = require("bcryptjs");
 const jwt = require("../utils/jwt.js");
 const userService = require("./userService.js");
+const { Op } = require('sequelize');
+const mailService = require('./emailService.js')
 
 const registerUser = async (data, t, role) => {
   const { email, password, phone, first_name, last_name, country_id } = data;
@@ -20,9 +22,7 @@ const registerUser = async (data, t, role) => {
   // Check if the user already exists
   let user = await User.findOne(
     {
-      where: {
-        [Op.or]: [{ phone }, { email }],
-      },
+      where: { email }
     },
     { transaction: t }
   );
@@ -52,7 +52,7 @@ const registerUser = async (data, t, role) => {
   if (!user.country_id) missingFields.push("country");
   if (!user.phone) missingFields.push("phone");
 
-  const emailSent = await sendEmailVerificationMail(
+  const emailSent = await mailService.sendEmailVerificationMail(
     email,
     first_name,
     user.user_id,
@@ -235,22 +235,28 @@ const completeAdminProfile = async (data, t, created_by) => {
   return user;
 };
 
-const loginUser = async ({ email, password },request) => {
+
+const loginUser = async ({ email, password }, request) => {
   const user = await User.findOne({ where: { email, status: "active" } });
 
   if (!user) throw new AppError("Invalid credentials", 400);
 
+  // Check if Google login only
   if (user.googleLogin === true && user.password === null)
-    throw new AppError("Login using google.");
+    throw new AppError("Please log in using your Google account.", 400);
 
   const isMatch = await bcrypt.compare(password, user.password);
-
   if (!isMatch) throw new AppError("Invalid credentials", 400);
 
-  let payload;
+  const payload = {
+    id: user.user_id,
+    role: user.role
+  };
 
+  const missingFields = [];
+
+  // Admin profile check
   if (user.role === "admin") {
-
     const adminProfile = await AdminProfile.findOne({
       where: { user_id: user.user_id },
       include: {
@@ -263,40 +269,62 @@ const loginUser = async ({ email, password },request) => {
           attributes: ["name"],
           include: {
             model: LevelPermission,
-            as: "permissions",
-          },
-        },
-      },
+            as: "permissions"
+          }
+        }
+      }
     });
 
-    payload = {
-      id: user.user_id,
-      role: user.role,
-    };
-
-  } else {
-    payload = {
-      id: user.user_id,
-      role: user.role,
-    };
+    if (!adminProfile) {
+      missingFields.push("adminProfile");
+      // throw new AppError("Admin profile is missing. Contact support.", 400);
+    }
   }
 
-  const now  = new Date()
-  const next7days = new Date(now);
-  next7days.setDate(next7days.getDate() + 7);
+  // Vendor profile check
+  else if (user.role === "vendor") {
+    const vendorProfile = await VendorProfile.findOne({
+      where: { user_id: user.user_id }
+    });
 
-  // Create session
-  const session = await Session.create(
-    {
-      user_id: user.user_id,
-      user_agent: request.user_agent,
-      ip_address: request.ip,
-      device: request.device,
-      location: request.location,
-      last_active_at: new Date(),
-      deleteAt: next7days
+    if (!vendorProfile) {
+      missingFields.push("vendorProfile");
+      // throw new AppError("Vendor profile is missing. Complete onboarding.", 400);
     }
-  )
+  }
+
+  // Customer profile check
+  else if (user.role === "customer") {
+    const customerProfile = await CustomerProfile.findOne({
+      where: { user_id: user.user_id }
+    });
+
+    if (!customerProfile) {
+      missingFields.push("customerProfile");
+      // throw new AppError("Customer profile is missing.", 400);
+    }
+  }
+
+
+  if(!user.country_id) {
+    missingFields.push('country');
+  }
+
+  // Optional: Create session
+  const now = new Date();
+  const next7days = new Date(now);
+  next7days.setDate(now.getDate() + 7);
+
+  // Uncomment if using session table
+  // const session = await Session.create({
+  //   user_id: user.user_id,
+  //   user_agent: request.user_agent,
+  //   ip_address: request.ip,
+  //   device: request.device,
+  //   location: request.location,
+  //   last_active_at: now,
+  //   deleteAt: next7days
+  // });
 
   const refresh_token = jwt.generateRefreshToken(payload);
   const access_token = jwt.generateAccessToken(payload);
@@ -304,7 +332,8 @@ const loginUser = async ({ email, password },request) => {
   return {
     access_token,
     refresh_token,
-    session_id: session.session_id
+    // session_id: session.session_id,
+    missingFields, // helpful for frontend redirect
   };
 };
 

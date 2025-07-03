@@ -1,0 +1,112 @@
+[
+  {
+    "sub_region_id": 1,
+    "name": "Southern Asia",
+    "region_id": 1
+  },
+  {
+    "sub_region_id": 2,
+    "name": "Northern Europe",
+    "region_id": 2
+  },
+  {
+    "sub_region_id": 3,
+    "name": "Southern Europe",
+    "region_id": 1
+  },
+  {
+    "sub_region_id": 4,
+    "name": "Northern Africa",
+    "region_id": 3
+  },
+  {
+    "sub_region_id": 5,
+    "name": "Polynesia",
+    "region_id": 4
+  },
+  {
+    "sub_region_id": 6,
+    "name": "Middle Africa",
+    "region_id": 1
+  },
+  {
+    "sub_region_id": 7,
+    "name": "Caribbean",
+    "region_id": 5
+  },
+  {
+    "sub_region_id": 8,
+    "name": "South America",
+    "region_id": 1
+  },
+  {
+    "sub_region_id": 9,
+    "name": "Western Asia",
+    "region_id": 1
+  },
+  {
+    "sub_region_id": 10,
+    "name": "Australia and New Zealand",
+    "region_id": 1
+  },
+  {
+    "sub_region_id": 11,
+    "name": "Western Europe",
+    "region_id": 1
+  },
+  {
+    "sub_region_id": 12,
+    "name": "Eastern Europe",
+    "region_id": 1
+  },
+  {
+    "sub_region_id": 13,
+    "name": "Central America",
+    "region_id": 1
+  },
+  {
+    "sub_region_id": 14,
+    "name": "Western Africa",
+    "region_id": 1
+  },
+  {
+    "sub_region_id": 15,
+    "name": "Northern America",
+    "region_id": 1
+  },
+  {
+    "sub_region_id": 16,
+    "name": "Southern Africa",
+    "region_id": 1
+  },
+  {
+    "sub_region_id": 17,
+    "name": "Eastern Africa",
+    "region_id": 1
+  },
+  {
+    "sub_region_id": 18,
+    "name": "South-Eastern Asia",
+    "region_id": 1
+  },
+  {
+    "sub_region_id": 19,
+    "name": "Eastern Asia",
+    "region_id": 1
+  },
+  {
+    "sub_region_id": 20,
+    "name": "Melanesia",
+    "region_id": 1
+  },
+  {
+    "sub_region_id": 21,
+    "name": "Micronesia",
+    "region_id": 1
+  },
+  {
+    "sub_region_id": 22,
+    "name": "Central Asia",
+    "region_id": 1
+  }
+]

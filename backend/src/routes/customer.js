@@ -8,7 +8,6 @@ const router = express.Router();
 
 router.post(
   "/register",
-  validationMiddleware.validateRegisterCustomer,
   authController.registerCustomer
 );
 

@@ -19,4 +19,8 @@ router.use(authMiddleware.authMiddleware);
 
 router.get("/me", userController.getUserDetails);
 
+router.get("/address", userController.getUserAddresses);
+
+router.post("/address/create", userController.createNewAddress);
+
 module.exports = router;

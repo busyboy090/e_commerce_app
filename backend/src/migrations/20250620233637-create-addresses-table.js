@@ -45,7 +45,12 @@ module.exports = {
         unique: true
       },
 
-      default: {
+      additional_information: {
+        type: Sequelize.TEXT,
+        allowNull: true
+      },
+
+      is_default: {
         type: Sequelize.BOOLEAN,
         allowNull: false,
         defaultValue: false, 
@@ -62,6 +67,17 @@ module.exports = {
         references: {
           model: 'countries',
           key: 'country_id'
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE'
+      },
+
+      state_id: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: 'states',
+          key: 'state_id'
         },
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE'

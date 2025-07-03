@@ -1,4 +1,4 @@
-import { login, refreshToken, logout } from "../store/authSlice.js";
+import { login, refreshToken, logout, getUserInformations } from "../store/authSlice.js";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchCartFromDatabase, syncCartToDatabase, clearCart } from "../store/cartSlice.js";
 
@@ -29,7 +29,8 @@ function useAuth() {
     ...authState,
     login: loginUser,
     refreshToken: refreshUserToken,
-    logout: logoutUser
+    logout: logoutUser,
+    getUserDetails: () => dispatch(getUserInformations())
   };
 }
 

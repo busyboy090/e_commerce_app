@@ -1,34 +1,13 @@
-import { useEffect, useLayoutEffect, useState } from 'react'
-import Loading from './components/Loading.jsx';
-import { BrowserRouter as Router, Route, Routes} from 'react-router-dom';
-import Home from './components/home/Home';
-import Checkout from './components/checkout/Checkout';
-// import About from './components/about/About'
-// import Contact from './components/contact/Contact'
-import NotFound from './components/NotFound'
-import Login from './components/auth/Login'
-import Register from './components/auth/Register';
-import Cart from './components/cart/Cart.jsx';
-// import Dashboard from './components/dashboard/Dashboard'
-// import Admin from './components/admin/Admin'
-// import User from './components/user/User';
-import Wishlist from './components/wishlist/Wishlist.jsx';
-import Layout from './components/Layout';
-import Account from './components/account/Account';
-import Profile from './components/account/Profile';
-import Address from './components/account/address-book/Address';
-import AddNewAddress from './components/account/address-book/AddNewAddress';
-import EditAddress from './components/account/address-book/EditAddress';
-import ProtectedRoute from './components/auth/ProtectedRoute';
-import ForgetPassword from './components/auth/forgot-password/ForgetPassword';
+import { useEffect, useLayoutEffect, useState, Suspense } from 'react'
 import useAuth from './hooks/useAuth.jsx';
 import api from './api/axios.js';
 import { useCart } from './hooks/useCart.jsx';
-import ProdutcDetails from './components/productdetails/ProdutcDetails.jsx';
+import AppRoutes from './routes/AppRoutes.jsx';
+import Loading from './components/ui/Loading';  
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
-  const { refreshToken, access_token, login, logout, isAuthenticated} = useAuth();
+  const { refreshToken, access_token, getUserDetails, login, logout, isAuthenticated} = useAuth();
   const { cartItems, syncCartToDatabase, fetchCartFromDatabase, products } = useCart();
 
   // Refresh token on app load
@@ -94,6 +73,12 @@ function App() {
     }
   }, [isAuthenticated, cartItems.length])
 
+  useEffect(() => {
+    if(isAuthenticated) {
+      getUserDetails();
+    }
+  },[access_token])
+
   if(isLoading) {
     return (
       <Loading />
@@ -102,41 +87,7 @@ function App() {
 
   return (
     <>
-      <Router>
-        <Routes>
-          {/* layout for all routes */}
-          <Route path='/' element={<Layout />}>
-
-            <Route index element={<Home />} />
-            <Route path='register' element={<Register />}></Route>
-            <Route path='login' element={<Login />} />
-            <Route path='wishlist' element={<Wishlist />} />
-            <Route path='cart' element={<Cart />}></Route>
-            <Route path='forgot-password' element={<ForgetPassword />}></Route>
-            <Route path='product/:id' element={<ProdutcDetails />} />
-
-            {/* Protected routes */}
-            <Route element={<ProtectedRoute />}>
-              <Route path='checkout' element={<Checkout />}></Route>
-              <Route path='account/manage-account/profile' element={<Account component={<Profile />} />}></Route>
-              <Route path='account/manage-account/address-book' element={<Account component={<Address />} />}></Route>
-              <Route path='account/manage-account/address-book/add-address' element={<Account component={<Address component={<AddNewAddress/>} />} />}></Route>
-              <Route path='account/manage-account/address-book/edit-address/:id' element={<Account component={<Address component={<EditAddress/>} />} />}></Route>
-            </Route>
-
-           {/* Missing Routes */}
-           <Route path='*' element={<NotFound />} />
-          </Route>
-          {/* <Route path='/about' element={<About />} />
-          <Route path='/contact' element={<Contact />} />
-          
-          <Route path='/register' element={<Register />} />
-          <Route path='/dashboard' element={<Dashboard />} />
-          <Route path='/profile' element={<Profile />} />
-          <Route path='/admin' element={<Admin />} />
-          <Route path='/user' element={<User />} /> */}
-        </Routes>
-      </Router>
+      <AppRoutes />
     </>
   )
 }

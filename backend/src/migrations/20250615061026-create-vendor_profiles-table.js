@@ -22,9 +22,21 @@ module.exports = {
         onUpdate: "CASCADE",
       },
 
-      store_name: {
+      business_name: {
         type: Sequelize.STRING,
         allowNull: false
+      },
+
+      business_type_id: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: 'business_types',
+          key: 'business_type_id'
+        },
+
+        onDelete: 'CASCADE',
+        onDelete: 'CASCADE'
       },
 
       is_verified: {

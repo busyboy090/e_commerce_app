@@ -3,8 +3,7 @@ const { Model } = require('sequelize');
 module.exports = (sequelize,DataTypes) => {
     class Region extends Model {
         static associate (models) {
-            Region.belongsTo(models.Continent, { foreignKey: 'continent_id', as: 'continent'});
-            Region.hasMany(models.Country, { foreignKey: 'region_id', as: 'countries'});
+            Region.hasMany(models.SubRegion, { foreignKey: 'region_id', as: 'subRegions'});
         }
     }
 
@@ -12,21 +11,16 @@ module.exports = (sequelize,DataTypes) => {
     Region.init(
         {
             region_id: {
-                type:  DataTypes.INTEGER,
+                type: DataTypes.INTEGER,
                 allowNull: false,
-                autoIncrement: true,
-                primaryKey: true
+                primaryKey: true,
+                autoIncrement: true
             },
 
-            name : {
-                type: DataTypes.STRING,
+            name: {
+                type:  DataTypes.STRING,
                 allowNull: false,
                 unique: true
-            },
-
-            code : {
-                type: DataTypes.STRING,
-                allowNull: false
             }
         },
         {
@@ -36,7 +30,6 @@ module.exports = (sequelize,DataTypes) => {
             timestamps: true
         }
     )
-
 
     return Region;
 }

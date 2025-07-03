@@ -1,7 +1,5 @@
 'use strict';
 
-const { all } = require('../routes');
-
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up (queryInterface, Sequelize) {
@@ -25,7 +23,28 @@ module.exports = {
       },
 
       device_id: {
-        type: Sequelize.STRING,
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: 'user_devices',
+          key: 'device_id'
+        },
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE'
+      },
+
+      device_type: {
+        type: Sequelize.ENUM('mobile','desktop'),
+        allowNull: false
+      },
+
+      os: {
+        type: Sequelize.STRING(50),
+        allowNull: false
+      },
+
+      browser: {
+        type: Sequelize.STRING(50),
         allowNull: false
       },
 
@@ -35,16 +54,6 @@ module.exports = {
       },
 
       ip_address: {
-        type: Sequelize.STRING,
-        allowNull: false
-      },
-
-      location: {
-        type: Sequelize.STRING,
-        allowNull: false
-      },
-
-      device: {
         type: Sequelize.STRING,
         allowNull: false
       },

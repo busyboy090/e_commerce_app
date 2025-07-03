@@ -8,7 +8,7 @@ module.exports = (sequelize, DataTypes) => {
       User.hasMany(models.Product, { foreignKey: "vendor_id", as: "vendor" });
       User.hasMany(models.Product, {
         foreignKey: "approved_by",
-        as: "productApproval",
+        as: "productApprover",
       });
       User.hasOne(models.VendorProfile, {
         foreignKey: "user_id",
@@ -27,6 +27,7 @@ module.exports = (sequelize, DataTypes) => {
       User.hasMany(models.VendorBusinessType, { foreignKey: 'user_id', as: 'vendorBusinessTypes'});
       User.hasMany(models.VendorBusinessType, { foreignKey: 'approved_by', as: 'approvedBy'});
       User.hasMany(models.Session, {  foreignKey: 'user_id', as: 'sessions'})
+      User.hasMany(models.UserPermission, { foreignKey: 'user_id', as: 'permissions'})
     }
   }
 

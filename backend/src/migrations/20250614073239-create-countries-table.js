@@ -24,23 +24,23 @@ module.exports = {
 
       currency_id: {
         type: Sequelize.INTEGER,
-        allowNull: false,
+        allowNull: true,
         references: {
           model: 'currencies',
           key: 'currency_id'
         },
-        onDelete: 'CASCADE',
+        onDelete: 'SET NULL',
         onUpdate: 'CASCADE'
       },
 
-      region_id: {
+      sub_region_id: {
         type: Sequelize.INTEGER,
-        allowNull: false,
+        allowNull: true,
         references: {
-          model: 'regions',
-          key: 'region_id'
+          model: 'sub_regions',
+          key: 'sub_region_id'
         },
-        onDelete: 'CASCADE',
+        onDelete: 'SET NULL',
         onUpdate: 'CASCADE'
       },
 

@@ -5,6 +5,7 @@ module.exports = (sequelize, DataTypes) => {
     class City extends Model {
         static associate (models) {
             City.belongsTo(models.State, { foreignKey: 'state_id', as: 'state'});
+            City.hasMany(models.Address, { foreignKey: 'city_id', as: 'addresses'})
         }
     }
 
@@ -20,17 +21,16 @@ module.exports = (sequelize, DataTypes) => {
             name: {
                 type: DataTypes.STRING,
                 allowNull: false,
-                unique: true
             },
         
             country_id: {
                 type: DataTypes.INTEGER,
-                allowNull: false,
+                allowNull: true,
                 references: {
                   model: 'countries',
                   key: 'country_id'
                 },
-                onUpdate: 'CASCADE',
+                onUpdate: 'SET NULL',
                 onDelete: 'CASCADE'
             },
         },

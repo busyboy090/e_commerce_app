@@ -214,8 +214,9 @@ const loginUser = async (req, res, next) => {
   const userAgent = req.headers['user-agent'];
   const ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
   const device_id = req.headers['device_id'];
-  const { city, region, country_name} = await getLocationFromIp(ip);
+  // const { city, region, country_name} = await getLocationFromIp(ip);
 
+  console.log(req.useragent);
   // if(!device_id) {
   //   return res.status(400).json({ 
   //     error: true,
@@ -223,12 +224,13 @@ const loginUser = async (req, res, next) => {
   //   });
   // }
 
-  const request = {
-    user_agent: userAgent,
-    ip,
-    device_id,
-    location: `${city} ${region} ${country_name}`
-  }
+  // const request = {
+  //   user_agent: userAgent,
+  //   ip,
+  //   device_id,
+  //   location: `${city} ${region} ${country_name}`,
+  //   device: ''
+  // }
 
 
   if (!email || !password) {

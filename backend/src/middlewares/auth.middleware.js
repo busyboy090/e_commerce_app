@@ -2,18 +2,22 @@ const { verifyAccessToken } = require('../utils/jwt.js');
 
 const authMiddleware = (req, res, next) => {
   let token = req?.headers['authorization'];
+  const refreshToken = req.signedCookies.refresh_token;
+  const session_id =  req?.signedCookies?.session_id;
   
-  if (!token) {
-    return res.status(401).json({ msg: 'No token, authorization denied' });
+  if (!token || !refreshToken || !session_id) {
+    return res.status(401).json({ msg: 'Authorization denied' });
   }
 
   try {
     token = token.split(' ')[1]
     const decoded = verifyAccessToken(token);
+    
+    if(decoded) {
+      req.user = decoded;
 
-    req.user = decoded;
-
-    next();
+      next()
+    }
     
   } catch (err) {
     console.log(err)

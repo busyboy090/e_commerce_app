@@ -14,17 +14,16 @@ module.exports = {
       name: {
         type: Sequelize.STRING,
         allowNull: false,
-        unique: true
       },
 
       state_id: {
         type: Sequelize.INTEGER,
-        allowNull: false,
+        allowNull: true,
         references: {
           model: 'states',
           key: 'state_id'
         },
-        onUpdate: 'CASCADE',
+        onUpdate: 'SET NULL',
         onDelete: 'CASCADE'
       },
 

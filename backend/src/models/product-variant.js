@@ -7,6 +7,8 @@ module.exports = (sequelize, DataTypes) => {
       ProductVariant.belongsTo(models.Product, { foreignKey: 'product_id', as: 'product' });
       ProductVariant.belongsTo(models.Color, { foreignKey: 'color_id', as: 'color' });
       ProductVariant.belongsTo(models.Size, { foreignKey: 'size_id', as: 'size' });
+      ProductVariant.hasMany(models.Cart, { foreignKey: 'variant_id', as: 'carts' });
+      ProductVariant.hasMany(models.ProductImage, { foreignKey: 'product_image_id', as: 'image'});
     }
   }
 
@@ -77,10 +79,16 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false
       },
 
-      image: {
-        type: DataTypes.STRING,
+      image_id: {
+        type: DataTypes.INTEGER,
         allowNull: true,
-      }
+        references: {
+          model: 'product_images',
+          key: 'product_image_id'
+        },
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE'
+      },
     },
     {
       sequelize,

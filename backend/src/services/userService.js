@@ -7,7 +7,12 @@ const {
   Country,
   Otp,
   Permission,
-  State
+  State,
+  BusinessType,
+  City,
+  Position,
+  Level,
+  Address,
 } = require("../models/index.js");
 const AppError = require("../utils/appError.js");
 const bcrypt = require("bcryptjs");
@@ -15,7 +20,8 @@ const { sendEmailVerificationMail } = require("./emailService.js");
 const { Op, where } = require("sequelize");
 const speakeasy = require("speakeasy");
 const otp = require("../utils/otp.js");
-const qrcode = require('qrcode');
+const qrcode = require("qrcode");
+const { Where } = require("sequelize/lib/utils");
 
 const getUser = async (id) => {
   const user = await User.findOne({
@@ -83,78 +89,109 @@ const getUser = async (id) => {
   return user;
 };
 
-const getUserDetails = async (id) => {
+const getUserDetails = async (user_id) => {
   const user = await User.findOne({
-    where: { user_id: id },
+    where: { user_id },
     attributes: [
       "email",
+      "first_name",
+      "last_name",
       "role",
-      "is_totp_enabled",
+      "is_2fa_enabled",
       "picture",
       "is_email_verified",
-    ],
-    include: [
-      {
-        model: AdminProfile,
-        as: "adminProfile",
-        attributes: ['approved'],
-        include: [
-          {
-            model: Department,
-            as: "department",
-            attributes: ["name"],
-          },
-          {
-            model: Position,
-            as: 'position',
-            attributes: ['title'],
-            include: {
-              model: Level,
-              as: 'level',
-              attributes: ['name']
-            }
-          }
-        ]
-      },
-      {
-        model: CustomerProfile,
-        as: "customerProfile",
-        attributes: ['phone','address','gender'],
-        include: [
-          {
-            model: State,
-            as: 'state',
-            attributes: ['name']
-          },
-          {
-            model: City,
-            as: 'city',
-            attributes: ['name']
-          }
-        ]
-      },
-      {
-        model: VendorProfile,
-        as: "vendorProfile",
-        attributes: [
-          "store_name",
-          "is_verified",
-          "address",
-          "phone",
-        ],
-        include: {
-          model: Country,
-          as: 'country',
-          attributes: ['name','code']
-        }
-      },
     ],
   });
 
   if (!user) throw new AppError("User not found", 404);
 
-  return user;
-}
+  let profile;
+
+  if (user.role === "admin") {
+    profile = await getAdminProfile(user_id);
+  } else if (user.role === "vendor") {
+    profile = await getVendorProfile(user_id);
+  } else {
+    profile = await getCustomerProfile(user_id);
+  }
+
+  return {
+    user,
+    profile,
+  };
+};
+
+const getAdminProfile = async (user_id) => {
+  const adminProfile = await AdminProfile.findOne({
+    where: { user_id },
+    attributes: ["approved"],
+    include: [
+      {
+        model: Department,
+        as: "department",
+        attributes: ["name"],
+      },
+      {
+        model: Position,
+        as: "position",
+        attributes: ["title"],
+        include: {
+          model: Level,
+          as: "level",
+          attributes: ["name"],
+        },
+      },
+    ],
+  });
+
+  if (!adminProfile) return null;
+
+  return adminProfile;
+};
+
+const getVendorProfile = async (user_id) => {
+  const vendorProfile = await VendorProfile.findOne({
+    where: { user_id },
+    attributes: ["business_name", "phone", "address", "is_verified"],
+    include: [
+      {
+        model: BusinessType,
+        key: "businessType",
+        attributes: ["name", "description"],
+      },
+      {
+        model: Country,
+        key: "country",
+        attributes: ["name", "code"],
+      },
+    ],
+  });
+
+  if (!vendorProfile) return null;
+};
+
+const getCustomerProfile = async (user_id) => {
+  const customerProfile = await CustomerProfile.findOne({
+    where: { user_id },
+    attributes: ["address", "gender", "phone"],
+    include: [
+      {
+        model: State,
+        as: "state",
+        attributes: ["name", "state_id"],
+      },
+      {
+        model: City,
+        key: "city",
+        attributes: ["name", "city_id"],
+      },
+    ],
+  });
+
+  if (!customerProfile) return null;
+
+  return customerProfile;
+};
 
 const getCustomerById = async (id) => {
   const user = await User.findOne({
@@ -378,18 +415,104 @@ const getGoogleUser = async (token) => {
     }
   );
 
-  if(!response.ok) {
-    throw new AppError('Error fetching Google user info',response.status);
+  if (!response.ok) {
+    throw new AppError("Error fetching Google user info", response.status);
   }
 
   const userInfo = await response.json();
 
-  if(!userInfo || !userInfo.email) {
-    throw new AppError('Invalid user info received from Google', 400);
+  if (!userInfo || !userInfo.email) {
+    throw new AppError("Invalid user info received from Google", 400);
   }
 
-  return userInfo
-}
+  return userInfo;
+};
+
+const getUserAddresses = async (user_id) => {
+  const addresses = await Address.findAll({
+    where: { user_id },
+    attributes: [
+      "first_name",
+      "last_name",
+      "phone_number",
+      "additional_phone_number",
+      "is_default",
+      "address",
+      "address_id",
+    ],
+    include: [
+      {
+        model: State,
+        as: "state",
+        attributes: ["name"],
+      },
+      {
+        model: Country,
+        as: "country",
+        attributes: ["name", "code"],
+      },
+      {
+        model: City,
+        as: "city",
+        attributes: ["name"],
+      },
+    ],
+  });
+
+  return addresses;
+};
+
+const createNewAddress = async (data, user_id, t) => {
+  const {
+    address,
+    is_default,
+    first_name,
+    last_name,
+    phone_number,
+    additional_phone_number,
+    country_id,
+    state_id,
+    city_id,
+  } = data;
+
+  let addressDetails;
+
+  // check for previous default address and set it to false
+  if (is_default === true) {
+    addressDetails = await Address.findOne(
+      {
+        where: {
+          user_id,
+          is_default: true,
+        },
+      },
+      { transaction: t }
+    );
+
+    if (addressDetails) {
+      addressDetails.is_default = false;
+      addressDetails.save();
+    }
+  }
+
+  addressDetails = await Address.create(
+    {
+      user_id,
+      first_name,
+      last_name,
+      phone_number,
+      additional_phone_number: additional_phone_number || null,
+      is_default,
+      address,
+      country_id,
+      state_id,
+      city_id,
+    },
+    { transaction: t }
+  );
+
+  return true;
+};
 
 module.exports = {
   findUser,
@@ -401,5 +524,7 @@ module.exports = {
   getAllCustomers,
   getAllVendors,
   getGoogleUser,
-  getUserDetails
+  getUserDetails,
+  getUserAddresses,
+  createNewAddress
 };

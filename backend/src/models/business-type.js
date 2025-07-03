@@ -3,7 +3,7 @@ const { Model } = require('sequelize');
 module.exports = (sequelize,DataTypes) => {
     class BusinessType extends Model {
         static associate (models) {
-            BusinessType.hasMany(models.VendorBusinessType,{ foreignKey: 'business_type_id', as: 'businessType'});
+            BusinessType.hasMany(models.VendorBusinessType,{ foreignKey: 'business_type_id', as: 'vendors'});
         }
     }
 
@@ -20,7 +20,12 @@ module.exports = (sequelize,DataTypes) => {
             name: {
                 type: DataTypes.STRING,
                 allowNull: false
-            }
+            },
+
+            description: {
+                type: DataTypes.STRING,
+                allowNull: false
+              },
         },
         {
             sequelize,

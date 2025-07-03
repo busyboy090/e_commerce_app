@@ -4,6 +4,7 @@ module.exports = (sequelize,DataTypes) => {
     class Session extends Model {
         static associate (models) {
             Session.belongsTo(models.User, { foreignKey: 'user_id', as: 'user'});
+            Session.belongsTo(models.UserDevice, { foreignKey: 'device_id', as: 'device'})
         }
     }
 
@@ -11,7 +12,7 @@ module.exports = (sequelize,DataTypes) => {
         {
             session_id: {
                 type: DataTypes.UUID,
-                defaultValue: Sequelize.UUIDV4,
+                defaultValue: DataTypes.UUIDV4,
                 allowNull: false,
                 primaryKey: true
             },
@@ -20,34 +21,30 @@ module.exports = (sequelize,DataTypes) => {
                 type:  DataTypes.INTEGER,
                 allowNull: false,
                 references: {
-                    model:  'users',
-                    key: 'user_id'
+                  model:  'users',
+                  key: 'user_id'
+                },
+                onDelete: 'CASCADE',
+                onUpdate: 'CASCADE'
+            },
+
+            device_id: {
+                type: DataTypes.INTEGER,
+                allowNull: false,
+                references: {
+                  model: 'user_devices',
+                  key: 'device_id'
                 },
                 onDelete: 'CASCADE',
                 onUpdate: 'CASCADE'
             },
         
+            browser: {
+                type: DataTypes.STRING(50),
+                allowNull: false
+            },
+        
             user_agent: {
-                type: DataTypes.STRING,
-                allowNull: false
-            },
-        
-            ip_address: {
-                type: DataTypes.STRING,
-                allowNull: false
-            },
-
-            device_id: {
-                type: DataTypes.STRING,
-                allowNull: false
-            },
-        
-            location: {
-                type: DataTypes.STRING,
-                allowNull: false
-            },
-        
-            device: {
                 type: DataTypes.STRING,
                 allowNull: false
             },
@@ -56,10 +53,10 @@ module.exports = (sequelize,DataTypes) => {
                 type: DataTypes.DATE,
                 allowNull: false
             },
-
+        
             deleteAt: {
+                allowNull: false,
                 type: DataTypes.DATE,
-                allowNull: false
             }
         },
         {
