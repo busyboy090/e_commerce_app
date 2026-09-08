@@ -1,0 +1,939 @@
+{
+  "products": [
+    {
+      "name": "Sleek Granite Shirt",
+      "description": "The Dejon Ball is the latest in a series of useless products from Kertzmann, Langosh and Gerlach",
+      "category_id": 2,
+      "brand_id": 8,
+      "type_id": 7,
+      "vendor_id": 1,
+      "is_approved": true,
+      "approved_by": 1,
+      "approved_at": "2025-07-06T13:43:00.298Z",
+      "productVariants": [
+        {
+          "color_id": 17,
+          "size_id": 9,
+          "price": "472.95",
+          "stock": 24,
+          "sku": "coliseum cow",
+          "disount_price": null,
+          "discount_percent": null,
+          "image": "https://picsum.photos/seed/EPXSBJAt5K/3374/2494"
+        },
+        {
+          "color_id": 18,
+          "size_id": 16,
+          "price": "705.35",
+          "stock": 56,
+          "sku": "though phooey",
+          "disount_price": null,
+          "discount_percent": null,
+          "image": "https://picsum.photos/seed/XRyN5gLHa0/3190/1027"
+        },
+        {
+          "color_id": 5,
+          "size_id": 36,
+          "price": "663.49",
+          "stock": 12,
+          "sku": "successfully elver",
+          "disount_price": null,
+          "discount_percent": null,
+          "image": "https://loremflickr.com/3629/2620?lock=5331047900160829"
+        },
+        {
+          "color_id": 2,
+          "size_id": 46,
+          "price": "257.50",
+          "stock": 26,
+          "sku": "during",
+          "disount_price": null,
+          "discount_percent": null,
+          "image": "https://loremflickr.com/3504/1886?lock=3602049531958582"
+        },
+        {
+          "color_id": 20,
+          "size_id": 22,
+          "price": "273.45",
+          "stock": 40,
+          "sku": "cruelly whack ick",
+          "disount_price": null,
+          "discount_percent": null,
+          "image": "https://picsum.photos/seed/pWkpJ8u/415/3934"
+        }
+      ],
+      "productImages": [
+        {
+          "image": "https://picsum.photos/seed/EPXSBJAt5K/3374/2494",
+          "main_image": false
+        },
+        {
+          "image": "https://picsum.photos/seed/XRyN5gLHa0/3190/1027",
+          "main_image": false
+        },
+        {
+          "image": "https://loremflickr.com/3629/2620?lock=5331047900160829",
+          "main_image": false
+        },
+        {
+          "image": "https://loremflickr.com/3504/1886?lock=3602049531958582",
+          "main_image": false
+        },
+        {
+          "image": "https://picsum.photos/seed/pWkpJ8u/415/3934",
+          "main_image": false
+        }
+      ]
+    },
+    {
+      "name": "Oriental Silk Gloves",
+      "description": "Discover the acceptable new Chair with an exciting mix of Cotton ingredients",
+      "category_id": 6,
+      "brand_id": 9,
+      "type_id": 4,
+      "vendor_id": 1,
+      "is_approved": true,
+      "approved_by": 1,
+      "approved_at": "2025-07-06T13:43:00.330Z",
+      "productVariants": [
+        {
+          "color_id": 23,
+          "size_id": 39,
+          "price": "779.96",
+          "stock": 27,
+          "sku": "after ugh ideal",
+          "disount_price": null,
+          "discount_percent": null,
+          "image": "https://loremflickr.com/764/3396?lock=440036405749723"
+        },
+        {
+          "color_id": 14,
+          "size_id": 46,
+          "price": "88.75",
+          "stock": 90,
+          "sku": "solder politely",
+          "disount_price": null,
+          "discount_percent": null,
+          "image": "https://loremflickr.com/957/1733?lock=7320452175696338"
+        },
+        {
+          "color_id": 30,
+          "size_id": 41,
+          "price": "191.35",
+          "stock": 70,
+          "sku": "gee metabolise",
+          "disount_price": null,
+          "discount_percent": null,
+          "image": "https://picsum.photos/seed/zS25Xrd2QI/2418/1885"
+        },
+        {
+          "color_id": 6,
+          "size_id": 36,
+          "price": "253.19",
+          "stock": 75,
+          "sku": "yet",
+          "disount_price": null,
+          "discount_percent": null,
+          "image": "https://picsum.photos/seed/PjpiQu/13/3769"
+        },
+        {
+          "color_id": 24,
+          "size_id": 12,
+          "price": "301.90",
+          "stock": 34,
+          "sku": "rarely hassle",
+          "disount_price": null,
+          "discount_percent": null,
+          "image": "https://loremflickr.com/1358/1833?lock=3793592509057096"
+        }
+      ],
+      "productImages": [
+        {
+          "image": "https://loremflickr.com/764/3396?lock=440036405749723",
+          "main_image": false
+        },
+        {
+          "image": "https://loremflickr.com/957/1733?lock=7320452175696338",
+          "main_image": false
+        },
+        {
+          "image": "https://picsum.photos/seed/zS25Xrd2QI/2418/1885",
+          "main_image": false
+        },
+        {
+          "image": "https://picsum.photos/seed/PjpiQu/13/3769",
+          "main_image": false
+        },
+        {
+          "image": "https://loremflickr.com/1358/1833?lock=3793592509057096",
+          "main_image": false
+        }
+      ]
+    },
+    {
+      "name": "Oriental Gold Hat",
+      "description": "Professional-grade Tuna perfect for powerful training and recreational use",
+      "category_id": 7,
+      "brand_id": 8,
+      "type_id": 8,
+      "vendor_id": 1,
+      "is_approved": true,
+      "approved_by": 1,
+      "approved_at": "2025-07-06T13:43:00.361Z",
+      "productVariants": [
+        {
+          "color_id": 7,
+          "size_id": 61,
+          "price": "57.79",
+          "stock": 90,
+          "sku": "tackle advanced ew",
+          "disount_price": null,
+          "discount_percent": null,
+          "image": "https://picsum.photos/seed/YSZByKa/1182/1589"
+        },
+        {
+          "color_id": 19,
+          "size_id": 15,
+          "price": "73.20",
+          "stock": 67,
+          "sku": "although",
+          "disount_price": null,
+          "discount_percent": null,
+          "image": "https://picsum.photos/seed/cFEXx1B9/896/2145"
+        },
+        {
+          "color_id": 15,
+          "size_id": 20,
+          "price": "750.87",
+          "stock": 23,
+          "sku": "incidentally underneath ridge",
+          "disount_price": null,
+          "discount_percent": null,
+          "image": "https://loremflickr.com/3206/3151?lock=4425887272552236"
+        },
+        {
+          "color_id": 21,
+          "size_id": 27,
+          "price": "878.29",
+          "stock": 91,
+          "sku": "exhaust",
+          "disount_price": null,
+          "discount_percent": null,
+          "image": "https://loremflickr.com/3997/2454?lock=206340846531716"
+        },
+        {
+          "color_id": 23,
+          "size_id": 49,
+          "price": "476.80",
+          "stock": 46,
+          "sku": "ew",
+          "disount_price": null,
+          "discount_percent": null,
+          "image": "https://loremflickr.com/58/3231?lock=271254261248117"
+        }
+      ],
+      "productImages": [
+        {
+          "image": "https://picsum.photos/seed/YSZByKa/1182/1589",
+          "main_image": true
+        },
+        {
+          "image": "https://picsum.photos/seed/cFEXx1B9/896/2145",
+          "main_image": true
+        },
+        {
+          "image": "https://loremflickr.com/3206/3151?lock=4425887272552236",
+          "main_image": true
+        },
+        {
+          "image": "https://loremflickr.com/3997/2454?lock=206340846531716",
+          "main_image": true
+        },
+        {
+          "image": "https://loremflickr.com/58/3231?lock=271254261248117",
+          "main_image": true
+        }
+      ]
+    },
+    {
+      "name": "Handmade Steel Tuna",
+      "description": "Introducing the Turkey-inspired Sausages, blending some style with local craftsmanship",
+      "category_id": 10,
+      "brand_id": 4,
+      "type_id": 6,
+      "vendor_id": 1,
+      "is_approved": true,
+      "approved_by": 1,
+      "approved_at": "2025-07-06T13:43:00.391Z",
+      "productVariants": [
+        {
+          "color_id": 26,
+          "size_id": 6,
+          "price": "559.50",
+          "stock": 71,
+          "sku": "chunter cake",
+          "disount_price": null,
+          "discount_percent": null,
+          "image": "https://loremflickr.com/3866/3391?lock=5459788675355545"
+        },
+        {
+          "color_id": 18,
+          "size_id": 64,
+          "price": "989.89",
+          "stock": 71,
+          "sku": "modulo likewise whoever",
+          "disount_price": null,
+          "discount_percent": null,
+          "image": "https://picsum.photos/seed/KnXnUGTyAM/977/936"
+        },
+        {
+          "color_id": 1,
+          "size_id": 34,
+          "price": "724.10",
+          "stock": 33,
+          "sku": "whoa outfit",
+          "disount_price": null,
+          "discount_percent": null,
+          "image": "https://loremflickr.com/2416/1301?lock=59908414720428"
+        },
+        {
+          "color_id": 25,
+          "size_id": 24,
+          "price": "471.85",
+          "stock": 75,
+          "sku": "gah awesome volleyball",
+          "disount_price": null,
+          "discount_percent": null,
+          "image": "https://loremflickr.com/287/3217?lock=7656652923212279"
+        },
+        {
+          "color_id": 25,
+          "size_id": 16,
+          "price": "986.82",
+          "stock": 14,
+          "sku": "irresponsible",
+          "disount_price": null,
+          "discount_percent": null,
+          "image": "https://picsum.photos/seed/XGMCKSgIM/510/3350"
+        }
+      ],
+      "productImages": [
+        {
+          "image": "https://loremflickr.com/3866/3391?lock=5459788675355545",
+          "main_image": false
+        },
+        {
+          "image": "https://picsum.photos/seed/KnXnUGTyAM/977/936",
+          "main_image": false
+        },
+        {
+          "image": "https://loremflickr.com/2416/1301?lock=59908414720428",
+          "main_image": false
+        },
+        {
+          "image": "https://loremflickr.com/287/3217?lock=7656652923212279",
+          "main_image": false
+        },
+        {
+          "image": "https://picsum.photos/seed/XGMCKSgIM/510/3350",
+          "main_image": false
+        }
+      ]
+    },
+    {
+      "name": "Recycled Silk Fish",
+      "description": "Discover the thick new Bacon with an exciting mix of Concrete ingredients",
+      "category_id": 1,
+      "brand_id": 8,
+      "type_id": 22,
+      "vendor_id": 1,
+      "is_approved": true,
+      "approved_by": 1,
+      "approved_at": "2025-07-06T13:43:00.412Z",
+      "productVariants": [
+        {
+          "color_id": 29,
+          "size_id": 13,
+          "price": "208.29",
+          "stock": 56,
+          "sku": "gah cultivated",
+          "disount_price": null,
+          "discount_percent": null,
+          "image": "https://picsum.photos/seed/afw5IG7/490/3927"
+        },
+        {
+          "color_id": 24,
+          "size_id": 39,
+          "price": "693.09",
+          "stock": 16,
+          "sku": "circa unsteady generally",
+          "disount_price": null,
+          "discount_percent": null,
+          "image": "https://loremflickr.com/712/1024?lock=1505312146036064"
+        },
+        {
+          "color_id": 14,
+          "size_id": 24,
+          "price": "762.39",
+          "stock": 21,
+          "sku": "via",
+          "disount_price": null,
+          "discount_percent": null,
+          "image": "https://picsum.photos/seed/rCluNwUsLj/1524/2317"
+        },
+        {
+          "color_id": 26,
+          "size_id": 26,
+          "price": "47.50",
+          "stock": 44,
+          "sku": "shark kindly and",
+          "disount_price": null,
+          "discount_percent": null,
+          "image": "https://loremflickr.com/3168/3079?lock=4291865018110520"
+        },
+        {
+          "color_id": 28,
+          "size_id": 58,
+          "price": "52.75",
+          "stock": 100,
+          "sku": "aboard",
+          "disount_price": null,
+          "discount_percent": null,
+          "image": "https://picsum.photos/seed/AB41zZjJ/1016/82"
+        }
+      ],
+      "productImages": [
+        {
+          "image": "https://picsum.photos/seed/afw5IG7/490/3927",
+          "main_image": false
+        },
+        {
+          "image": "https://loremflickr.com/712/1024?lock=1505312146036064",
+          "main_image": false
+        },
+        {
+          "image": "https://picsum.photos/seed/rCluNwUsLj/1524/2317",
+          "main_image": false
+        },
+        {
+          "image": "https://loremflickr.com/3168/3079?lock=4291865018110520",
+          "main_image": false
+        },
+        {
+          "image": "https://picsum.photos/seed/AB41zZjJ/1016/82",
+          "main_image": false
+        }
+      ]
+    },
+    {
+      "name": "Intelligent Granite Computer",
+      "description": "Innovative Bike featuring enlightened technology and Wooden construction",
+      "category_id": 3,
+      "brand_id": 7,
+      "type_id": 7,
+      "vendor_id": 1,
+      "is_approved": true,
+      "approved_by": 1,
+      "approved_at": "2025-07-06T13:43:00.433Z",
+      "productVariants": [
+        {
+          "color_id": 17,
+          "size_id": 40,
+          "price": "682.19",
+          "stock": 36,
+          "sku": "without stiff",
+          "disount_price": null,
+          "discount_percent": null,
+          "image": "https://loremflickr.com/3009/3631?lock=3670587608378492"
+        },
+        {
+          "color_id": 27,
+          "size_id": 34,
+          "price": "342.75",
+          "stock": 66,
+          "sku": "jogging gah",
+          "disount_price": null,
+          "discount_percent": null,
+          "image": "https://loremflickr.com/2915/522?lock=7373108193087195"
+        },
+        {
+          "color_id": 20,
+          "size_id": 42,
+          "price": "890.75",
+          "stock": 90,
+          "sku": "regarding",
+          "disount_price": null,
+          "discount_percent": null,
+          "image": "https://picsum.photos/seed/L0ICP/2867/3964"
+        },
+        {
+          "color_id": 4,
+          "size_id": 14,
+          "price": "742.09",
+          "stock": 58,
+          "sku": "firsthand bran",
+          "disount_price": null,
+          "discount_percent": null,
+          "image": "https://picsum.photos/seed/bFXqk0PO7y/3753/3607"
+        },
+        {
+          "color_id": 29,
+          "size_id": 6,
+          "price": "447.09",
+          "stock": 56,
+          "sku": "militate",
+          "disount_price": null,
+          "discount_percent": null,
+          "image": "https://loremflickr.com/709/1154?lock=5881119582506593"
+        }
+      ],
+      "productImages": [
+        {
+          "image": "https://loremflickr.com/3009/3631?lock=3670587608378492",
+          "main_image": false
+        },
+        {
+          "image": "https://loremflickr.com/2915/522?lock=7373108193087195",
+          "main_image": false
+        },
+        {
+          "image": "https://picsum.photos/seed/L0ICP/2867/3964",
+          "main_image": false
+        },
+        {
+          "image": "https://picsum.photos/seed/bFXqk0PO7y/3753/3607",
+          "main_image": false
+        },
+        {
+          "image": "https://loremflickr.com/709/1154?lock=5881119582506593",
+          "main_image": false
+        }
+      ]
+    },
+    {
+      "name": "Fantastic Steel Pizza",
+      "description": "New Table model with 61 GB RAM, 919 GB storage, and separate features",
+      "category_id": 9,
+      "brand_id": 2,
+      "type_id": 23,
+      "vendor_id": 1,
+      "is_approved": true,
+      "approved_by": 1,
+      "approved_at": "2025-07-06T13:43:00.458Z",
+      "productVariants": [
+        {
+          "color_id": 24,
+          "size_id": 10,
+          "price": "302.80",
+          "stock": 6,
+          "sku": "destock seafood between",
+          "disount_price": null,
+          "discount_percent": null,
+          "image": "https://loremflickr.com/677/887?lock=8145310705934988"
+        },
+        {
+          "color_id": 7,
+          "size_id": 45,
+          "price": "642.35",
+          "stock": 54,
+          "sku": "zowie",
+          "disount_price": null,
+          "discount_percent": null,
+          "image": "https://picsum.photos/seed/uF7ud3R/1805/3855"
+        },
+        {
+          "color_id": 31,
+          "size_id": 14,
+          "price": "591.39",
+          "stock": 42,
+          "sku": "happy",
+          "disount_price": null,
+          "discount_percent": null,
+          "image": "https://picsum.photos/seed/qDDK33sESe/1262/415"
+        },
+        {
+          "color_id": 11,
+          "size_id": 52,
+          "price": "580.55",
+          "stock": 65,
+          "sku": "phooey fast",
+          "disount_price": null,
+          "discount_percent": null,
+          "image": "https://loremflickr.com/2721/1049?lock=7918733635390073"
+        },
+        {
+          "color_id": 30,
+          "size_id": 9,
+          "price": "175.69",
+          "stock": 35,
+          "sku": "evenly",
+          "disount_price": null,
+          "discount_percent": null,
+          "image": "https://loremflickr.com/1122/2293?lock=3783986696578323"
+        }
+      ],
+      "productImages": [
+        {
+          "image": "https://loremflickr.com/677/887?lock=8145310705934988",
+          "main_image": false
+        },
+        {
+          "image": "https://picsum.photos/seed/uF7ud3R/1805/3855",
+          "main_image": false
+        },
+        {
+          "image": "https://picsum.photos/seed/qDDK33sESe/1262/415",
+          "main_image": false
+        },
+        {
+          "image": "https://loremflickr.com/2721/1049?lock=7918733635390073",
+          "main_image": false
+        },
+        {
+          "image": "https://loremflickr.com/1122/2293?lock=3783986696578323",
+          "main_image": false
+        }
+      ]
+    },
+    {
+      "name": "Small Steel Bike",
+      "description": "The azure Cheese combines Maldives aesthetics with Lithium-based durability",
+      "category_id": 3,
+      "brand_id": 6,
+      "type_id": 7,
+      "vendor_id": 1,
+      "is_approved": true,
+      "approved_by": 1,
+      "approved_at": "2025-07-06T13:43:00.479Z",
+      "productVariants": [
+        {
+          "color_id": 6,
+          "size_id": 10,
+          "price": "501.35",
+          "stock": 39,
+          "sku": "ha fooey",
+          "disount_price": null,
+          "discount_percent": null,
+          "image": "https://loremflickr.com/1465/322?lock=4322258276659972"
+        },
+        {
+          "color_id": 13,
+          "size_id": 21,
+          "price": "308.55",
+          "stock": 44,
+          "sku": "fooey aircraft",
+          "disount_price": null,
+          "discount_percent": null,
+          "image": "https://picsum.photos/seed/jV0uO/3398/3581"
+        },
+        {
+          "color_id": 7,
+          "size_id": 51,
+          "price": "16.29",
+          "stock": 25,
+          "sku": "like",
+          "disount_price": null,
+          "discount_percent": null,
+          "image": "https://picsum.photos/seed/sNImWn3ANC/2345/3595"
+        },
+        {
+          "color_id": 3,
+          "size_id": 44,
+          "price": "370.35",
+          "stock": 21,
+          "sku": "surprise perfectly coop",
+          "disount_price": null,
+          "discount_percent": null,
+          "image": "https://loremflickr.com/2086/2194?lock=5084163686565853"
+        },
+        {
+          "color_id": 24,
+          "size_id": 56,
+          "price": "195.90",
+          "stock": 5,
+          "sku": "fraternise",
+          "disount_price": null,
+          "discount_percent": null,
+          "image": "https://loremflickr.com/2519/3234?lock=7513979436161141"
+        }
+      ],
+      "productImages": [
+        {
+          "image": "https://loremflickr.com/1465/322?lock=4322258276659972",
+          "main_image": false
+        },
+        {
+          "image": "https://picsum.photos/seed/jV0uO/3398/3581",
+          "main_image": false
+        },
+        {
+          "image": "https://picsum.photos/seed/sNImWn3ANC/2345/3595",
+          "main_image": false
+        },
+        {
+          "image": "https://loremflickr.com/2086/2194?lock=5084163686565853",
+          "main_image": false
+        },
+        {
+          "image": "https://loremflickr.com/2519/3234?lock=7513979436161141",
+          "main_image": false
+        }
+      ]
+    },
+    {
+      "name": "Incredible Silk Keyboard",
+      "description": "Experience the fuchsia brilliance of our Bacon, perfect for leading environments",
+      "category_id": 10,
+      "brand_id": 11,
+      "type_id": 21,
+      "vendor_id": 1,
+      "is_approved": true,
+      "approved_by": 1,
+      "approved_at": "2025-07-06T13:43:00.503Z",
+      "productVariants": [
+        {
+          "color_id": 18,
+          "size_id": 1,
+          "price": "883.15",
+          "stock": 91,
+          "sku": "woot whimsical",
+          "disount_price": null,
+          "discount_percent": null,
+          "image": "https://picsum.photos/seed/1tum2B/3012/718"
+        },
+        {
+          "color_id": 3,
+          "size_id": 60,
+          "price": "948.19",
+          "stock": 57,
+          "sku": "hope boo stable",
+          "disount_price": null,
+          "discount_percent": null,
+          "image": "https://picsum.photos/seed/pifHFo4PFM/813/1616"
+        },
+        {
+          "color_id": 27,
+          "size_id": 2,
+          "price": "656.39",
+          "stock": 15,
+          "sku": "actually than",
+          "disount_price": null,
+          "discount_percent": null,
+          "image": "https://picsum.photos/seed/TPg38vsq0d/3119/2732"
+        },
+        {
+          "color_id": 10,
+          "size_id": 17,
+          "price": "200.75",
+          "stock": 41,
+          "sku": "rich abaft psst",
+          "disount_price": null,
+          "discount_percent": null,
+          "image": "https://picsum.photos/seed/ZoHfYdPeB/194/3288"
+        },
+        {
+          "color_id": 20,
+          "size_id": 62,
+          "price": "501.45",
+          "stock": 89,
+          "sku": "unto summary untried",
+          "disount_price": null,
+          "discount_percent": null,
+          "image": "https://picsum.photos/seed/NxhUO3BQ/2023/1876"
+        }
+      ],
+      "productImages": [
+        {
+          "image": "https://picsum.photos/seed/1tum2B/3012/718",
+          "main_image": false
+        },
+        {
+          "image": "https://picsum.photos/seed/pifHFo4PFM/813/1616",
+          "main_image": false
+        },
+        {
+          "image": "https://picsum.photos/seed/TPg38vsq0d/3119/2732",
+          "main_image": false
+        },
+        {
+          "image": "https://picsum.photos/seed/ZoHfYdPeB/194/3288",
+          "main_image": false
+        },
+        {
+          "image": "https://picsum.photos/seed/NxhUO3BQ/2023/1876",
+          "main_image": false
+        }
+      ]
+    },
+    {
+      "name": "Awesome Cotton Bike",
+      "description": "Professional-grade Hat perfect for impressionable training and recreational use",
+      "category_id": 5,
+      "brand_id": 8,
+      "type_id": 24,
+      "vendor_id": 1,
+      "is_approved": true,
+      "approved_by": 1,
+      "approved_at": "2025-07-06T13:43:00.527Z",
+      "productVariants": [
+        {
+          "color_id": 17,
+          "size_id": 19,
+          "price": "223.65",
+          "stock": 57,
+          "sku": "blend whereas or",
+          "disount_price": null,
+          "discount_percent": null,
+          "image": "https://picsum.photos/seed/BPNYrAs2g/3890/3761"
+        },
+        {
+          "color_id": 28,
+          "size_id": 66,
+          "price": "696.85",
+          "stock": 60,
+          "sku": "drat",
+          "disount_price": null,
+          "discount_percent": null,
+          "image": "https://picsum.photos/seed/R3OgQfr/1141/3314"
+        },
+        {
+          "color_id": 2,
+          "size_id": 47,
+          "price": "191.65",
+          "stock": 79,
+          "sku": "uselessly",
+          "disount_price": null,
+          "discount_percent": null,
+          "image": "https://picsum.photos/seed/iyLAA/2764/1236"
+        },
+        {
+          "color_id": 7,
+          "size_id": 5,
+          "price": "507.29",
+          "stock": 62,
+          "sku": "eek under before",
+          "disount_price": null,
+          "discount_percent": null,
+          "image": "https://loremflickr.com/132/2074?lock=3589540989839781"
+        },
+        {
+          "color_id": 10,
+          "size_id": 1,
+          "price": "198.39",
+          "stock": 97,
+          "sku": "meaty trained",
+          "disount_price": null,
+          "discount_percent": null,
+          "image": "https://loremflickr.com/1304/1392?lock=2524834749787600"
+        }
+      ],
+      "productImages": [
+        {
+          "image": "https://picsum.photos/seed/BPNYrAs2g/3890/3761",
+          "main_image": false
+        },
+        {
+          "image": "https://picsum.photos/seed/R3OgQfr/1141/3314",
+          "main_image": false
+        },
+        {
+          "image": "https://picsum.photos/seed/iyLAA/2764/1236",
+          "main_image": false
+        },
+        {
+          "image": "https://loremflickr.com/132/2074?lock=3589540989839781",
+          "main_image": false
+        },
+        {
+          "image": "https://loremflickr.com/1304/1392?lock=2524834749787600",
+          "main_image": false
+        }
+      ]
+    },
+    {
+      "name": "Fantastic Gold Bike",
+      "description": "Professional-grade Car perfect for candid training and recreational use",
+      "category_id": 1,
+      "brand_id": 6,
+      "type_id": 2,
+      "vendor_id": 1,
+      "is_approved": true,
+      "approved_by": 1,
+      "approved_at": "2025-07-06T13:43:00.545Z",
+      "productVariants": [
+        {
+          "color_id": 17,
+          "size_id": 27,
+          "price": "35.89",
+          "stock": 52,
+          "sku": "whoever if mammoth",
+          "disount_price": null,
+          "discount_percent": null,
+          "image": "https://loremflickr.com/188/1536?lock=6736905908511027"
+        },
+        {
+          "color_id": 10,
+          "size_id": 53,
+          "price": "271.52",
+          "stock": 85,
+          "sku": "ad fiercely",
+          "disount_price": null,
+          "discount_percent": null,
+          "image": "https://picsum.photos/seed/TkJAwY9ZE/3493/16"
+        },
+        {
+          "color_id": 16,
+          "size_id": 22,
+          "price": "679.39",
+          "stock": 22,
+          "sku": "gifted",
+          "disount_price": null,
+          "discount_percent": null,
+          "image": "https://loremflickr.com/594/514?lock=1159278210992625"
+        },
+        {
+          "color_id": 20,
+          "size_id": 24,
+          "price": "467.99",
+          "stock": 16,
+          "sku": "against fooey finally",
+          "disount_price": null,
+          "discount_percent": null,
+          "image": "https://loremflickr.com/3496/3368?lock=1028690871799181"
+        },
+        {
+          "color_id": 16,
+          "size_id": 7,
+          "price": "11.18",
+          "stock": 94,
+          "sku": "perky yowza",
+          "disount_price": null,
+          "discount_percent": null,
+          "image": "https://loremflickr.com/3143/2910?lock=8081964731587669"
+        }
+      ],
+      "productImages": [
+        {
+          "image": "https://loremflickr.com/188/1536?lock=6736905908511027",
+          "main_image": false
+        },
+        {
+          "image": "https://picsum.photos/seed/TkJAwY9ZE/3493/16",
+          "main_image": false
+        },
+        {
+          "image": "https://loremflickr.com/594/514?lock=1159278210992625",
+          "main_image": false
+        },
+        {
+          "image": "https://loremflickr.com/3496/3368?lock=1028690871799181",
+          "main_image": false
+        },
+        {
+          "image": "https://loremflickr.com/3143/2910?lock=8081964731587669",
+          "main_image": false
+        }
+      ]
+    }
+  ]
+}

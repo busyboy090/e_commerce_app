@@ -9,6 +9,7 @@ import useAuth from "@/hooks/useAuth";
 import CheckboxInput from "@/components/ui/CheckboxInput";
 import { encryptData, decryptData} from "@/utils/Encryption.js";
 import GoogleLogin from "@/features/auth/GoogleLogin";
+import auth from '@/api/auth.js'
 
 
 function Login() {
@@ -21,15 +22,6 @@ function Login() {
     email: false,
     password: false,
   })
-
-  useEffect(() => {
-    if(localStorage.getItem('password') && localStorage.getItem('email') ) {
-      handleChange('email', decryptData('email'));
-      handleChange('password', decryptData('password'));
-      setRememberMe(true);
-    }
-  
-  }, [])
 
   const isValid = useRef(false);
   const [loading, setLoading] = useState(false);
@@ -73,44 +65,23 @@ function Login() {
 
     try {
         
-      const response = await api.post('/auth/login',
-        JSON.stringify({
-          email: formData.email,
-          password: formData.password
-        }),{
-          headers: { 'Content-Type': 'application/json' },
-          withCredentials: true
-        }
-      );
+      const data = await auth.loginUser({
+        email: formData.email,
+        password: formData.password
+      })
   
-      const access_token = response?.data?.access_token;
-      const user = response?.data?.user;
-
-      if(response.status === 200) {
-        localStorage.setItem('authenticated', JSON.stringify(true));
-        // store the user credentials when the remember me functionality is checked
-          if(rememberMe === true) {
-            encryptData(formData.email, 'email')
-            encryptData(formData.password, 'password')
-          } else {
-            localStorage.removeItem('email');
-            localStorage.removeItem('password');
-          }
-
-      }
-
       // save the userdetais
       login(response?.data);
 
       // show notification
-      toast.success(response?.data?.msg);
+      toast.success(data?.msg);
 
       // Redirect
       navigate(from, { replace: true });
 
     } catch (err) {
       console.error(err);
-      toast.error(err?.response?.data?.msg)
+      toast.error(err?.error)
     } finally {
       setLoading(false);
     }

@@ -428,91 +428,25 @@ const getGoogleUser = async (token) => {
   return userInfo;
 };
 
-const getUserAddresses = async (user_id) => {
-  const addresses = await Address.findAll({
+const getUserCountry = async (user_id) => {
+  const user = User.findOne({ 
     where: { user_id },
-    attributes: [
-      "first_name",
-      "last_name",
-      "phone_number",
-      "additional_phone_number",
-      "is_default",
-      "address",
-      "address_id",
-    ],
-    include: [
-      {
-        model: State,
-        as: "state",
-        attributes: ["name"],
-      },
-      {
-        model: Country,
-        as: "country",
-        attributes: ["name", "code"],
-      },
-      {
-        model: City,
-        as: "city",
-        attributes: ["name"],
-      },
-    ],
+    include: {
+      model: Country,
+      as: 'country',
+      attributes: ['name','code'],
+      include: {
+        model: Currency,
+        as: 'currency',
+        attributes: ['name','code','symbol']
+      }
+    }
   });
 
-  return addresses;
-};
+  if(!user) throw new AppError('User does not exist', 404);
 
-const createNewAddress = async (data, user_id, t) => {
-  const {
-    address,
-    is_default,
-    first_name,
-    last_name,
-    phone_number,
-    additional_phone_number,
-    country_id,
-    state_id,
-    city_id,
-  } = data;
-
-  let addressDetails;
-
-  // check for previous default address and set it to false
-  if (is_default === true) {
-    addressDetails = await Address.findOne(
-      {
-        where: {
-          user_id,
-          is_default: true,
-        },
-      },
-      { transaction: t }
-    );
-
-    if (addressDetails) {
-      addressDetails.is_default = false;
-      addressDetails.save();
-    }
-  }
-
-  addressDetails = await Address.create(
-    {
-      user_id,
-      first_name,
-      last_name,
-      phone_number,
-      additional_phone_number: additional_phone_number || null,
-      is_default,
-      address,
-      country_id,
-      state_id,
-      city_id,
-    },
-    { transaction: t }
-  );
-
-  return true;
-};
+  return user;
+}
 
 module.exports = {
   findUser,
@@ -525,6 +459,5 @@ module.exports = {
   getAllVendors,
   getGoogleUser,
   getUserDetails,
-  getUserAddresses,
-  createNewAddress
+  getUserCountry
 };

@@ -1,7 +1,4 @@
-const db = require("../models/index.js");
-const { getCartByUserId } = require("../services/cartService.js");
-
-const { Cart } = db;
+const cartService = require("../services/cartService.js");
 
 const addProductToCart = async (req, res) => {
   const { cartItems } = req.body;
@@ -43,27 +40,28 @@ const addProductToCart = async (req, res) => {
   }
 };
 
-const getCart = async (req, res) => {
+const getUserCart = async (req, res, next) => {
   const user_id = req.user.id;
-  
-  if(!user_id) {
-    return res.status(400).json({ msg: ''})
-  }
 
   try {
-
-    const cart = await getCartByUserId(user_id);
-
-    if(!cart) {
-      return res.status(404).json({ message: 'Cart not found'})
-    }
-
-    res.status(200).json(cart);
-  } catch (error) {
-    console.log(error);
-    res.status(500).json({ msg: "Server error" });
+    const cart = await cartService.getCartByUserId(user_id);
+    res.status(200).json({ cart });
+  } catch (err) {
+    next(err)
   }
 };
+
+const getProducts = async (req, res, next) => {
+  const productIds = req.body;
+  try {
+
+    const cart = await cartService.getCartProducts(productIds);
+
+    res.status(200).json({ cart });
+  } catch (err) {
+    next(err)
+  }
+}
 
 const updateCart = async (req, res) => {
   const { cartItems } = req.body;
@@ -176,8 +174,9 @@ const updateCartProductQuantity = async (req, res) => {
 
 module.exports = {
   addProductToCart,
-  getCart,
   updateCart,
+  getUserCart,
   deleteCartProductFromCart,
   updateCartProductQuantity,
+  getProducts
 };

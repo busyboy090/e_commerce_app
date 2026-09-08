@@ -4,7 +4,6 @@ module.exports = (sequelize, DataTypes) => {
   class Color extends Model {
     static associate (models) {
       Color.hasMany(models.ProductVariant, {foreignKey: 'color_id', as: 'product_variants'})
-      Color.hasMany(models.ProductImage, { foreignKey: 'color_id', as: 'images'})
     }
   }
 

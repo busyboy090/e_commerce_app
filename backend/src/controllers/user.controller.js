@@ -6,6 +6,7 @@ const { adminRole } = require("../config/admin.js");
 const { User, Otp, sequelize } = require("../models/index.js");
 const catchAsync = require("../utils/catchAsync.js");
 const mail = require("../services/emailService.js");
+const cartService = require("../services/cartService.js")
 
 const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 
@@ -104,50 +105,6 @@ const resetPassword = async (req, res) => {
   }
 };
 
-const createNewAddress = async (req, res, next) => {
-  const user_id = req.user.id;
-  const {
-    phone_number,
-    first_name,
-    last_name,
-    address,
-    city_id,
-    country_id,
-    state_id,
-    additional_phone_number,
-    is_default,
-  } = req.body;
-
-  if(!first_name || !last_name || !address || !phone_number || !city_id || !country_id || !state_id || !additional_phone_number || !is_default) {
-    return res.status(400).json({ error: true, msg: 'All fields are required.'});
-  }
-
-  try {
-    const t = await sequelize.transaction();
-
-    await userService.createNewAddress(req.boby, user_id, t);
-
-    await t.commit();
-
-    res.status(200).json({ msg: 'Address created successfully'});
-  } catch (err) {
-    await t.rollback();
-    next(err);
-  }
-};
-
-const getUserAddresses = async (req, res, next) => {
-  const user_id = req.user.id;
-
-  try {
-    const addresses = await userService.getUserAddresses(user_id);
-
-    res.status(200).json({ addresses });
-  } catch (err) {
-    next(err);
-  }
-};
-
 module.exports = {
   resetPassword,
   verifyOtp,
@@ -156,6 +113,4 @@ module.exports = {
   getAllVendors,
   sendResetPasswordOtp,
   getUserDetails,
-  getUserAddresses,
-  createNewAddress
 };

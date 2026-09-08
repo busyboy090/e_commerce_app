@@ -35,7 +35,7 @@ export const updateCartProductQuantity = createAsyncThunk(
 
     try {
       const response = await api.put(
-        `/cart/${productId}`,
+        `/user/cart/${productId}`,
         {quantity},
       );
 
@@ -52,7 +52,7 @@ export const deleteCartProductFromDatabase = createAsyncThunk(
   async (productId) => {
     try {
       const response = await api.delete(
-        `/cart/${productId}`,
+        `/user/cart/${productId}`,
       );
 
       return response?.data;
@@ -68,7 +68,7 @@ export const fetchCartFromDatabase = createAsyncThunk(
   async () => {
     try {
       const response = await api.get(
-        '/cart'
+        '/user/cart'
       );
       return response.data;
     } catch (err) {
@@ -83,7 +83,7 @@ export const fetchProducts = createAsyncThunk(
   async (productIds) => {
     try {
       const response = await api.post(
-        '/products/multipleproducts',
+        '/cart/products/multipleproducts',
         JSON.stringify({ productIds }),
         { headers: { 'Content-Type': 'application/json' } }
       );
@@ -128,32 +128,20 @@ const cartSlice = createSlice({
     builder
       .addCase(fetchProducts.fulfilled, (state, action) => {
         state.fetchProductsStatus = 'succeeded';
-        state.products = action.payload;
+        state.cartItems = action.payload.cart;
       })
       .addCase(fetchCartFromDatabase.fulfilled, (state, action) => {
         state.fetchCartFromDatabaseStatus = 'succeeded';
-        state.cartItems = action.payload.map((item) => { 
-          return { productId: item.product_id, quantity: item.quantity}
-        });
-        state.products = action.payload.map((product) =>  product.products);
+        state.cartItems = action.payload.cart
       })
       .addCase(syncCartToDatabase.fulfilled, (state, action) => {
-        state.cartItems = action.payload.cartItems.map((item) => { 
-          return { productId: item.product_id, quantity: item.quantity}
-        });
-        state.products = action.payload.products.map((product) =>  product.products);
+        state.cartItems = action.payload.cart
       })
       .addCase(updateCartProductQuantity.fulfilled, (state, action) => {
-        state.cartItems = action.payload.cartItems.map((item) => { 
-          return { productId: item.product_id, quantity: item.quantity}
-        });
-        state.products = action.payload.products.map((product) =>  product.products);
+        state.cartItems = action.payload.cart
       })
       .addCase(deleteCartProductFromDatabase.fulfilled, (state, action) => {
-        state.cartItems = action.payload.cartItems.map((item) => { 
-          return { productId: item.product_id, quantity: item.quantity}
-        });
-        state.products = action.payload.products.map((product) =>  product.products);
+        state.cart = action.payload.cart
       })
   }
 });

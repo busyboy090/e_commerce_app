@@ -1,5 +1,6 @@
 const db = require('../models/index.js');
 const { sequelize } = require('sequelize');
+const AppError = require('../utils/appError.js');
 
 const {
   ProductVariant, 
@@ -10,7 +11,7 @@ const {
 } = db
 
 const getProductById = async(productId) => {
-  return await Product.findAll({
+  const product = await Product.findAll({
     where: { product_id: productId },
     order: [['product_id', 'DESC']],
     attributes: [
@@ -58,6 +59,10 @@ const getProductById = async(productId) => {
     group: ['products.product_id'],
     subQuery: false
   });
+
+  if(!product) throw new AppError('Product not found', 404);
+
+  return product
 }
 
 module.exports = {

@@ -77,7 +77,6 @@ const authSlice = createSlice({
                 } else {
                     state.user = null;
                     state.profile = null;
-                    state.isAuthenticated = false;
                 }
             })
     }

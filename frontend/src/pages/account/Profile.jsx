@@ -47,10 +47,10 @@ function Profile() {
 
   useEffect(() => {
     setFormData((prev) => ({...prev, 
-      first_name: user?.first_name,
-      last_name: user?.last_name,
-      email: user?.email,
-      address: profile?.address
+      first_name: user?.first_name ?? '',
+      last_name: user?.last_name ?? '',
+      email: user?.email ?? '',
+      address: profile?.address ?? ''
     }));
   }, [user])
   

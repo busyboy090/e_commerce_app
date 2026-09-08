@@ -27,17 +27,6 @@ module.exports = {
         allowNull: false,
       },
 
-      color_id: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-        references:{
-          model: 'colors',
-          key: 'color_id'
-        },
-        onDelete: 'CASCADE',
-        onUpdate:'CASCADE'
-      },
-
       main_image: {
         type: Sequelize.BOOLEAN,
         allowNull: false,

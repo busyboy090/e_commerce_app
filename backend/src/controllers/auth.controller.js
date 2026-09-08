@@ -255,8 +255,8 @@ const loginUser = async (req, res, next) => {
         maxAge: 7 * 24 * 60 * 60 * 1000,
         signed: true,
       }).cookie("session_id", session_id, {
-        httpOnly: false,
-        secure: true,
+        httpOnly: true,
+        secure: false,
         sameSite: "strict",
         maxAge: 7 * 24 * 60 * 60 * 1000,
         signed: true,
@@ -295,20 +295,11 @@ const refreshTokens = async (req, res, next) => {
   }
 
   try {
-    const { access_token, refresh_token } = await authService.refreshTokens(
+    const { access_token } = await authService.refreshTokens(
       refreshToken
     );
 
-    res
-      .cookie("refresh_token", refresh_token, {
-        httpOnly: true,
-        secure: false,
-        sameSite: "strict",
-        maxAge: 7 * 24 * 60 * 60 * 1000,
-        signed: true,
-      })
-      .status(200)
-      .json({ access_token });
+    res.status(200).json({ access_token });
   } catch (err) {
     next(err);
   }

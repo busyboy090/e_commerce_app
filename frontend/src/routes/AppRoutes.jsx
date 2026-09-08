@@ -27,6 +27,7 @@ import Address from '@/pages/account/Address';
 import VendorOnboarding from '@/pages/vendor/VendorOnboarding';
 import AddAddress from '@/pages/account/AddAddress';
 import EditAddress from '@/pages/account/EditAddress';
+import useApp from '@/hooks/useApp';
 
 
 // Features

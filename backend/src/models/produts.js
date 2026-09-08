@@ -7,7 +7,6 @@ module.exports = (sequelize, DataTypes) => {
             Product.belongsTo(models.Category, { foreignKey: 'category_id', as: 'categories' });
             Product.belongsTo(models.Brand, { foreignKey: 'brand_id', as: 'brands' });
             Product.belongsTo(models.Type, { foreignKey: 'type_id', as: 'types' });
-            Product.belongsTo(models.Unit, { foreignKey: 'unit_id', as: 'productUnit' });
             Product.hasMany(models.ProductImage, { foreignKey: 'product_id', as: 'productImages'});
             Product.belongsTo(models.User, { foreignKey: 'approved_by', as: 'productApproval' })
             Product.belongsTo(models.User, { foreignKey: 'vendor_id', as: 'vendor' })

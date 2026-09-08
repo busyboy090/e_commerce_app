@@ -26,8 +26,12 @@ const validateRegisterCustomer = [
     .notEmpty()
     .withMessage("Phone number is required"),
   body("email")
+    .notEmpty()
+    .isString()
     .isEmail()
-    .withMessage("Invalid email format"),
+    .withMessage("Invalid email format")
+    .normalizeEmail()
+    .toLowerCase(),
   body("country")
     .notEmpty()
     .withMessage("Country is required"),
@@ -71,8 +75,11 @@ const validateRegisterVendor = [
 
 const validateRegisterAdmin = [
   body("email") 
-    .isEmail()
-    .withMessage("Invalid email format"),
+    .notEmpty()
+    .isString()
+    .isEmail().withMessage("Invalid email format")
+    .normalizeEmail()
+    .toLowerCase(),
   body("password")
     .notEmpty()
     .isString()

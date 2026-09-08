@@ -35,7 +35,7 @@
     "react-toastify": "^11.0.5",
     "react-window": "^1.8.11",
     "slick-carousel": "^1.8.1",
-    "sweetalert2": "^11.17.2",
+    "sweetalert2": "^11.22.2",
     "swiper": "^11.2.6"
   },
   "devDependencies": {

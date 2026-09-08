@@ -5,21 +5,23 @@ const { de } = require('@faker-js/faker');
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up (queryInterface, Sequelize) {
-    await queryInterface.createTable('size_standards', {
-      size_standard_id: {
+    await queryInterface.createTable('size_regions', {
+      size_region_id: {
         type: Sequelize.INTEGER,
         autoIncrement: true,
         primaryKey: true,
+        allowNull: false
       },
 
       name: {
         type: Sequelize.STRING,
         allowNull: false,
+        unique: true
       },
 
-      description: {
-        type: Sequelize.TEXT,
-        allowNull: true,
+      code: {
+        type: Sequelize.STRING,
+        allowNull: false,
       },
 
       created_at: {
@@ -37,6 +39,6 @@ module.exports = {
   },
 
   async down (queryInterface, Sequelize) {
-    await queryInterface.dropTable('size_standards');
+    await queryInterface.dropTable('size_regions');
   }
 };

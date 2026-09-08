@@ -74,17 +74,6 @@ module.exports = {
         allowNull: false,
       },
 
-      unit_id: {
-        type: Sequelize.INTEGER,
-        allowNull: true,
-        references: {
-          model: 'units',
-          key: 'unit_id'
-        },
-        onDelete: 'CASCADE',
-        onUpdate: 'CASCADE'
-      },
-
       is_approved: {
         type: Sequelize.BOOLEAN,
         allowNull: false,

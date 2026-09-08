@@ -10,8 +10,6 @@ export const getUserCountry = async () => {
     try {
       const res = await fetch("https://ipwho.is/");
       const data = await res.json();
-
-      console.log(data)
   
       if (data.success) {
         const country = {

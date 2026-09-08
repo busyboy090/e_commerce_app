@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useState, useEffect, use } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { faEyeSlash, faEye } from '@fortawesome/free-solid-svg-icons'
 import country  from "../api/country.js";
 import { FixedSizeList as List } from 'react-window';
@@ -66,43 +66,44 @@ export function InputField(props) {
   )
 }
 
-export function CountryInput ({handleChange,value, setCountryCode}) {
+export function CountryInput ({handleChange,value}) {
     const [countries, setCountries] = useState([]);
-    const [countryName, setCountryName] = useState('');
+    const countryName = useRef('');
 
     // fetch all the countries 
     useEffect(() => {
         country.getAllCountries()
             .then(data => setCountries(data))
             .catch(err => console.error(err))
+    }, []);
 
-        if(!value) {
-            getUserCountry()
-            .then(data => {
-                setCountryName(data?.name || '')
-                setCountryCode(data?.code || '')
-            })
-            .catch(err => console.log(err));
-        } else {
-            const country = countries.filter(c => c.country_id === value)
-            setCountryName(country.name)
-        }
-      }, []);
+    // if(!value) {
+    //     getUserCountry()
+    //     .then((data) => { 
+    //         const country = countries.filter(c => c.name.toLowerCase() === data?.name.toLowerCase())
+    //         if(country.length > 0) {
+    //             countryName.current = country[0].name
+    //             handleChange(country[0]);
+    //         }
+    //     })
+    //     .catch((err) => console.error(err));
+    // } else {
+    //     const country = countries.filter(c => c.country_id === value)
 
-
-      const handleCountryChange = (country) => {
-        handleChange('country_id',country.country_id);
-        setCountryName(country.name)
-      }
+    //     if(country.length > 0) {
+    //         countryName.current = country[0].name
+    //     }
+    // }
 
     return (
-        <SelectInput dropdown={countries} handleChange={handleCountryChange} value={countryName} label='Country' id='country' />
+        <SelectInput dropdown={countries} handleChange={handleChange} value={countryName.current} label='Country' id='country' />
     )
 }
 
 export function StateInput ({handleChange,value,country_id}) {
     const [states, setStates] = useState([]);
-    const [stateName, setStateName] = useState('');
+    const stateName = useRef('');
+
 
     // fetch all the countries 
     useEffect(() => {
@@ -112,45 +113,44 @@ export function StateInput ({handleChange,value,country_id}) {
 
         if(value) {
             const state = states.filter(s => s.state_id === value);
-            setStateName(state.name || '')
+            stateName.current = state[0]?.name || '';
         }
     }, [country_id]);
 
-
     const handleStateChange = (state) => {
-        handleChange('state_id',state.state_id);
-        setStateName(state.name)
+        handleChange(state)
+        stateName.current = state.name;
     }
 
     return (
-        <SelectInput dropdown={states} handleChange={handleStateChange} value={stateName} label='Select your State' id='state' />
+        <SelectInput dropdown={states} handleChange={handleStateChange} value={stateName.current} label='Select your State' id='state' />
     )
 }
 
 export function CityInput ({ handleChange, value, state_id}) {
     const [cities, setCities] = useState([]);
-    const [cityName, setCityName] = useState('');
+    const cityName = useRef('');
 
     // fetch all the countries 
     useEffect(() => {
         country.getAllCitiesOfAState(state_id)
           .then(data => setCities(data))
           .catch(err => console.error(err))
-
+        
         if(value) {
-            const city = cities.filter(s => s.city_id === value);
-            setCityName(city.name || '')
+            const city = cities.filter(c => c.city_id === value);
+            cityName.current = city[0]?.name || '';
         }
       }, [state_id]);
 
 
       const handleCityChange = (city) => {
-        handleChange('city_id',city.city_id);
-        setCityName(city.name)
+        handleChange(city);
+        cityName.current = city.name
       }
 
     return (
-        <SelectInput dropdown={cities} handleChange={handleCityChange} value={cityName} label='Select your City' id='city' />
+        <SelectInput dropdown={cities} handleChange={handleCityChange} value={cityName.current} label='Select your City' id='city' />
     )
 }
 

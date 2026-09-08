@@ -1,12 +1,11 @@
 import React, { useLayoutEffect } from 'react';
 import { Outlet} from 'react-router-dom';
-import Navbar from '@/components/layout/Navbar/Navbar.jsx';
-import Footer from '@/components/layout/Footer/Footer.jsx'
+import Navbar from './Navbar/Navbar.jsx';
+import Footer from './Footer/Footer.jsx'
 import { ToastContainer} from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 function MainLayout() {
-  
   return (
     <>
         <ToastContainer

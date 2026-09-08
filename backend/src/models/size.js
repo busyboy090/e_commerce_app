@@ -5,7 +5,8 @@ module.exports = (sequelize, DataTypes) => {
         static associate(models) {
             // Define associations here if needed
             Size.belongsTo(models.Type, { foreignKey: 'type_id', as: 'types' });
-            Size.belongsTo(models.SizeStandard, { foreignKey: 'size_standard_id', as: 'sizeStandard' });
+            Size.belongsTo(models.SizeRegion, { foreignKey: 'size_region_id', as: 'sizeRegion' });
+            Size.belongsTo(models.Unit, { foreignKey: 'unit_id', as: 'unit'})
         }
     }
 
@@ -18,7 +19,7 @@ module.exports = (sequelize, DataTypes) => {
                 primaryKey: true
             },
 
-            label: {
+            name: {
                 type: DataTypes.STRING,
                 allowNull: false
             },
@@ -34,16 +35,27 @@ module.exports = (sequelize, DataTypes) => {
                 onUpdate: 'CASCADE'
             },
 
-            size_standard_id: {
+            size_region_id: {
                 type: DataTypes.INTEGER,
-                allowNull: false,
+                allowNull: true,
                 references: {
-                  model: 'size_standards',
-                  key: 'size_standard_id'
+                  model: 'size_regions',
+                  key: 'size_region_id'
                 },
                 onDelete: 'CASCADE',
                 onUpdate: 'CASCADE'
-            }
+            },
+
+            unit_id: {
+                type: DataTypes.INTEGER,
+                allowNull: true,
+                references: {
+                  model: 'units',
+                  key: 'unit_id'
+                },
+                onDelete: 'CASCADE',
+                onUpdate: 'CASCADE'
+            },
         },
         {
             sequelize,

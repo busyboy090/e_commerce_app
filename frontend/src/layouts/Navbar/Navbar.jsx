@@ -11,9 +11,9 @@ import useAuth from '@/hooks/useAuth';
 import { toast } from 'react-toastify';
 import { useCart } from '@/hooks/useCart';
 import { useWishList } from '@/hooks/useWishList';
-import DesktopNav from './DesktopNav';
-import MobileNav from './MobileNav';
 import Nav from './Nav';
+import Auth from '@/features/auth/Auth';
+import ProfileMenu from './ProfileMenu';
 
 function Navbar() {
     const [toggle, setToggle] = useState(false);
@@ -70,9 +70,9 @@ function Navbar() {
                         <img src={SearchIcon} alt="search" />
                     </button>
 
-                    {
-                        user && !userIcon ? <MobileNav user={user} logout={handleLogout} /> : null
-                    }
+                    <Auth>
+                        <ProfileMenu user={user} logout={handleLogout} />
+                    </Auth>
                 </div>
 
                 <div className={`flex-col max-lg:w-screen mt-[10px] lg:mt-[0] lg:flex lg:flex-row space-x-[148px] lg:items-center ${toggle ? 'flex' : 'hidden'} `}>
@@ -105,9 +105,9 @@ function Navbar() {
                             </span>
                         </a>
 
-                       {
-                            user && !userIcon ? <DesktopNav user={user} logout={handleLogout} /> : null
-                       }
+                       <Auth>
+                            <ProfileMenu user={user} logout={handleLogout}/>
+                       </Auth>
                     </div>
                 </div>
             </div>

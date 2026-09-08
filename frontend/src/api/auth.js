@@ -26,7 +26,20 @@ const registerVendor = async (data) => {
     }
 }
 
+const loginUser = async (data) => {
+    try {
+        const response = await api.post('/auth/login', {
+            ...data,
+        });
+
+        return response.data
+    } catch (error) {
+        throw error.response?.data || error.message || 'Something went wrong';
+    }
+}
+
 export default {
     registerCustomer,
-    registerVendor
+    registerVendor,
+    loginUser
 }

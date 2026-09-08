@@ -4,7 +4,6 @@ module.exports = (sequelize, DataTypes) => {
     class ProductImage extends Model {
         static associate (models) {
             ProductImage.belongsTo(models.Product, { foreignKey: 'product_id', as: 'product'});
-            ProductImage.belongsTo(models.Color, { foreignKey: 'color_id', as: 'color'})
             ProductImage.belongsTo(models.ProductVariant, { foreignKey: 'product_image_id', as: 'productVariant'})
         }
     }
@@ -24,17 +23,6 @@ module.exports = (sequelize, DataTypes) => {
                 references: {
                   model: 'products',
                   key: 'product_id'
-                },
-                onDelete: 'CASCADE',
-                onUpdate: 'CASCADE'
-            },
-
-            color_id: {
-                type: DataTypes.INTEGER,
-                allowNull: false,
-                references: {
-                    model: 'colors',
-                    key: 'color_id'
                 },
                 onDelete: 'CASCADE',
                 onUpdate: 'CASCADE'

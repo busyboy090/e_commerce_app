@@ -1,15 +1,15 @@
 const { Model } = require('sequelize');
 
 module.exports = (sequelize,DataTypes) => {
-    class SizeStandard extends Model {
+    class SizeRegion extends Model {
         static associate (models) {
-            SizeStandard.hasMany(models.Size, { foreignKey: 'size_standard_id', as: 'sizeStandards'})
+            SizeRegion.hasMany(models.Size, { foreignKey: 'size_region_id', as: 'sizes'})
         }
     }
 
-    SizeStandard.init(
+    SizeRegion.init(
         {
-            size_standard_id: {
+            size_region_id: {
                 type: DataTypes.INTEGER,
                 autoIncrement: true,
                 primaryKey: true,
@@ -27,11 +27,11 @@ module.exports = (sequelize,DataTypes) => {
         },
         {
             sequelize,
-            modelName: 'SizeStandard',
-            tableName: 'size_standards',
+            modelName: 'SizeRegion',
+            tableName: 'size_regions',
             timestamps: true
         }
     )
 
-    return SizeStandard;
+    return SizeRegion;
 }

@@ -1,4 +1,4 @@
-import React, { useEffect, useState} from "react";
+import React, { useEffect, useState, useRef} from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
 
@@ -6,6 +6,7 @@ function SelectInput({ label, id, value, dropdown, handleChange}) {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [dropdownArray, setDropdownArray] = useState([]);
   const [inputValue, setInputValue] = useState('')
+  const ref = useRef(null)
 
   useEffect(() => {
     setDropdownArray(dropdown)
@@ -15,8 +16,25 @@ function SelectInput({ label, id, value, dropdown, handleChange}) {
     setInputValue(value || '')
   }, [value])
 
+  const toggle = (e) => {
+    e.stopPropagation();
+    setIsDropdownOpen(prev => !prev);
+  }
+
+  useEffect(() => {
+    const handleOutsideClick = (e) => {
+      if(ref.current && !ref.current.contains(e.target)){
+        setIsDropdownOpen(false)
+      }
+    }
+
+    document.addEventListener('click', handleOutsideClick);
+
+    return () => document.removeEventListener('click', handleOutsideClick);
+  }, [])
+
   return (
-    <div className="flex flex-col gap-[5px]">
+    <div className="flex flex-col gap-[5px]" ref={ref}>
       <label htmlFor={id}>{label}</label>
       <div className="relative group">
         <div className="select-field-container h-[56px] flex justify-between items-center border border-slate-500 p-[10px] rounded-[4px] cursor-pointer">
@@ -53,6 +71,7 @@ function SelectInput({ label, id, value, dropdown, handleChange}) {
                     onClick={() => {
                       handleChange(item);
                       setIsDropdownOpen(false);
+                      setInputValue(item?.name)
                     }}
                   >
                     {item.name}

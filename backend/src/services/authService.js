@@ -235,7 +235,6 @@ const completeAdminProfile = async (data, t, created_by) => {
   return user;
 };
 
-
 const loginUser = async ({ email, password }, request) => {
   const user = await User.findOne({ where: { email, status: "active" } });
 

@@ -81,7 +81,7 @@ module.exports = (sequelize, DataTypes) => {
 
             state_id: {
                 type: DataTypes.INTEGER,
-                allowNull: false,
+                allowNull: true,
                 references: {
                   model: 'states',
                   key: 'state_id'
@@ -92,7 +92,7 @@ module.exports = (sequelize, DataTypes) => {
         
             city_id: {
                 type: DataTypes.INTEGER,
-                allowNull: false,
+                allowNull: true,
                 references: {
                   model: 'cities',
                   key: 'city_id'

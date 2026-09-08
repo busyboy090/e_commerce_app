@@ -9,23 +9,29 @@
           "name": "Smartphones",
           "description": "Latest smartphones with smart features.",
           "sizes": ["4.7", "5.5", "6.1", "6.7"],
-          "unit": "inches"
+          "unit": "inches",
+          "region": null
         },
         {
           "name": "Laptops",
           "description": "Portable computers for work and play.",
           "sizes": ["13", "15", "17"],
-          "unit": "inches"
+          "unit": "inches",
+          "region": null
         },
         {
           "name": "Televisions",
           "description": "LED, OLED, and Smart TVs in various sizes.",
           "sizes": ["32", "43", "55", "65"],
-          "unit": "inches"
+          "unit": "inches",
+          "region": null
         },
         {
           "name": "Headphones",
-          "description": "Over-ear, in-ear and wireless audio gear."
+          "description": "Over-ear, in-ear and wireless audio gear.",
+          "region": null,
+          "unit": null,
+          "sizes":[]
         }
       ]
     },
@@ -38,23 +44,29 @@
           "name": "Men's Clothing",
           "description": "Tops, bottoms, suits and casuals for men.",
           "sizes": ["S", "M", "L", "XL"],
-          "unit": "label"
+          "unit": null,
+          "region": null
         },
         {
           "name": "Women's Clothing",
           "description": "Dresses, tops, trousers, and skirts.",
           "sizes": ["XS", "S", "M", "L", "XL"],
-          "unit": "label"
+          "unit": null,
+          "region": null
         },
         {
           "name": "Shoes",
           "description": "Casual and formal footwear.",
           "sizes": ["38", "39", "40", "41", "42", "43"],
-          "unit": "EU"
+          "region": "EU",
+          "unit": null
         },
         {
           "name": "Bags",
-          "description": "Handbags, backpacks, and purses."
+          "description": "Handbags, backpacks, and purses.",
+          "region": null,
+          "unit": null,
+          "sizes": []
         }
       ]
     },
@@ -67,17 +79,22 @@
           "name": "Furniture",
           "description": "Chairs, tables, beds and more.",
           "sizes": ["Small", "Medium", "Large"],
-          "unit": "label"
+          "unit": null,
+          "region": null
         },
         {
           "name": "Appliances",
           "description": "Electrical tools for kitchen and home.",
           "sizes": ["5", "10", "15", "20"],
-          "unit": "L"
+          "unit": "L",
+          "region": null
         },
         {
           "name": "Lighting",
-          "description": "Bulbs, LED panels, and lamps."
+          "description": "Bulbs, LED panels, and lamps.",
+          "unit": null,
+          "region": null,
+          "sizes": []
         }
       ]
     },
@@ -88,11 +105,17 @@
       "types": [
         {
           "name": "Fiction",
-          "description": "Novels, stories, and literature."
+          "description": "Novels, stories, and literature.",
+          "region": null,
+          "sizes": [],
+          "unit": null
         },
         {
           "name": "Educational",
-          "description": "School and academic resources."
+          "description": "School and academic resources.",
+          "region": null,
+          "sizes": [],
+          "unit": null
         }
       ]
     },
@@ -105,13 +128,15 @@
           "name": "Skincare",
           "description": "Creams, cleansers and treatments.",
           "sizes": ["50", "100", "200"],
-          "unit": "ml"
+          "unit": "ml",
+          "region": null
         },
         {
           "name": "Fragrances",
           "description": "Perfumes and deodorants.",
           "sizes": ["30", "50", "100"],
-          "unit": "ml"
+          "unit": "ml",
+          "region": null
         }
       ]
     },
@@ -124,13 +149,15 @@
           "name": "Sportswear",
           "description": "Activewear for gym and sports.",
           "sizes": ["S", "M", "L", "XL"],
-          "unit": "label"
+          "unit": null,
+          "region": null
         },
         {
           "name": "Footwear",
           "description": "Shoes for running and outdoor.",
           "sizes": ["40", "41", "42", "43"],
-          "unit": "EU"
+          "unit": null,
+          "region": "EU"
         }
       ]
     },
@@ -143,11 +170,15 @@
           "name": "Educational Toys",
           "description": "Toys that boost thinking and creativity.",
           "sizes": ["Small", "Medium", "Large"],
-          "unit": "label"
+          "unit": null,
+          "region": null
         },
         {
           "name": "Board Games",
-          "description": "Games for families and groups."
+          "description": "Games for families and groups.",
+          "region": null,
+          "sizes": [],
+          "unit": null
         }
       ]
     },
@@ -160,11 +191,15 @@
           "name": "Tires & Wheels",
           "description": "Rims and tires for all vehicles.",
           "sizes": ["14", "15", "16", "17"],
-          "unit": "inches"
+          "unit": "inches",
+          "region": null
         },
         {
           "name": "Car Electronics",
-          "description": "Audio, navigation and sensors."
+          "description": "Audio, navigation and sensors.",
+          "region": null,
+          "sizes": [],
+          "unit": null
         }
       ]
     },
@@ -177,13 +212,15 @@
           "name": "Vitamins & Supplements",
           "description": "Health boosters and immunity support.",
           "sizes": ["30", "60", "90"],
-          "unit": "capsules"
+          "unit": "capsules",
+          "region": null
         },
         {
           "name": "Cleaning Products",
           "description": "Detergents and disinfectants.",
           "sizes": ["500", "750", "1000"],
-          "unit": "ml"
+          "unit": "ml",
+          "region": null
         }
       ]
     },
@@ -196,13 +233,15 @@
           "name": "Beverages",
           "description": "Soft drinks, juices, and water.",
           "sizes": ["250", "500", "1000"],
-          "unit": "ml"
+          "unit": "ml",
+          "region": null
         },
         {
           "name": "Snacks",
           "description": "Chips, biscuits, and finger foods.",
           "sizes": ["50", "100", "200"],
-          "unit": "g"
+          "unit": "g",
+          "region": null
         }
       ]
     }

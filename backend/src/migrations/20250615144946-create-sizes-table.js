@@ -11,10 +11,9 @@ module.exports = {
         primaryKey: true
       },
 
-      label: {
+      name: {
         type: Sequelize.STRING,
         allowNull: false,
-        unique: true
       },
 
       type_id: {
@@ -28,12 +27,23 @@ module.exports = {
         onUpdate: 'CASCADE'
       },
 
-      size_standard_id: {
+      size_region_id: {
         type: Sequelize.INTEGER,
-        allowNull: false,
+        allowNull: true,
         references: {
-          model: 'size_standards',
-          key: 'size_standard_id'
+          model: 'size_regions',
+          key: 'size_region_id'
+        },
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE'
+      },
+
+      unit_id: {
+        type: Sequelize.INTEGER,
+        allowNull: true,
+        references: {
+          model: 'units',
+          key: 'unit_id'
         },
         onDelete: 'CASCADE',
         onUpdate: 'CASCADE'

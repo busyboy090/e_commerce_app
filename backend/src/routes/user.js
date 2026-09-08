@@ -2,6 +2,7 @@ const express = require("express");
 const validationMiddleware = require("../middlewares/validators.js");
 const authMiddleware = require("../middlewares/auth.middleware.js");
 const userController = require("../controllers/user.controller.js");
+const cartController = require("../controllers/cart.controller.js");
 
 const router = express.Router();
 
@@ -18,9 +19,5 @@ router.post(
 router.use(authMiddleware.authMiddleware);
 
 router.get("/me", userController.getUserDetails);
-
-router.get("/address", userController.getUserAddresses);
-
-router.post("/address/create", userController.createNewAddress);
 
 module.exports = router;

@@ -2,23 +2,30 @@ import {React, useState} from 'react';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash, faPen, faChevronDown } from "@fortawesome/free-solid-svg-icons";
+import Swal from 'sweetalert2';
 
 // AddressCard Component
-function AddressCard({ edit, ...props }) {
-  const [isDefaultAddress, setIsDefaultAddress] = useState(props.setAsDefault);
-  const [visible, setVisible] = useState(true);
-
-  if (!visible) return null;
-
+function AddressCard(props) {
+  const deleteAddress = () => {
+    Swal.fire({
+      title: 'Remove this Address?',
+      text: "You'll no longer be able to use this address for future orders.",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, remove it',
+      confirmButtonColor: '#DB4444',
+      cancelButtonText: 'Cancel',
+    })
+  }
   return (
     <div className="shadow p-[15px] flex flex-col gap-[10px] rounded-[4px]">
-      <p className="font-bold text-[1.5rem]">{props.firstName} {props.lastName}</p>
-      <p>Country: {props.country}</p>
-      <p>State: {props.state}</p>
-      <p>City: {props.city}</p>
+      <p className="font-bold text-[1.5rem]">{props.first_name} {props.last_name}</p>
+      <p>Country: {props.country.name}</p>
+      <p>State: {props.state.name}</p>
+      <p>City: {props.city.name}</p>
       <p>Address: {props.address}</p>
       <p>Phone Number: {props.phone}</p>
-      {isDefaultAddress && (
+      {props.is_default && (
         <div className="flex gap-[15px] my-[10px] items-center">
           <svg width="25" height="25" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="green" strokeWidth="3">
             <path d="M50 5 A45 45 0 1 1 49.9 5 Z" />
@@ -32,16 +39,16 @@ function AddressCard({ edit, ...props }) {
         <div>
           <button
             type="button"
-            disabled={isDefaultAddress}
-            className={`${isDefaultAddress ? 'text-[rgba(0,0,0,0.5)]' : 'text-[#DB4444]'} font-semibold`}
+            disabled={props.is_default}
+            className={`${props.is_default ? 'text-[rgba(0,0,0,0.5)]' : 'text-[#DB4444]'} font-semibold`}
           >
             Set As Default
           </button>
         </div>
         <div className="flex gap-[25px] items-center">
-          <FontAwesomeIcon icon={faTrash} className="text-[#DB4444]" onClick={() => setVisible(false)} />
-          <Link to={`/account/manage-account/address-book/edit-address/${props.id}`}>
-            <FontAwesomeIcon icon={faPen} className="text-[#DB4444]" onClick={() => edit(props)} />
+          <FontAwesomeIcon icon={faTrash} className="text-[#DB4444]" onClick={deleteAddress} />
+          <Link to={`/account/addresses/${props.address_id}/edit`}>
+            <FontAwesomeIcon icon={faPen} className="text-[#DB4444]"/>
           </Link>
         </div>
       </div>

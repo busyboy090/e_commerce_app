@@ -1,0 +1,48 @@
+{
+    "size_regions": [
+        {
+            "code": "EU",
+            "name": "European Union"
+        },
+        {
+            "code": "UK",
+            "name": "United Kingdom"
+        },
+        {
+            "code": "US",
+            "name": "United States"
+        },
+        {
+            "code": "JP",
+            "name": "Japan"
+        },
+        {
+            "code": "CN",
+            "name": "China"
+        },
+        {
+            "code": "KR",
+            "name": "South Korea"
+        },
+        {
+            "code": "AU",
+            "name": "Australia"
+        },
+        {
+            "code": "MX",
+            "name": "Mexico"
+        },
+        {
+            "code": "IN",
+            "name": "India"
+        },
+        {
+            "code": "BR",
+            "name": "Brazil"
+        },
+        {
+            "code": "RU",
+            "name": "Russia"
+        }
+    ]
+}

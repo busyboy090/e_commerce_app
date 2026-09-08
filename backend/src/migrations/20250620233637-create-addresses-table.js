@@ -14,7 +14,6 @@ module.exports = {
       user_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
-        unique: true,
         references: {
           model: "users",
           key: "user_id",
@@ -42,12 +41,10 @@ module.exports = {
       additional_phone_number: {
         type: Sequelize.STRING(20),
         allowNull: true,
-        unique: true
       },
 
       additional_information: {
         type: Sequelize.TEXT,
-        allowNull: true
       },
 
       is_default: {
@@ -74,7 +71,7 @@ module.exports = {
 
       state_id: {
         type: Sequelize.INTEGER,
-        allowNull: false,
+        allowNull: true,
         references: {
           model: 'states',
           key: 'state_id'
@@ -85,7 +82,7 @@ module.exports = {
 
       city_id: {
         type: Sequelize.INTEGER,
-        allowNull: false,
+        allowNull: true,
         references: {
           model: 'cities',
           key: 'city_id'

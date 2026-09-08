@@ -1,88 +1,83 @@
-import { faker } from '@faker-js/faker';
-import Product from '../models/product/product.model.js';
-import Category from '../models/product/category.model.js';
-import Brand from '../models/product/brand.model.js';
-import Type from '../models/product/type.model.js';
-import Color from '../models/product/color.model.js';
-import ProductColor from '../models/product/product-color.model.js';
-import Size from '../models/product/size.model.js';
-import ProductSize from '../models/product/product-size.model.js';
-import ProductVariant from '../models/product/product-variant.model.js';
+const { faker } = require('@faker-js/faker');
+const { Category, Brand, Type, Size, Color } = require('../models/index.js');
+const fs = require('fs');
 
 const productSeeder = async () => {
-    try {
-        let category = await Category.findAll();
-        let brand = await Brand.findAll();
-        let type = await Type.findAll();
+    let category = await Category.findAll();
+    let brand = await Brand.findAll();
+    let type = await Type.findAll();
+    const products = []
 
-        for(let i = 0; i <= 10; i++) {
-            
-            const name = faker.commerce.productName();
-            const description = faker.commerce.productDescription();
-            const category_id = faker.helpers.arrayElement(category).category_id;
-            const brand_id = faker.helpers.arrayElement(brand).brand_id;
-            const type_id = faker.helpers.arrayElement(type).type_id;
 
-            let product = {
-                name,
-                description,
-                category_id,
-                brand_id,
-                type_id,
-            };
+    for(let i = 0; i <= 10; i++) {
+        const name = faker.commerce.productName();
+        const description = faker.commerce.productDescription();
+        const category_id = faker.helpers.arrayElement(category).category_id;
+        const brand_id = faker.helpers.arrayElement(brand).brand_id;
+        const type_id = faker.helpers.arrayElement(type).type_id;
 
-            product = await Product.create(product);
+        const productImages = [];
+        const productVariants = [];
 
-            const productColors = [];
-            const productVariants = [];
+        for(let j = 0; j <= 4; j++) {
+            const colors = await Color.findAll();
 
-            for(let i = 0; i <= 4; i++) {
-                const colors = await Color.findAll();
+            const color_id = faker.helpers.arrayElement(colors).color_id;
 
-                const color_id = faker.helpers.arrayElement(colors).color_id;
+            const image = faker.image.url();
 
-                const image = faker.image.url();
-                const product_id = product.product_id;
-
-                productColors.push({
-                    product_id,
-                    color_id,
-                    image
+            if(i === 2) {
+                productImages.push({
+                    image,
+                    main_image: true
                 })
-
-                const sizes = await Size.findAll();
-
-                const price = faker.commerce.price();
-                const stock = faker.number.int({max: 100});
-                const sku = faker.word.words();
-                const size_id = faker.helpers.arrayElement(sizes).size_id;
-
-                productVariants.push({
-                    product_id,
-                    color_id,
-                    size_id,
-                    price,
-                    stock,
-                    sku,
+            } else {
+                productImages.push({
+                    image,
+                    main_image: false
                 })
-
-                await ProductSize.create({
-                    size_id,
-                    product_id
-                })
-
             }
 
-            await ProductColor.bulkCreate(productColors);
-            await ProductVariant.bulkCreate(productVariants)
-            
-            console.log('Product created successfully');
+            const sizes = await Size.findAll();
+
+            const price = faker.commerce.price();
+            const stock = faker.number.int({max: 100});
+            const sku = faker.word.words();
+            const size_id = faker.helpers.arrayElement(sizes).size_id;
+            productVariants.push({
+                color_id,
+                size_id,
+                price,
+                stock,
+                sku,
+                disount_price: null,
+                discount_percent: null,
+                image
+            })
         }
 
+        const existingProduct = products.filter(p => p.name === name);
 
-    } catch (error) {
-        console.log('Error creating product', error)
+        if(existingProduct.length > 0) continue;
+
+        products.push({
+            name,
+            description,
+            category_id,
+            brand_id,
+            type_id,
+            vendor_id: 1,
+            is_approved: true,
+            approved_by: 1,
+            approved_at: new Date(),
+            productVariants,
+            productImages
+        })
     }
+
+
+    await fs.writeFileSync('src/data/products.json', JSON.stringify(products, null, 2), 'utf-8')
+
 }
 
 productSeeder()
