@@ -1,8 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import { useParams } from 'react-router-dom';
-import api from '@/api/axios';
-import Loading from '@/components/ui/Loading';
-import Ratings from '@/components/ui/Ratings';
+import api from '@/services/axios';
+import Loading from '@/components/Loading/Loading';
+import Ratings from '@/components/Ratings/Ratings';
 import { toast } from 'react-toastify';
 
 

@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import api from '../../api/axios';
+import api from '@/services/axios';
 import { toast } from 'react-toastify';
 
 function startCountdown(durationInSeconds, setTime, endTime, countdownDisplay) {

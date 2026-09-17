@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronUp, faChevronDown } from "@fortawesome/free-solid-svg-icons";
-import DeleteCart from '../../assets/icons/delete-cart.svg';
-import { formatCurrency } from '../../utils/money';
-import { useCart } from '../../hooks/useCart';
+import DeleteCart from '@/assets/icons/delete-cart.svg';
+import { formatCurrency } from '@/utils/money';
+import { useCart } from '@/hooks/useCart';
 
 function CartCard({ product }) {
   const { image, name, price, quantity, productId } = product;

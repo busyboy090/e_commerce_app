@@ -1,10 +1,10 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import vendor from "@/api/vendor.js";
+import vendor from "@/services/vendor.js";
 import PhoneInput from "react-phone-input-2";
-import TextInput from "@/components/ui/TextInput";
-import { CountryInput, BusinessTypeInput } from "@/features/components.jsx";
+import TextInput from "@/components/Input/TextInput";
+import { CountryInput, BusinessTypeInput } from "@/components/components.jsx";
 import { getUserCountry } from "@/utils/geolocation.js";
 import { validateText, validateNumber } from "@/utils/validator.js";
 

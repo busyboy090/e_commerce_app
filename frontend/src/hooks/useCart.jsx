@@ -9,7 +9,7 @@ import {
   fetchCartFromDatabase, 
   deleteCartProductFromDatabase, 
   updateCartProductQuantity 
-} from "../store/cartSlice";
+} from "@/store/cartSlice";
 
 export const useCart = () => {
     const dispatch = useDispatch();

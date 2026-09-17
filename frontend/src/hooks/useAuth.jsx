@@ -1,6 +1,6 @@
-import { login, refreshToken, logout, getUserInformations } from "../store/authSlice.js";
+import { login, refreshToken, logout, getUserInformations } from "@/store/authSlice.js";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchCartFromDatabase, syncCartToDatabase, clearCart } from "../store/cartSlice.js";
+import { fetchCartFromDatabase, syncCartToDatabase, clearCart } from "@/store/cartSlice.js";
 
 function useAuth() {
   const dispatch = useDispatch();

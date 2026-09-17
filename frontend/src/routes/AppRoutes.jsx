@@ -8,7 +8,7 @@ import MainLayout from  "@/layouts/MainLayout";
 import ProtectedRoute from './ProtectedRoute';
 
 // Components
-import Loading from '@/components/ui/Loading';
+import Loading from '@/components/Loading/Loading';
 
 // Lazy-loaded pages
 const Home = lazy(() => import('@/pages/Home'));

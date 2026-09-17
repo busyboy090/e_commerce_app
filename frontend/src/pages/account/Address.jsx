@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import AddressCard from "@/features/address/AddressCard";
+import AddressCard from "@/features/address/components/AddressCard";
 import './address.css';
-import user from '@/api/user.js';
+import user from '@/services/user.js';
 
 // Main Address Component
 function Address() {

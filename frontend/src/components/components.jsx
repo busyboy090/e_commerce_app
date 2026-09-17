@@ -1,11 +1,11 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState, useEffect, useRef } from 'react';
 import { faEyeSlash, faEye } from '@fortawesome/free-solid-svg-icons'
-import country  from "../api/country.js";
+import country  from "@/services/country.js";
 import { FixedSizeList as List } from 'react-window';
-import vendor from "../api/vendor.js";
+import vendor from "@/services/vendor.js";
 import { getUserCountry } from "../utils/geolocation.js";
-import SelectInput from '@/components/ui/SelectInput';
+import SelectInput from '@/components/Input/SelectInput';
 import PhoneInput from 'react-phone-input-2';;
 
 export function CountryInput ({handleChange,value}) {

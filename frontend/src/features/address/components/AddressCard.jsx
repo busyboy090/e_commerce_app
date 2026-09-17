@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash, faPen, faChevronDown } from "@fortawesome/free-solid-svg-icons";
 import Swal from 'sweetalert2';
 import { toast } from 'react-toastify';
-import user from '@/api/user.js';
+import user from '@/services/user.js';
 
 // AddressCard Component
 function AddressCard(props) {

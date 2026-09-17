@@ -4,12 +4,12 @@ import { useNavigate } from "react-router-dom";
 
 import "react-phone-input-2/lib/style.css";
 
-import CheckboxInput from "@/components/ui/CheckboxInput";
-import TextInput from "@/components/ui/TextInput";
-import { PhoneInputField } from "../components";
+import CheckboxInput from "@/components/Input/CheckboxInput";
+import TextInput from "@/components/Input/TextInput";
+import { PhoneInputField } from "@/components/components";
 import { getUserCountry } from "@/utils/geolocation.js";
-import country from "@/api/country.js";
-import SelectInput from '@/components/ui/SelectInput';
+import country from "@/services/country.js";
+import SelectInput from '@/components/Input/SelectInput';
 
 export function AddressForm({ initialData = {}, mode = "add", handleSubmit: onFinalSubmit }) {
   const [countries, setCountries] = useState([]);

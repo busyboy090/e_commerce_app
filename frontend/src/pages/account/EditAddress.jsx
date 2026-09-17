@@ -1,7 +1,7 @@
 import React, { useEffect, useState  } from 'react'
-import AddressForm from '@/features/address/AddressForm';
+import AddressForm from '@/features/address/components/AddressForm';
 import { useParams, useNavigate } from 'react-router-dom';
-import user from '@/api/user.js';
+import user from '@/services/user.js';
 import { toast } from 'react-toastify';
 
 

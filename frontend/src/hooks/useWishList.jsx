@@ -3,7 +3,7 @@ import {
   addToWishList,
   removeFromWishList,
   fetchProducts
-} from '../store/wishListSlice';
+} from '@/store/wishListSlice';
 
 export const useWishList = () => {
     const dispatch = useDispatch();

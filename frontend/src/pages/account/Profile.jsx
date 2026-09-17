@@ -3,8 +3,8 @@ import { faPencil } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import ProfilePics from '@/assets/images/profile-pics.jpg';
 import useAuth from '@/hooks/useAuth';
-import CheckboxInput from '@/components/ui/CheckboxInput';
-import TextInput from '@/components/ui/TextInput';
+import CheckboxInput from '@/components/Input/CheckboxInput';
+import TextInput from '@/components/Input/TextInput';
 
 function Profile() {
   const { auth } = useAuth()

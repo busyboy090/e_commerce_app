@@ -5,14 +5,14 @@ import WishlistIcon from '@/assets/icons/wishlist-icon.svg'
 import './navbar.css';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars, faUser, faBagShopping, faXmark, faRightFromBracket} from "@fortawesome/free-solid-svg-icons";
-import api from '@/api/axios';
+import api from '@/services/axios';
 import { useNavigate } from 'react-router-dom';
 import useAuth from '@/hooks/useAuth';
 import { toast } from 'react-toastify';
 import { useCart } from '@/hooks/useCart';
 import { useWishList } from '@/hooks/useWishList';
 import Nav from './Nav';
-import Auth from '@/features/auth/Auth';
+import Auth from '@/features/auth/components/Auth';
 import ProfileMenu from './ProfileMenu';
 
 function Navbar() {

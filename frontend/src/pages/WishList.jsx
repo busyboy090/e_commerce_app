@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import ProductCard from "@/features/product/ProductCard";
+import ProductCard from "@/features/products/components/ProductCard";
 import { useWishList } from "../hooks/useWishList";
 
 function WishList() {

@@ -1,5 +1,5 @@
 import React from 'react'
-import DropDownArrow from '../../assets/icons/dropdown-arrow.svg';
+import DropDownArrow from '@/assets/icons/dropdown-arrow.svg';
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css"; 
 import "slick-carousel/slick/slick-theme.css";

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import api from '../../api/axios';
+import api from '@/services/axios';
 import { toast } from 'react-toastify';
 
 function GetEmail(props) {

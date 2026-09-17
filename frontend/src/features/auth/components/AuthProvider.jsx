@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useLayoutEffect} from 'react'
-import Loading from '@/components/ui/Loading';  
+import Loading from '@/components/Loading/Loading';  
 import useAuth from '@/hooks/useAuth.jsx';
-import api from '@/api/axios.js';
+import api from '@/services/axios.js';
 import { useCart } from '@/hooks/useCart.jsx';
 
 function AuthProvider({ children }) {

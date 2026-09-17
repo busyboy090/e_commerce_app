@@ -6,7 +6,7 @@ import { Navigation, Mousewheel, Autoplay } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/mousewheel'
 import CategoryCard from './CategoryCard';
-import api from '../../api/axios'
+import api from '@/services/axios'
 
 
 function Categories() {

@@ -1,9 +1,9 @@
 import {React} from "react";
-import Hero from "@/features/hero/Hero";
-import FlashSales from "@/features/flashsales/FlashSales";
-import Categories from "@/features/categories/Categories";
+import Hero from "@/features/home/components/Hero";
+import FlashSales from "@/features/home/components/FlashSales";
+import Categories from "@/features/categories/components/Categories";
 import Jbl from "@/assets/products/BIG-JBL.svg";
-import NewArrival from "@/features/product/NewArrival";
+import NewArrival from "@/features/products/components/NewArrival";
 import FastDelivery from '@/assets/icons/Fast-Delivery.svg';
 import CustomerService from '@/assets/icons/Customer-service.svg';
 import MoneyGuarantee from '@/assets/icons/Money-Guarantee.svg';
@@ -53,7 +53,7 @@ function Home() {
         <img src={Jbl} className="w-130" alt="JBL Speaker Promo" />
       </div>
 
-      <Product />
+      {/* <Product /> */}
       <NewArrival />
 
       <div className="my-[110px]">

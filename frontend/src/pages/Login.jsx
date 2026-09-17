@@ -1,15 +1,15 @@
 import React, {useState, useRef, useEffect } from "react";
 import SideImage from "@/assets/images/login-register-image.svg";
-import TextInput from "@/components/ui/TextInput";
+import TextInput from "@/components/Input/TextInput";
 import { validateText } from "@/utils/validator";
 import { toast } from "react-toastify";
 import { useNavigate, useLocation } from "react-router-dom";
-import api from '@/api/axios';
+import api from '@/services/axios';
 import useAuth from "@/hooks/useAuth";
-import CheckboxInput from "@/components/ui/CheckboxInput";
+import CheckboxInput from "@/components/Input/CheckboxInput";
 import { encryptData, decryptData} from "@/utils/Encryption.js";
-import GoogleLogin from "@/features/auth/GoogleLogin";
-import auth from '@/api/auth.js'
+import GoogleLogin from "@/features/auth/components/GoogleLogin";
+import auth from '@/services/auth.js'
 
 
 function Login() {

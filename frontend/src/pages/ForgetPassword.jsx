@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import GetEmail from '@/features/auth/GetEmail';
-import Otp from '@/features/auth/Otp';
+import GetEmail from '@/features/auth/pages/GetEmail';
+import Otp from '@/features/auth/pages/Otp';
 import ResetPassword from './ResetPassword';
 import { useLocation } from 'react-router-dom';
 

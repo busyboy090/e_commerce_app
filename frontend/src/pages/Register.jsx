@@ -3,12 +3,12 @@ import SideImage from "@/assets/images/login-register-image.svg";
 import PhoneInput from "react-phone-input-2";
 import './register.css';
 import { validateEmail, validatePassword, validateText, validateNumber } from "@/utils/validator.js";
-import TextInput from "@/components/ui/TextInput";
-import { CountryInput } from "@/features/components.jsx";
+import TextInput from "@/components/Input/TextInput";
+import { CountryInput } from "@/components/components.jsx";
 import { toast } from "react-toastify";
 import { useNavigate, useLocation } from "react-router-dom";
-import GoogleLogin from "@/features/auth/GoogleLogin.jsx";
-import auth from '@/api/auth.js';
+import GoogleLogin from "@/features/auth/components/GoogleLogin.jsx";
+import auth from '@/services/auth.js';
 import { getUserCountry } from "@/utils/geolocation.js";
 
 function Form ({ handleChange, handleSubmit, formData, loading, errors}) {

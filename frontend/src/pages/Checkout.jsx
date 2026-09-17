@@ -7,9 +7,9 @@ import Mastercard from '@/assets/payment-method-logo/mastercard.svg'
 import Nagad from '@/assets/payment-method-logo/nagad.svg';
 import { useCart } from '@/hooks/useCart.jsx';
 import {generateCart} from '@/utils/cart.utils.js';
-import CheckoutCartCard from "@/features/checkout/CheckoutCartCard.jsx";
+import CheckoutCartCard from "@/features/checkout/components/CheckoutCartCard.jsx";
 import { formatCurrency } from "@/utils/money.js";
-import TextInput from "@/components/ui/TextInput";
+import TextInput from "@/components/Input/TextInput";
 
 function Checkout() {
   const [formData, setFormData] = useState({

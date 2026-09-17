@@ -1,6 +1,6 @@
 import React from 'react';
-import api from '../../api/axios';
-import useAuth from '../../hooks/useAuth';
+import api from '@/services/axios';
+import useAuth from '@/hooks/useAuth';
 import { useGoogleLogin } from '@react-oauth/google';
 import { toast } from 'react-toastify';
 import { useNavigate, useLocation } from 'react-router-dom';

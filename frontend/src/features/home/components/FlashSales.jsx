@@ -2,12 +2,12 @@ import { React, useRef, useEffect, useState } from "react";
 import Countdown from "react-countdown";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight, faArrowLeft } from "@fortawesome/free-solid-svg-icons";
-import ProductCard from "@/features/product/ProductCard";
+import ProductCard from "@/features/products/components/ProductCard";
 import { SwiperSlide, Swiper } from "swiper/react";
 import { Mousewheel, Navigation, Autoplay, Pagination, Grid } from "swiper/modules";
 import 'swiper/css';
 import "./flashSales.css";
-import api from '@/api/axios'
+import api from '@/services/axios'
 
 function FlashSales() {
   const flashSalesEndDate = new Date();

@@ -1,8 +1,8 @@
 import React from 'react';
-import Ps5 from '../../assets/products/PS5.svg';
-import WomensCollection from '../../assets/products/Womens-Collection.svg';
-import Perfume from '../../assets/products/Perfume.svg';
-import Speakers from '../../assets/products/Speakers.svg';
+import Ps5 from '@/assets/products/PS5.svg';
+import WomensCollection from '@/assets/products/Womens-Collection.svg';
+import Perfume from '@/assets/products/Perfume.svg';
+import Speakers from '@/assets/products/Speakers.svg';
 import './NewArrival.css';
 
 function NewArrival() {

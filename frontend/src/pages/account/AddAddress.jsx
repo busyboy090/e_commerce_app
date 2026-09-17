@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import AddressForm from '@/features/address/AddressForm';
-import user from '@/api/user.js';
+import AddressForm from '@/features/address/components/AddressForm';
+import user from '@/services/user.js';
 import { toast } from 'react-toastify';
 
 function AddAddress() {

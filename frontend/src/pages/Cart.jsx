@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import CartCard from '../features/cart/CartCard.jsx';
+import CartCard from '@/features/cart/components/CartCard.jsx';
 import { useCart } from '../hooks/useCart.jsx';
 import useAuth from '../hooks/useAuth.jsx';
 import { generateCart } from '../utils/cart.utils.js';

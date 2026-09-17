@@ -3,8 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { toast } from 'react-toastify';
-import api from '../api/axios';
-import TextInput from '@/components/ui/TextInput';
+import api from '@/services/axios';
+import TextInput from '@/components/Input/TextInput';
 
 function ResetPassword(props) {
     const navigate = useNavigate();
