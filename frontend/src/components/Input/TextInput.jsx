@@ -1,8 +1,7 @@
 import { useState } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEyeSlash, faEye } from '@fortawesome/free-solid-svg-icons';
+import { Eye, EyeOff } from 'lucide-react';
 
-function TextInput({ label, id, type = 'text', value, onChange, error, className = '', ...rest }) {
+function TextInput({ label, id, type = 'text', error, className = '', ...rest }) {
   const [passwordVisible, setPasswordVisible] = useState(false);
   const isPassword = type === 'password';
   const inputType = isPassword ? (passwordVisible ? 'text' : 'password') : type;
@@ -17,17 +16,17 @@ function TextInput({ label, id, type = 'text', value, onChange, error, className
           id={id}
           name={id}
           type={inputType}
-          value={value}
-          onChange={onChange}
           className="h-[50px] w-full bg-[#F5F5F5] rounded-[4px] focus:outline-0 p-[10px]"
           {...rest}
         />
         {isPassword && (
-          <FontAwesomeIcon
-            icon={passwordVisible ? faEyeSlash : faEye}
+          <button
+            type="button"
             className="absolute right-[10px] top-[50%] -translate-y-1/2 cursor-pointer text-gray-400"
             onClick={() => setPasswordVisible(prev => !prev)}
-          />
+          >
+            {passwordVisible ? <EyeOff size={18} /> : <Eye size={18} />}
+          </button>
         )}
       </div>
       {error && <p className="text-red-500 text-sm">{error}</p>}

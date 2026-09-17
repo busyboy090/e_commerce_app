@@ -1,4 +1,4 @@
-import { React, useState } from "react";
+import { useState } from "react";
 import WhiteTick from "@/assets/icons/white-tick.svg";
 import './checkout.css';
 import Bkash from '@/assets/payment-method-logo/bkash.svg'
@@ -6,32 +6,33 @@ import Visa from '@/assets/payment-method-logo/visa.svg'
 import Mastercard from '@/assets/payment-method-logo/mastercard.svg'
 import Nagad from '@/assets/payment-method-logo/nagad.svg';
 import { useCart } from '@/hooks/useCart.jsx';
-import {generateCart} from '@/utils/cart.utils.js';
+import { generateCart } from '@/utils/cart.utils.js';
 import CheckoutCartCard from "@/features/checkout/components/CheckoutCartCard.jsx";
 import { formatCurrency } from "@/utils/money.js";
 import TextInput from "@/components/Input/TextInput";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { checkoutSchema } from "@/utils/schemas";
 
 function Checkout() {
-  const [formData, setFormData] = useState({
-    first_name: '',
-    company_name: '',
-    street_address: '',
-    apartment: '',
-    town_city: '',
-    phone_number: '',
-    email: '',
-  }) 
   const [isChecked, setIsChecked] = useState(false);
-  const {products, cartItems} = useCart();
+  const { products, cartItems } = useCart();
   const cart = generateCart(products, cartItems);
-  const totalProduct = cart.reduce((total, item) => total + item.quantity, 0);
   const cartSubTotal = cart.reduce((total, item) => total + item.price * item.quantity, 0).toFixed(2);
   const cartTotal = cart.reduce((total, item) => total + item.price * item.quantity, 0).toFixed(2);
 
-  const handleChange = (e) => {
-    const { id, value } = e.target;
-    setFormData((prev) => ({...prev, [id]: value}));
-  }
+  const { register, handleSubmit, formState: { errors } } = useForm({
+    resolver: zodResolver(checkoutSchema),
+    defaultValues: {
+      first_name: '', company_name: '', street_address: '',
+      apartment: '', town_city: '', phone_number: '', email: '',
+    },
+  });
+
+  const onSubmit = (data) => {
+    // TODO: integrate with order service
+  };
+
   return (
     <div className="container mb-[50px!important] lg:mb-[100px!important]">
       <p className="my-[40px] lg:my-[80px]">Home / checkout</p>
@@ -39,54 +40,31 @@ function Checkout() {
 
       <div className="grid grid-cols-12 gap-[25px] lg:gap-[150px]">
         <div className="col-span-12 md:col-span-5 lg:col-span-4">
-          <form>
+          <form onSubmit={handleSubmit(onSubmit)}>
             <div className="flex flex-col gap-[20px]">
-              {/* first name */}
-              <TextInput type='text' label='First Name*' id='first_name' onChange={handleChange} value={formData.first_name}/>
-
-              {/* company name */}
-              <TextInput type='text' label='Company Name*' id='company_name' onChange={handleChange} value={formData.company_name}/>
-
-              {/* street address */}
-              <TextInput type='text' label='Street Address*' id='street_address' onChange={handleChange} value={formData.street_address}/>
-
-              {/* Apartment, floor, etc. (optional)*/}
-              <TextInput type='text' label='Apartment, floor, etc. (optional)' id='apartment' onChange={handleChange} value={formData.apartment}/>
-              
-              {/* Town / City */}
-              <TextInput type='text' label='Town/City*' id='town_city' onChange={handleChange} value={formData.town_city}/>
-
-              {/* Phone Number* */}
-              <TextInput type='tel' label='Phone Number' id='phone_number' onChange={handleChange} value={formData.phone_number}/>
-
-              {/* Email Address*/}
-              <TextInput type='email' label='Email' id='email' onChange={handleChange} value={formData.email}/>
+              <TextInput type='text' label='First Name*' id='first_name' {...register('first_name')} error={errors.first_name?.message} />
+              <TextInput type='text' label='Company Name' id='company_name' {...register('company_name')} />
+              <TextInput type='text' label='Street Address*' id='street_address' {...register('street_address')} error={errors.street_address?.message} />
+              <TextInput type='text' label='Apartment, floor, etc. (optional)' id='apartment' {...register('apartment')} />
+              <TextInput type='text' label='Town/City*' id='town_city' {...register('town_city')} error={errors.town_city?.message} />
+              <TextInput type='tel' label='Phone Number*' id='phone_number' {...register('phone_number')} error={errors.phone_number?.message} />
+              <TextInput type='email' label='Email*' id='email' {...register('email')} error={errors.email?.message} />
 
               <div className="flex gap-[16px] items-center">
                 <div className="relative mt-[6px]">
-                  {/* Checkbox Box */}
                   <input
                     type="checkbox"
                     className="bg-[#DB4444] appearance-none h-[24px] w-[24px] rounded-[4px]"
-                    onChange={() => {
-                      setIsChecked(!isChecked);
-                    }}
+                    onChange={() => setIsChecked(!isChecked)}
                   />
-                  {/* White Tick Appears When Checked */}
                   <img
                     src={WhiteTick}
                     alt=""
-                    className={`${
-                      isChecked ? "block" : "hidden"
-                    } absolute top-[40%] left-[50%] translate-[-50%]`}
-                    onClick={() => {
-                      setIsChecked(!isChecked);
-                    }}
+                    className={`${isChecked ? "block" : "hidden"} absolute top-[40%] left-[50%] translate-[-50%]`}
+                    onClick={() => setIsChecked(!isChecked)}
                   />
                 </div>
-                <label htmlFor="">
-                  Save this information for faster check-out next time
-                </label>
+                <label>Save this information for faster check-out next time</label>
               </div>
             </div>
           </form>
@@ -94,13 +72,10 @@ function Checkout() {
 
         <div className="col-span-12 md:col-span-5 lg:col-span-6 mt-[25px]">
           <div className="lg:w-[70%] flex flex-col gap-[32px]">
-            
-            {
-              cart.map((product) => (
-                <CheckoutCartCard product={product} key={product.productId} />
-              ))
-            }
-          
+            {cart.map((product) => (
+              <CheckoutCartCard product={product} key={product.productId} />
+            ))}
+
             <p className="flex justify-between border-b-2 border-[rgba(0,0,0,0.1)] rounded-[4px] pb-[20px] items-center">
               Subtotal <span>{formatCurrency(cartSubTotal)}</span>
             </p>
@@ -111,29 +86,20 @@ function Checkout() {
               Total <span>{formatCurrency(cartTotal)}</span>
             </p>
 
-            {/* payment options */}
             <div className="flex flex-col gap-[20px]">
-              {/* bank payment option */}
               <div className="flex max-md:flex-col max-md:items-start justify-between items-center">
                 <div className="flex gap-5.5 items-center">
-                  <input
-                    type="radio"
-                    value="bank"
-                    id="bank"
-                    name="payment"
-                  />
+                  <input type="radio" value="bank" id="bank" name="payment" />
                   <label htmlFor="bank">Bank</label>
                 </div>
                 <div className="flex gap-[10px]">
-                    {/* visa */}
-                    <img src={Bkash} alt="Bkash"  className="w-[70px]"/>
-                    <img src={Visa} alt="Visa"  className="w-[70px]"/>
-                    <img src={Mastercard} alt="Mastercard" className="w-[70px]"/>
-                    <img src={Nagad} alt="Nagad" className="w-[70px]"/>
+                  <img src={Bkash} alt="Bkash" className="w-[70px]" />
+                  <img src={Visa} alt="Visa" className="w-[70px]" />
+                  <img src={Mastercard} alt="Mastercard" className="w-[70px]" />
+                  <img src={Nagad} alt="Nagad" className="w-[70px]" />
                 </div>
               </div>
 
-              {/* cash on delivery */}
               <div className="flex gap-5.5 items-center">
                 <input type="radio" value="cash" id="cash" name="payment" />
                 <label htmlFor="cash">Cash on delivery</label>

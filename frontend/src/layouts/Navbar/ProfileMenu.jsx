@@ -1,15 +1,9 @@
 import { useState, useRef, useEffect } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 import User from '@/assets/icons/user.svg';
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { 
-  faUser, 
-  faBagShopping, 
-  faXmark, 
-  faRightFromBracket 
-} from "@fortawesome/free-solid-svg-icons";
+import { User as UserIcon, ShoppingBag, X, LogOut } from 'lucide-react';
 
-export function MenuLink({ name, icon, to, onClick }) {
+export function MenuLink({ name, icon: Icon, to, onClick }) {
   return (
     <li>
       <RouterLink 
@@ -17,7 +11,7 @@ export function MenuLink({ name, icon, to, onClick }) {
         onClick={onClick}
         className='flex items-center gap-3.5 p-2.5 text-sm w-full text-white/90 hover:bg-white hover:text-black rounded transition-colors duration-150'
       >
-        <FontAwesomeIcon icon={icon} className='text-base w-5 text-center' />
+        <Icon size={18} strokeWidth={1.5} />
         <span>{name}</span>
       </RouterLink>
     </li>
@@ -66,16 +60,16 @@ function ProfileMenu({ user, logout, isAuthenticated }) {
         <div className='absolute top-[45px] right-0 z-50 w-[240px] rounded-lg bg-neutral-900/90 backdrop-blur-md shadow-xl border border-white/10 p-3'>
           {isAuthenticated ? (
             <ul className='space-y-1'>
-              <MenuLink to='/account/profile' name='Manage My Account' icon={faUser} onClick={closeMenu} />
-              <MenuLink to='/account/orders' name='My Orders' icon={faBagShopping} onClick={closeMenu} />
-              <MenuLink to='/account/cancellations' name='My Cancellations' icon={faXmark} onClick={closeMenu} />
+              <MenuLink to='/account/profile' name='Manage My Account' icon={UserIcon} onClick={closeMenu} />
+              <MenuLink to='/account/orders' name='My Orders' icon={ShoppingBag} onClick={closeMenu} />
+              <MenuLink to='/account/cancellations' name='My Cancellations' icon={X} onClick={closeMenu} />
               <li className='pt-1 border-t border-white/10 mt-1'>
                 <button 
                   type='button' 
                   onClick={() => { logout(); closeMenu(); }} 
                   className='flex items-center gap-3.5 p-2.5 w-full text-sm text-white/90 hover:bg-white hover:text-black rounded transition-colors duration-150'
                 >
-                  <FontAwesomeIcon icon={faRightFromBracket} className='text-base w-5 text-center' />
+                  <LogOut size={18} strokeWidth={1.5} />
                   <span>Logout</span>
                 </button>
               </li>

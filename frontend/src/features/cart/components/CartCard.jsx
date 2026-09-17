@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faChevronUp, faChevronDown } from "@fortawesome/free-solid-svg-icons";
+import { ChevronUp, ChevronDown } from "lucide-react";
 import DeleteCart from '@/assets/icons/delete-cart.svg';
 import { formatCurrency } from '@/utils/money';
 import { useCart } from '@/hooks/useCart';
@@ -72,8 +71,8 @@ function CartCard({ product }) {
           </select>
 
           <div className="absolute top-1 right-2 flex flex-col gap-[2px]">
-            <FontAwesomeIcon icon={faChevronUp} onClick={increment} className="cursor-pointer" />
-            <FontAwesomeIcon icon={faChevronDown} onClick={decrement} className="cursor-pointer" />
+            <ChevronUp size={14} onClick={increment} className="cursor-pointer" />
+            <ChevronDown size={14} onClick={decrement} className="cursor-pointer" />
           </div>
         </div>
       </td>

@@ -12,7 +12,9 @@ function EditAddress() {
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
-  useEffect(()=>{
+  const fetchAddress = () => {
+    setLoading(true);
+    setError(null);
     user.getAddress(id)
       .then(data => {
         setAddress(data)
@@ -22,6 +24,10 @@ function EditAddress() {
         setError('Failed to load address');
         setLoading(false)
       })
+  };
+
+  useEffect(()=>{
+    fetchAddress();
   },[])
 
   if(loading) {
@@ -37,7 +43,7 @@ function EditAddress() {
       <div className="text-center my-10">
         <p className="text-red-500 text-lg">{error}</p>
         <button 
-          onClick={() => window.location.reload()} 
+          onClick={fetchAddress} 
           className="mt-4 px-4 py-2 bg-[#DB4444] text-white rounded"
         >
           Retry

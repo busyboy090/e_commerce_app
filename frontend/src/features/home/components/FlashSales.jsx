@@ -1,7 +1,6 @@
 import { useRef, useEffect, useState } from "react";
 import Countdown from "react-countdown";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowRight, faArrowLeft } from "@fortawesome/free-solid-svg-icons";
+import { ArrowLeft, ArrowRight } from "lucide-react";
 import ProductCard from "@/features/products/components/ProductCard";
 import { SwiperSlide, Swiper } from "swiper/react";
 import { Mousewheel, Navigation, Autoplay, Pagination, Grid } from "swiper/modules";
@@ -134,11 +133,11 @@ function FlashSales() {
 
           <div className="flex gap-[10px] items-center">
             <button className="w-[46px] h-[46px] bg-[#F5F5F5] rounded-full" ref={prevSlideRef}>
-              <FontAwesomeIcon icon={faArrowLeft} />
+              <ArrowLeft size={18} />
             </button>
 
             <button className="w-[46px] h-[46px] bg-[#F5F5F5] rounded-full" ref={nextSlideRef}>
-              <FontAwesomeIcon icon={faArrowRight} />
+              <ArrowRight size={18} />
             </button>
           </div>
         </div>

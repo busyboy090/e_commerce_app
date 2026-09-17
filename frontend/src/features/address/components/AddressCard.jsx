@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrash, faPen, faChevronDown } from "@fortawesome/free-solid-svg-icons";
+import { Trash, Pencil } from "lucide-react";
 import Swal from 'sweetalert2';
 import { toast } from 'react-toastify';
 import user from '@/services/user.js';
@@ -58,9 +57,9 @@ function AddressCard({ onDeleted, ...props }) {
           </button>
         </div>
         <div className="flex gap-[25px] items-center">
-          <FontAwesomeIcon icon={faTrash} className="text-[#DB4444]" onClick={deleteAddress} />
+          <Trash size={18} className="text-[#DB4444] cursor-pointer" onClick={deleteAddress} />
           <Link to={`/account/addresses/${props.address_id}/edit`}>
-            <FontAwesomeIcon icon={faPen} className="text-[#DB4444]"/>
+            <Pencil size={18} className="text-[#DB4444]"/>
           </Link>
         </div>
       </div>

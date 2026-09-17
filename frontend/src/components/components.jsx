@@ -1,6 +1,4 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState, useEffect, useRef } from 'react';
-import { faEyeSlash, faEye } from '@fortawesome/free-solid-svg-icons'
 import country  from "@/services/country.js";
 import { FixedSizeList as List } from 'react-window';
 import vendor from "@/services/vendor.js";

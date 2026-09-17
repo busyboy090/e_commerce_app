@@ -1,6 +1,5 @@
 import { useRef, useEffect, useState } from 'react';
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowRight, faArrowLeft } from "@fortawesome/free-solid-svg-icons";
+import { ArrowLeft, ArrowRight } from "lucide-react";
 import { Swiper, SwiperSlide} from 'swiper/react';
 import { Navigation, Mousewheel, Autoplay } from 'swiper/modules';
 import 'swiper/css';
@@ -65,11 +64,11 @@ function Categories() {
 
                 <div className='flex gap-[10px] items-center'>
                     <button className='w-[46px] h-[46px] bg-[#F5F5F5] rounded-full' ref={prevSlideRef}>
-                        <FontAwesomeIcon icon={faArrowLeft} />
+                        <ArrowLeft size={18} />
                     </button>
 
                     <button className='w-[46px] h-[46px] bg-[#F5F5F5] rounded-full' ref={nextSlideRef}>   
-                        <FontAwesomeIcon icon={faArrowRight} />
+                        <ArrowRight size={18} />
                     </button>
                 </div>
             </div>

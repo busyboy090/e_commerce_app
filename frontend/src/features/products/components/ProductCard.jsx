@@ -1,14 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faHeart as faHeartRegular,
-  faEye as faEyeRegular,
-} from "@fortawesome/free-regular-svg-icons";
-import {
-  faHeart as faHeartSolid,
-  faEye as faEyeSolid,
-} from "@fortawesome/free-solid-svg-icons";
+import { Heart, Eye } from "lucide-react";
 import "./ProductCard.css";
 import CartIcon from "@/assets/icons/cart-black-icon.svg";
 import DeleteIcon from '@/assets/icons/icon-delete.svg';
@@ -77,8 +69,10 @@ import DiscountBadge from '@/components/common/DiscountBadge';
                 }
               }
             >
-              <FontAwesomeIcon
-                icon={isWishlisted ? faHeartSolid : faHeartRegular}
+              <Heart
+                size={16}
+                fill={isWishlisted ? "#DB4444" : "none"}
+                stroke={isWishlisted ? "#DB4444" : "currentColor"}
               />
             </button>
           ) : (
@@ -108,7 +102,7 @@ import DiscountBadge from '@/components/common/DiscountBadge';
                 aria-label="Quick view"
                 onClick={() => setIsViewed(!isViewed)}
               >
-                <FontAwesomeIcon icon={isViewed ? faEyeSolid : faEyeRegular} />
+                <Eye size={16} />
               </button>
             ) : ''
           }

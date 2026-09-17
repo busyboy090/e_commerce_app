@@ -47,7 +47,7 @@ function Address() {
       <div className="text-center my-10">
         <p className="text-red-500 text-lg">{error}</p>
         <button 
-          onClick={() => window.location.reload()} 
+          onClick={refreshAddresses} 
           className="mt-4 px-4 py-2 bg-[#DB4444] text-white rounded"
         >
           Retry

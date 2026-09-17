@@ -1,14 +1,32 @@
-.phone .form-control {
-    background-color: transparent !important;
-    border-bottom: 1px solid rgb(128, 128, 128, 0.3) !important;
+.phone-input-container .react-tel-input {
+  font-family: inherit;
 }
 
-.phone {
-    background-color: transparent !important;
+.phone-input-container .react-tel-input .form-control {
+  width: 100% !important;
+  height: 50px !important;
+  background-color: #F5F5F5 !important;
+  border: none !important;
+  border-radius: 4px !important;
+  padding: 10px 10px 10px 48px !important;
+  font-size: 16px !important;
+  color: #000 !important;
 }
 
-.phone .flag-dropdown {
-    background-color: transparent !important;
+.phone-input-container .react-tel-input .flag-dropdown {
+  background-color: #F5F5F5 !important;
+  border: none !important;
+  border-radius: 4px 0 0 4px !important;
+}
+
+.phone-input-container .react-tel-input .flag-dropdown:hover,
+.phone-input-container .react-tel-input .flag-dropdown.open {
+  background-color: #e5e5e5 !important;
+}
+
+.phone-input-container .react-tel-input .selected-flag {
+  padding: 0 6px 0 8px !important;
+  border-radius: 4px 0 0 4px !important;
 }
 
 .hide-scrollbar {

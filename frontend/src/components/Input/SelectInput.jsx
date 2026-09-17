@@ -1,6 +1,5 @@
 import React, { useEffect, useState, useRef} from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
+import { ChevronDown } from "lucide-react";
 
 function SelectInput({ label, id, value, dropdown, handleChange}) {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -35,9 +34,9 @@ function SelectInput({ label, id, value, dropdown, handleChange}) {
 
   return (
     <div className="flex flex-col gap-[5px]" ref={ref}>
-      <label htmlFor={id}>{label}</label>
+      <label htmlFor={id} className="text-[rgba(0,0,0,0.5)]">{label}</label>
       <div className="relative group">
-        <div className="select-field-container h-[56px] flex justify-between items-center border border-slate-500 p-[10px] rounded-[4px] cursor-pointer">
+        <div className="select-field-container h-[50px] flex justify-between items-center bg-[#F5F5F5] p-[10px] rounded-[4px] cursor-pointer">
           <input
             type="text"
             id={id}
@@ -52,11 +51,12 @@ function SelectInput({ label, id, value, dropdown, handleChange}) {
             }}
             className="w-full focus:outline-none"
           />
-          <FontAwesomeIcon
-            icon={faChevronDown}
+          <ChevronDown
+            size={16}
             onClick={() => {
               setIsDropdownOpen(!isDropdownOpen);
             }}
+            className="cursor-pointer"
           />
         </div>
         {

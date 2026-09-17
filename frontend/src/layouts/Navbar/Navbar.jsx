@@ -3,8 +3,7 @@ import SearchIcon from '@/assets/icons/search-icon.svg'
 import CartIcon from '@/assets/icons/cart-icon.svg'
 import WishlistIcon from '@/assets/icons/wishlist-icon.svg'
 import './navbar.css';
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBars } from "@fortawesome/free-solid-svg-icons";
+import { Menu } from 'lucide-react';
 import api from '@/services/axios';
 import { useNavigate, useLocation, Link } from 'react-router-dom';
 import useAuth from '@/hooks/useAuth';
@@ -53,8 +52,8 @@ function Navbar() {
                     {/* mobile nav toggle */}
                     <button onClick={() => {
                         setToggle(!toggle)
-                    }} className='text-[1.5rem] lg:hidden'>
-                        <FontAwesomeIcon icon={faBars} />
+                    }} className='lg:hidden'>
+                        <Menu size={24} strokeWidth={1.5} />
                     </button>
                     <Link to="/" className='font-bold text-3xl'>Exclusive</Link>
                 </div>
@@ -68,7 +67,7 @@ function Navbar() {
                     <ProfileMenu user={user} logout={handleLogout} isAuthenticated={isAuthenticated} />
                 </div>
 
-                <div className={`flex-col max-lg:w-screen mt-[10px] lg:mt-[0] lg:flex lg:flex-row space-x-[148px] lg:items-center ${toggle ? 'flex' : 'hidden'} `}>
+                <div className={`flex-col max-lg:w-full mt-[10px] lg:mt-[0] lg:flex lg:flex-row space-x-[148px] lg:items-center ${toggle ? 'flex' : 'hidden'} `}>
                     <Nav />
 
                     <div className='flex  items-center space-x-6 mt-[10px] lg:mt-[0]'>

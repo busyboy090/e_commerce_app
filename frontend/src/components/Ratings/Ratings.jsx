@@ -1,5 +1,4 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faStar, faStarHalfStroke } from "@fortawesome/free-solid-svg-icons";
+import { Star, StarHalf } from 'lucide-react';
 
 const Ratings = ({ratings = '0.0'}) => {
     const renderRatings = () => {
@@ -9,12 +8,12 @@ const Ratings = ({ratings = '0.0'}) => {
     
         if (firstHalf) {
           for (let i = 0; i < parseInt(firstHalf); i++) {
-            ratingsArray.push(<FontAwesomeIcon key={i} icon={faStar} />);
+            ratingsArray.push(<Star key={i} size={14} fill="#FFAD33" stroke="#FFAD33" />);
           }
         }
     
         if (secondHalf === '5') {
-          ratingsArray.push(<FontAwesomeIcon key={ratings} icon={faStarHalfStroke} />);
+          ratingsArray.push(<StarHalf key={ratings} size={14} fill="#FFAD33" stroke="#FFAD33" />);
         }
     
         return ratingsArray;
@@ -23,7 +22,7 @@ const Ratings = ({ratings = '0.0'}) => {
     return (
         <ul className="flex gap-[4px]">
             {renderRatings().map((rating, index) => (
-                <li className="text-[#FFAD33]" key={index}>
+                <li key={index}>
                     {rating}
                 </li>
             )

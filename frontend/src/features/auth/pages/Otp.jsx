@@ -1,7 +1,6 @@
 import React, { useState, useRef, useEffect} from 'react'
 import { Link } from 'react-router-dom';
-import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { ArrowLeft } from 'lucide-react';
 import { toast } from 'react-toastify';
 import api from '@/services/axios';
 import ResendOtp from './ResendOtp';
@@ -122,9 +121,9 @@ function Otp(props) {
 
             <ResendOtp email={email}/>
 
-            <Link to="/login" className='text-center block mt-[20px]'>
-                <FontAwesomeIcon icon={faArrowLeft} />
-                <span className='ms-[10px] font-medium'>Back to login</span>
+            <Link to="/login" className='inline-flex items-center gap-2 text-center mt-[20px]'>
+                <ArrowLeft size={18} strokeWidth={1.5} />
+                <span className='font-medium'>Back to login</span>
             </Link>
         </form>
     );

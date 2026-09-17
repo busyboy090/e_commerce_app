@@ -6,8 +6,7 @@ import NewArrival from "@/features/products/components/NewArrival";
 import FastDelivery from '@/assets/icons/Fast-Delivery.svg';
 import CustomerService from '@/assets/icons/Customer-service.svg';
 import MoneyGuarantee from '@/assets/icons/Money-Guarantee.svg';
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowUp} from "@fortawesome/free-solid-svg-icons";
+import { ArrowUp } from "lucide-react";
 
 function Home() {
   return (
@@ -90,7 +89,7 @@ function Home() {
           window.scrollTo({ top: 0, behavior: "smooth" });
         }}
       >
-        <FontAwesomeIcon icon={faArrowUp} />
+        <ArrowUp size={20} />
       </button>
     </div>
   );

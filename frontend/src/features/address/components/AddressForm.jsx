@@ -1,5 +1,6 @@
-import React, { useEffect, useState, useMemo, useRef } from "react";
-import { useForm, Controller, FormProvider, set } from "react-hook-form";
+import React, { useEffect, useState, useMemo } from "react";
+import { useForm, Controller, FormProvider } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { useNavigate } from "react-router-dom";
 
 import "react-phone-input-2/lib/style.css";
@@ -11,6 +12,7 @@ import { getUserCountry } from "@/utils/geolocation.js";
 import country from "@/services/country.js";
 import SelectInput from '@/components/Input/SelectInput';
 import { toast } from 'react-toastify';
+import { addressSchema } from "@/utils/schemas";
 
 export function AddressForm({ initialData = {}, mode = "add", handleSubmit: onFinalSubmit }) {
   const [countries, setCountries] = useState([]);
@@ -19,6 +21,7 @@ export function AddressForm({ initialData = {}, mode = "add", handleSubmit: onFi
   const navigate = useNavigate();
 
   const methods = useForm({
+    resolver: zodResolver(addressSchema),
     defaultValues: {
       first_name: "",
       last_name: "",
@@ -125,13 +128,13 @@ export function AddressForm({ initialData = {}, mode = "add", handleSubmit: onFi
             label="First Name"
             id="first_name"
             error={errors.first_name?.message}
-            {...register("first_name", { required: "First name is required" })}
+            {...register("first_name")}
           />
           <TextInput
             label="Last Name"
             id="last_name"
             error={errors.last_name?.message}
-            {...register("last_name", { required: "Last name is required" })}
+            {...register("last_name")}
           />
 
         {/* Country, State, City, Phone */}
@@ -139,7 +142,6 @@ export function AddressForm({ initialData = {}, mode = "add", handleSubmit: onFi
             <Controller
               name="country"
               control={control}
-              rules={{ required: "Country is required" }}
               render={({ field }) => (
                 <SelectInput
                   id='country'
@@ -163,7 +165,6 @@ export function AddressForm({ initialData = {}, mode = "add", handleSubmit: onFi
                 <Controller
                   name="state"
                   control={control}
-                  rules={{ required: "State is required" }}
                   render={({ field }) => (
                     <SelectInput
                       value={field.value?.name}
@@ -189,7 +190,6 @@ export function AddressForm({ initialData = {}, mode = "add", handleSubmit: onFi
                 <Controller
                   name="city"
                   control={control}
-                  rules={{ required: "City is required" }}
                   render={({ field }) => (
                     <SelectInput
                       value={field.value?.name}
@@ -209,7 +209,6 @@ export function AddressForm({ initialData = {}, mode = "add", handleSubmit: onFi
             <Controller
               name="phone_number"
               control={control}
-              rules={{ required: "Phone number is required" }}
               render={({ field }) => (
                 <PhoneInputField
                   label="Phone Number"
@@ -244,7 +243,7 @@ export function AddressForm({ initialData = {}, mode = "add", handleSubmit: onFi
           label="Address"
           id="address"
           error={errors.address?.message}
-          {...register("address", { required: "Address is required" })}
+          {...register("address")}
         />
         <TextInput
           label="Additional Information"
