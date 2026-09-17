@@ -6,7 +6,7 @@ import './navbar.css';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars, faUser, faBagShopping, faXmark, faRightFromBracket} from "@fortawesome/free-solid-svg-icons";
 import api from '@/services/axios';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation, Link } from 'react-router-dom';
 import useAuth from '@/hooks/useAuth';
 import { toast } from 'react-toastify';
 import { useCart } from '@/hooks/useCart';
@@ -18,7 +18,7 @@ import ProfileMenu from './ProfileMenu';
 function Navbar() {
     const [toggle, setToggle] = useState(false);
     const [accountDropdown, setAccountDropdown] = useState(false)
-    const URL = window.location.href;
+    const { pathname } = useLocation();
 
     const { cartItems } = useCart();
     const { wishList } = useWishList();
@@ -27,7 +27,7 @@ function Navbar() {
     const totalWishList = wishList.length; 
 
 
-    const userIcon = URL.includes('/login') || URL.includes('/register');
+    const userIcon = pathname.includes('/login') || pathname.includes('/register');
     
     const { isAuthenticated, user, logout } = useAuth();
 
@@ -46,7 +46,7 @@ function Navbar() {
             }
 
         } catch(err) {
-            // silently handle
+            toast.error('Failed to logout. Please try again.');
         } 
     }
 
@@ -61,7 +61,7 @@ function Navbar() {
                     }} className='text-[1.5rem] lg:hidden'>
                         <FontAwesomeIcon icon={faBars} />
                     </button>
-                    <a className='font-bold text-3xl' href='/'>Exclusive</a>
+                    <Link to="/" className='font-bold text-3xl'>Exclusive</Link>
                 </div>
 
                 <div className='flex lg:hidden items-center space-x-6'>
@@ -90,20 +90,20 @@ function Navbar() {
                         </form>
 
                         {/* wishlist */}
-                        <a href="/wishlist" className={`${URL.includes('login') || URL.includes('register')  ? 'hidden' : ''} relative`}>
+                        <Link to="/wishlist" className={`${pathname.includes('login') || pathname.includes('register')  ? 'hidden' : ''} relative`}>
                             <img src={WishlistIcon} alt="Wishlist" className='skeleton'/>
                             <span className='bg-[#DB4444] rounded-full w-[18px] h-[18px] text-white text-[0.75rem] absolute top-[-1px] right-[-3px] flex items-center justify-center'>
                                 { totalWishList }
                             </span>
-                        </a>
+                        </Link>
                         
                         {/* cart */}
-                        <a href="/cart" className={`${URL.includes('login') || URL.includes('register') ? 'hidden' : ''} relative`}>
+                        <Link to="/cart" className={`${pathname.includes('login') || pathname.includes('register') ? 'hidden' : ''} relative`}>
                             <img src={CartIcon} alt="Cart" />
                             <span className='bg-[#DB4444] rounded-full w-[20px] h-[20px] text-white text-[0.8rem] absolute top-[-4px] right-[-3px] flex items-center justify-center'>
                                 { totalCartQuantity }
                             </span>
-                        </a>
+                        </Link>
 
                        <Auth>
                             <ProfileMenu user={user} logout={handleLogout}/>

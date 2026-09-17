@@ -15,7 +15,7 @@ const getAllStatesOfACountry = async (country_id) => {
     if(!country_id) return [];
     try {
 
-        const res = await api.get(`country/${country_id}/states`);
+        const res = await api.get(`/country/${country_id}/states`);
 
         return res.data.states
     } catch (error) {

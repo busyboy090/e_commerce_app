@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useLayoutEffect} from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import Loading from '@/components/Loading/Loading';  
 import useAuth from '@/hooks/useAuth.jsx';
 import api from '@/services/axios.js';
@@ -8,14 +8,15 @@ function AuthProvider({ children }) {
     const [isLoading, setIsLoading] = useState(true);
     const { refreshToken, access_token, getUserDetails, login, logout, isAuthenticated} = useAuth();
     const { cartItems, syncCartToDatabase, fetchCartFromDatabase, products } = useCart();
+    const hasFetchedUser = useRef(false);
 
     // Refresh token on app load
-    useLayoutEffect(() => {
+    useEffect(() => {
         const fetchToken = async () => {
             try {
                 await refreshToken();
             } catch (error) {
-                // token refresh failed
+                // Token refresh failed — user will need to re-authenticate
             } finally {
                 setIsLoading(false);
             }
@@ -72,17 +73,23 @@ function AuthProvider({ children }) {
     }, [access_token, refreshToken, login, logout]);
 
 
+    // Fetch cart from database when user becomes authenticated
     useEffect(() => {
         if(isAuthenticated) {
-        fetchCartFromDatabase()
+            fetchCartFromDatabase()
         }
-    }, [isAuthenticated, cartItems.length])
+    }, [isAuthenticated])
 
+    // Fetch user details once after initial authentication
     useEffect(() => {
-        if(isAuthenticated) {
+        if(isAuthenticated && !hasFetchedUser.current) {
+            hasFetchedUser.current = true;
             getUserDetails();
         }
-    },[access_token])
+        if(!isAuthenticated) {
+            hasFetchedUser.current = false;
+        }
+    },[isAuthenticated])
 
     if(isLoading) {
         return (

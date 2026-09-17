@@ -1,20 +1,19 @@
-import React, {useEffect, useState} from 'react';
+import {useEffect, useState} from 'react';
 import { useParams } from 'react-router-dom';
 import api from '@/services/axios';
 import Loading from '@/components/Loading/Loading';
 import Ratings from '@/components/Ratings/Ratings';
+import QuantityController from '@/components/common/QuantityController';
 import { toast } from 'react-toastify';
 
 
-function ProdutcDetails() {
+function ProductDetails() {
   const [loading, setLoading] = useState(true);
   const { id } = useParams();
   const [product, setProducts ] = useState([])
   const [selectedColor, setSelectedColor] = useState();
   const [selectedSize, setSelectedSize] = useState();
   const [quantity, setQuantity] = useState(1);
-  let productId;
-  
   useEffect(() => {
     // Fetch product details using the id from the URL
     const fetchProductDetails = async () => {
@@ -24,7 +23,6 @@ function ProdutcDetails() {
           throw new Error('Network response was not ok');
         }
         setProducts(response?.data || []);
-        productId = response?.data.product_id;
       } catch (error) {
         toast.error('Failed to load product details');
       } finally {
@@ -35,18 +33,6 @@ function ProdutcDetails() {
     fetchProductDetails();
   }
   , [id]);
-
-  const increment = () => {
-    if (quantity < 10) {
-      setQuantity(prev => prev + 1)
-    }
-  }
-
-  const decrement = () => {
-    if (quantity > 1) {
-      setQuantity(prev => prev - 1)
-    }
-  }
 
   if(loading) {
     return (
@@ -120,11 +106,7 @@ function ProdutcDetails() {
 
         {/* Quantity and Buy */}
         <div className="flex items-center space-x-4">
-          <div className="flex border rounded">
-            <button onClick={decrement} className="px-3">-</button>
-            <span className="px-3 border-x">{quantity}</span>
-            <button onClick={increment} className="px-3">+</button>
-          </div>
+          <QuantityController quantity={quantity} onChange={setQuantity} />
           <button className="bg-red-500 hover:bg-red-600">Buy Now</button>
           <button className="border p-2 rounded">♡</button>
         </div>
@@ -153,4 +135,4 @@ function ProdutcDetails() {
   )
 }
 
-export default ProdutcDetails
+export default ProductDetails

@@ -9,6 +9,7 @@ import ProtectedRoute from './ProtectedRoute';
 
 // Components
 import Loading from '@/components/Loading/Loading';
+import ErrorBoundary from '@/components/common/ErrorBoundary';
 
 // Lazy-loaded pages
 const Home = lazy(() => import('@/pages/Home'));
@@ -29,6 +30,7 @@ const VendorOnboarding = lazy(() => import('@/pages/vendor/VendorOnboarding'));
 
 function AppRoutes() {
   return (
+    <ErrorBoundary>
     <Router>
         <Suspense fallback={<Loading />}>
           <Routes>
@@ -57,6 +59,7 @@ function AppRoutes() {
           </Routes>
         </Suspense>
       </Router>
+    </ErrorBoundary>
   )
 }
 

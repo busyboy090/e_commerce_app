@@ -1,4 +1,4 @@
-import {React, useState} from 'react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash, faPen, faChevronDown } from "@fortawesome/free-solid-svg-icons";
@@ -7,7 +7,7 @@ import { toast } from 'react-toastify';
 import user from '@/services/user.js';
 
 // AddressCard Component
-function AddressCard(props) {
+function AddressCard({ onDeleted, ...props }) {
   const deleteAddress = () => {
     Swal.fire({
       title: 'Remove this Address?',
@@ -22,7 +22,7 @@ function AddressCard(props) {
         try {
           await user.deleteAddress(props.address_id);
           toast.success('Address removed successfully');
-          window.location.reload();
+          onDeleted?.();
         } catch (err) {
           toast.error(err?.msg || 'Failed to remove address');
         }

@@ -1,4 +1,4 @@
-import React, { useEffect, useState  } from 'react'
+import { useEffect, useState } from 'react'
 import AddressForm from '@/features/address/components/AddressForm';
 import { useParams, useNavigate } from 'react-router-dom';
 import user from '@/services/user.js';
@@ -9,6 +9,7 @@ function EditAddress() {
   const [address, setAddress] = useState([])
   const { id } = useParams();
   const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(null);
   const navigate = useNavigate();
 
   useEffect(()=>{
@@ -18,6 +19,7 @@ function EditAddress() {
         setLoading(false)
       })
       .catch(err => {
+        setError('Failed to load address');
         setLoading(false)
       })
   },[])
@@ -26,6 +28,20 @@ function EditAddress() {
     return (
       <div className="flex h-full w-full items-center justify-center">
         <div className="animate-spin rounded-full h-16 w-16 border-4 border-gray-300 border-t-transparent"></div>
+      </div>
+    )
+  }
+
+  if(error) {
+    return (
+      <div className="text-center my-10">
+        <p className="text-red-500 text-lg">{error}</p>
+        <button 
+          onClick={() => window.location.reload()} 
+          className="mt-4 px-4 py-2 bg-[#DB4444] text-white rounded"
+        >
+          Retry
+        </button>
       </div>
     )
   }

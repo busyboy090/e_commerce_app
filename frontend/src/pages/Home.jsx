@@ -1,4 +1,3 @@
-import {React} from "react";
 import Hero from "@/features/home/components/Hero";
 import FlashSales from "@/features/home/components/FlashSales";
 import Categories from "@/features/categories/components/Categories";

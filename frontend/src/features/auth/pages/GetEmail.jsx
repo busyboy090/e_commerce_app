@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import api from '@/services/axios';
@@ -53,10 +54,10 @@ function GetEmail(props) {
           <button type='submit' className='bg-[#DB4444] text-[white] h-[50px] w-[100%] rounded-[7px] font-semibold'>Reset password</button>
       </form>
 
-      <a href="/login" className='text-center block mt-[20px]'>
+      <Link to="/login" className='text-center block mt-[20px]'>
           <FontAwesomeIcon icon={faArrowLeft} />
           <span className='ms-[10px] font-medium'>Back to log in</span>
-      </a>
+      </Link>
     </>
   )
 }

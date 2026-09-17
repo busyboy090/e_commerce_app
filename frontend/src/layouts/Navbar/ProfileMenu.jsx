@@ -1,4 +1,5 @@
-import React, { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect } from 'react';
+import { Link as RouterLink } from 'react-router-dom';
 import User from '@/assets/icons/user.svg';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser, faBagShopping, faXmark, faRightFromBracket} from "@fortawesome/free-solid-svg-icons";
@@ -8,10 +9,10 @@ export function Link({name, icon, to}) {
     return (
         <>
             <li>
-                <a href={to} className='flex items-center gap-[16px] p-[10px] text-[0.875rem] w-[100%] hover:bg-[white] hover:text-[black] rounded-[4px]'>
+                <RouterLink to={to} className='flex items-center gap-[16px] p-[10px] text-[0.875rem] w-[100%] hover:bg-[white] hover:text-[black] rounded-[4px]'>
                     <FontAwesomeIcon icon={icon} className='text-[1.4rem]' />
                     <span className='text-[0.875rem]'>{name}</span>
-                </a>
+                </RouterLink>
             </li>
         </>
     )

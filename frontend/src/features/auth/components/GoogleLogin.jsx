@@ -22,7 +22,7 @@ function GoogleLogin() {
             )
     
             
-            localStorage.setItem('authenticated', JSON.stringify(true));
+            localStorage.setItem('exclusive_authenticate', JSON.stringify(true));
     
             const token = response?.data?.access_token;
             const user = response?.data?.user

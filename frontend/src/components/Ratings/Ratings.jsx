@@ -2,7 +2,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar, faStarHalfStroke } from "@fortawesome/free-solid-svg-icons";
 
 const Ratings = ({ratings = '0.0'}) => {
-    const rendenderRatings = () => {
+    const renderRatings = () => {
         let ratingsArray = [];
         const firstHalf = ratings.split(".")[0];
         const secondHalf = ratings.split(".")[1];
@@ -22,7 +22,7 @@ const Ratings = ({ratings = '0.0'}) => {
 
     return (
         <ul className="flex gap-[4px]">
-            {rendenderRatings().map((rating, index) => (
+            {renderRatings().map((rating, index) => (
                 <li className="text-[#FFAD33]" key={index}>
                     {rating}
                 </li>

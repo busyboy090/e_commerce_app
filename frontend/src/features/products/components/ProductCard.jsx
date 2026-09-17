@@ -1,4 +1,5 @@
-import { React, useState, useRef } from "react";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faHeart as faHeartRegular,
@@ -7,8 +8,6 @@ import {
 import {
   faHeart as faHeartSolid,
   faEye as faEyeSolid,
-  faStar,
-  faStarHalfStroke
 } from "@fortawesome/free-solid-svg-icons";
 import "./ProductCard.css";
 import CartIcon from "@/assets/icons/cart-black-icon.svg";
@@ -16,9 +15,11 @@ import DeleteIcon from '@/assets/icons/icon-delete.svg';
 import { toast } from "react-toastify";
 import { useCart } from "@/hooks/useCart";
 import { useWishList } from "@/hooks/useWishList";
-import useAuth from '@/hooks/useAuth';
+import Ratings from '@/components/Ratings/Ratings';
+import DiscountBadge from '@/components/common/DiscountBadge';
 
-function ProductCard({ product, settings }) {
+ function ProductCard({ product, settings }) {
+  const navigate = useNavigate();
   const image = product?.product_colors[0]?.image;
   const price = product?.product_variants[0]?.price;
   const productId = product?.product_id;
@@ -35,56 +36,25 @@ function ProductCard({ product, settings }) {
     return wishList.some(item => item.productId === productId);
   }
 
-  const productCard = useRef()
-
   const { view, wishlist, deleteBtn } = settings;
   const [isWishlisted, setIsWishlisted] = useState(productExists(productId));
   const [isViewed, setIsViewed] = useState(false);
-  const imageContainer = useRef();
+  const [imgError, setImgError] = useState(false);
+  const [isDeleted, setIsDeleted] = useState(false);
 
-  const rendenderRatings = (ratings) => {
-    let ratingsArray = [];
-    const firstHalf = ratings.split(".")[0];
-    const secondHalf = ratings.split(".")[1];
-
-    if (firstHalf) {
-      for (let i = 0; i < parseInt(firstHalf); i++) {
-        ratingsArray.push(<FontAwesomeIcon key={i} icon={faStar} />);
-      }
-    }
-
-    if (secondHalf === '5') {
-      ratingsArray.push(<FontAwesomeIcon key={ratings} icon={faStarHalfStroke} />);
-    }
-
-    return ratingsArray;
-  };
+  if (isDeleted) return null;
 
   return (
-    <div className="mt-[40px]" ref={productCard}>
+    <div className="mt-[40px]">
       <div className="max-sm:w-[100%] snap-center w-[270px] bg-[#F5F5F5] h-[250px] relative rounded-[4px] overflow-hidden product-card">
-        <div ref={imageContainer} onClick={() => {
-          window.location.href = `/product/${productId}`; 
+        <div onClick={() => {
+          navigate(`/product/${productId}`); 
         }}>
-          <img className="product-image" src={image} alt={name || 'Product image'} onError={() => {
-          imageContainer.current.classList.add('image-skeleton')
+          <img className={`product-image ${imgError ? 'image-skeleton' : ''}`} src={image} alt={name || 'Product image'} onError={() => {
+          setImgError(true)
         }} />
         </div>
-        {discount ? (
-          <p className="discount absolute top-[12px] left-[12px] w-[55px] h-[26px] bg-[#DB4444] flex justify-center items-center text-white rounded-[4px] text-[0.75rem]">
-            -{discount}%
-          </p>
-        ) : (
-          ""
-        )}
-
-        {isNew ? (
-          <p className="discount absolute top-[12px] left-[12px] w-[55px] h-[26px] bg-[#00FF66] flex justify-center items-center text-white rounded-[4px] text-[0.75rem]">
-            New
-          </p>
-        ) : (
-          ""
-        )}
+        <DiscountBadge discount={discount} isNew={isNew} />
 
         <div className="absolute top-[12px] right-[12px] flex flex-col gap-[8px]">
           {/* wishlist icon */}
@@ -123,7 +93,7 @@ function ProductCard({ product, settings }) {
               aria-label="Remove from wishlist"
               onClick={() => {
                 removeFromWishList(productId)
-                productCard.current.remove();
+                setIsDeleted(true);
               }}>
                 <img src={DeleteIcon} alt="Remove from wishlist" />
               </button>
@@ -159,36 +129,9 @@ function ProductCard({ product, settings }) {
         <div className="flex gap-[12px]">
           <p className="text-[#DB4444] text-[1rem]">${price}</p>
           {discount ? <p className="line-through opacity-25">${(price / (1 - discount / 100)).toFixed(2)}</p> : " "}
-          {!discount ? (
-            <ul className="flex gap-[4px]">
-              {rendenderRatings(product?.averageRating).map((item, index) => {
-                return (
-                  <li className="text-[#FFAD33]" key={index}>
-                    {item}
-                  </li>
-                );
-              })}
-              <span className="ms-1">(88)</span>
-            </ul>
-          ) : (
-            ""
-          )}
+          <Ratings ratings={product?.averageRating} />
+          <span className="ms-1">({discount ? product?.totalReviews : 88})</span>
         </div>
-        {discount ? (
-          <ul className="flex gap-[4px]">
-            {rendenderRatings(product?.averageRating).map((item, index) => {
-              return (
-                <li className="text-[#FFAD33]" key={index}>
-                  {item}
-                </li>
-              );
-            })}
-
-            <span className="ms-1">({product?.totalReviews})</span>
-          </ul>
-        ) : (
-          ""
-        )}
       </div>
     </div>
   );

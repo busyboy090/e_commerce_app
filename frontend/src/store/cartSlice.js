@@ -8,85 +8,61 @@ const initialState = {
   fetchCartFromDatabaseStatus: 'idle',
   fetchProductsStatus: 'idle',
   syncCartToDatabaseStatus: 'idle',
-
+  error: null,
 };
 
 export const syncCartToDatabase = createAsyncThunk(
   'cart/syncCartToDatabase',
   async (cartItems) => {
-    try {
-      const response = await api.post(
-        '/cart',
-        JSON.stringify({ cartItems}),
-        { headers: { 'Content-Type': 'application/json' } }
-      );
-
-      return response?.data;
-    } catch (err) {
-      return null;
-    }
+    const response = await api.post(
+      '/cart',
+      JSON.stringify({ cartItems }),
+      { headers: { 'Content-Type': 'application/json' } }
+    );
+    return response?.data;
   }
 );
 
 export const updateCartProductQuantity = createAsyncThunk(
   'cart/updateCartProductQuantity',
   async ({productId , quantity}) => {
-
-    try {
-      const response = await api.put(
-        `/user/cart/${productId}`,
-        {quantity},
-      );
-
-      return response?.data;
-    } catch (err) {
-      return null;
-    }
+    const response = await api.put(
+      `/user/cart/${productId}`,
+      {quantity},
+    );
+    return response?.data;
   }
 );
 
 export const deleteCartProductFromDatabase = createAsyncThunk(
   'cart/deleteCartProductFromDatabase',
   async (productId) => {
-    try {
-      const response = await api.delete(
-        `/user/cart/${productId}`,
-      );
-
-      return response?.data;
-    } catch (err) {
-      return null;
-    }
+    const response = await api.delete(
+      `/user/cart/${productId}`,
+    );
+    return response?.data;
   }
 );
 
 export const fetchCartFromDatabase = createAsyncThunk(
   'cart/fetchCartFromDatabase',
   async () => {
-    try {
-      const response = await api.get(
-        '/user/cart'
-      );
-      return response.data;
-    } catch (err) {
-      return []
-    }
+    const response = await api.get(
+      '/user/cart'
+    );
+    return response.data;
   }
 );
 
 export const fetchProducts = createAsyncThunk(
   'cart/fetchProducts',
   async (productIds) => {
-    try {
-      const response = await api.post(
-        '/cart/products/multipleproducts',
-        JSON.stringify({ productIds }),
-        { headers: { 'Content-Type': 'application/json' } }
-      );
-      return response.data.products;
-    } catch (err) {
-      return []
-    }
+    const response = await api.post(
+      '/cart/products/multipleproducts',
+      JSON.stringify({ productIds }),
+      { headers: { 'Content-Type': 'application/json' } }
+    );
+    return response.data.products;
   }
 );
 
@@ -116,13 +92,22 @@ const cartSlice = createSlice({
     clearCart(state) {
       state.cartItems = [];
       localStorage.removeItem('exclusive_cart');
+    },
+    clearError(state) {
+      state.error = null;
     }
   },
   extraReducers: (builder) => {
     builder
+      .addCase(fetchProducts.pending, (state) => {
+        state.fetchProductsStatus = 'loading';
+      })
       .addCase(fetchProducts.fulfilled, (state, action) => {
         state.fetchProductsStatus = 'succeeded';
         state.cartItems = action.payload.cart;
+      })
+      .addCase(fetchCartFromDatabase.pending, (state) => {
+        state.fetchCartFromDatabaseStatus = 'loading';
       })
       .addCase(fetchCartFromDatabase.fulfilled, (state, action) => {
         state.fetchCartFromDatabaseStatus = 'succeeded';
@@ -135,7 +120,24 @@ const cartSlice = createSlice({
         state.cartItems = action.payload.cart
       })
       .addCase(deleteCartProductFromDatabase.fulfilled, (state, action) => {
-        state.cart = action.payload.cart
+        state.cartItems = action.payload.cart
+      })
+      .addCase(syncCartToDatabase.rejected, (state, action) => {
+        state.error = action.error?.message || 'Failed to sync cart';
+      })
+      .addCase(updateCartProductQuantity.rejected, (state, action) => {
+        state.error = action.error?.message || 'Failed to update quantity';
+      })
+      .addCase(deleteCartProductFromDatabase.rejected, (state, action) => {
+        state.error = action.error?.message || 'Failed to delete item';
+      })
+      .addCase(fetchCartFromDatabase.rejected, (state, action) => {
+        state.fetchCartFromDatabaseStatus = 'failed';
+        state.error = action.error?.message || 'Failed to fetch cart';
+      })
+      .addCase(fetchProducts.rejected, (state, action) => {
+        state.fetchProductsStatus = 'failed';
+        state.error = action.error?.message || 'Failed to fetch products';
       })
   }
 });
@@ -145,6 +147,7 @@ export const {
   removeProductFromCart,
   updateProductQuantity,
   clearCart,
+  clearError,
 } = cartSlice.actions;
 
 export default cartSlice.reducer;

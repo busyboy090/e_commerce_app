@@ -1,86 +1,53 @@
-import React, {useState, useRef, useEffect } from "react";
+import React, { useState } from "react";
 import SideImage from "@/assets/images/login-register-image.svg";
 import TextInput from "@/components/Input/TextInput";
 import { validateText } from "@/utils/validator";
 import { toast } from "react-toastify";
-import { useNavigate, useLocation } from "react-router-dom";
-import api from '@/services/axios';
+import { useNavigate, useLocation, Link } from "react-router-dom";
 import useAuth from "@/hooks/useAuth";
 import CheckboxInput from "@/components/Input/CheckboxInput";
-import { encryptData, decryptData} from "@/utils/Encryption.js";
 import GoogleLogin from "@/features/auth/components/GoogleLogin";
-import auth from '@/services/auth.js'
+import auth from '@/services/auth.js';
+import { useFormState } from "@/hooks/useFormState";
 
+
+const validateLogin = (formData) => ({
+  email: validateText(formData.email),
+  password: validateText(formData.password),
+});
 
 function Login() {
-  const [formData, setFormData] = useState({
-    email: '',
-    password: '',
-  });
-  
-  const [errors, setErrors] = useState({
-    email: false,
-    password: false,
-  })
+  const { formData, errors, loading, setLoading, handleChange, validateForm } = useFormState({
+    email: '', password: ''
+  }, validateLogin);
 
-  const isValid = useRef(false);
-  const [loading, setLoading] = useState(false);
-
-  const  { login } = useAuth();
+  const { login } = useAuth();
   const [rememberMe, setRememberMe] = useState(false);
 
   const navigate = useNavigate();
   const location = useLocation();
-  const from = location.state?.from?.pathname || '/'
-  
-  const handleChange = (field,value) => {
-    setFormData((prev) => ({...prev, [field]: value}));
-  }
+  const from = location.state?.from?.pathname || '/';
 
-  // validate the form to check for errors
-  const validateForm = () => {
-    const {email,password} = formData;
-
-    let newErrors = {
-      email: validateText(email),
-      password: validateText(password),
-    }
-
-    setErrors(newErrors);
-
-    isValid.current = Object.values(newErrors).every(value => value === true);
-  }
-
-  // submit the form
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    validateForm();
-
-    if(!isValid.current) {
+    const isValid = validateForm();
+    if (!isValid) {
       setLoading(false);
-
-      return
+      return;
     }
 
     try {
-        
       const data = await auth.loginUser({
         email: formData.email,
         password: formData.password
-      })
-  
-      // save the user details
+      });
+
       login(data);
-
-      // show notification
       toast.success(data?.msg);
-
-      // Redirect
       navigate(from, { replace: true });
-
     } catch (err) {
-      toast.error(err?.error || 'Login failed')
+      toast.error(err?.error || 'Login failed');
     } finally {
       setLoading(false);
     }
@@ -128,7 +95,7 @@ function Login() {
               
 
             {/* signup link */}
-            <p className="text-center mt-[20px]">Not a user? <a href="/register" className="underline underline-offset-9 ms-2">Sign Up</a> </p>
+            <p className="text-center mt-[20px]">Not a user? <Link to="/register" className="underline underline-offset-9 ms-2">Sign Up</Link> </p>
           </form>
         </div>
       </div>

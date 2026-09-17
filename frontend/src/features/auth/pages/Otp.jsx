@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect} from 'react'
+import { Link } from 'react-router-dom';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { toast } from 'react-toastify';
@@ -121,10 +122,10 @@ function Otp(props) {
 
             <ResendOtp email={email}/>
 
-            <a href="/login" className='text-center block mt-[20px]'>
+            <Link to="/login" className='text-center block mt-[20px]'>
                 <FontAwesomeIcon icon={faArrowLeft} />
                 <span className='ms-[10px] font-medium'>Back to login</span>
-            </a>
+            </Link>
         </form>
     );
 }

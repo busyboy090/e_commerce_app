@@ -6,10 +6,11 @@ import { validateEmail, validatePassword, validateText, validateNumber } from "@
 import TextInput from "@/components/Input/TextInput";
 import { CountryInput } from "@/components/components.jsx";
 import { toast } from "react-toastify";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, Link } from "react-router-dom";
 import GoogleLogin from "@/features/auth/components/GoogleLogin.jsx";
 import auth from '@/services/auth.js';
 import { getUserCountry } from "@/utils/geolocation.js";
+import { useFormState } from "@/hooks/useFormState";
 
 function Form ({ handleChange, handleSubmit, formData, loading, errors}) {
   const [countryCode, setCountryCode] = useState('');
@@ -59,60 +60,33 @@ function Form ({ handleChange, handleSubmit, formData, loading, errors}) {
 }
 
 
+const validateRegister = (formData) => ({
+  first_name: validateText(formData.first_name),
+  last_name: validateText(formData.last_name),
+  email: validateEmail(formData.email),
+  password: validatePassword(formData.password, formData.confirm_password),
+  phone: validateText(formData.phone),
+  country_id: validateNumber(formData.country_id)
+});
+
 function Register() {
-  const [formData, setFormData] = useState({
-    first_name: '',
-    last_name: '',
-    email: '',
-    password: '',
-    confirm_password: '',
-    phone: '',
-    country_id: null
-  });
+  const { formData, errors, loading, setLoading, handleChange, validateForm } = useFormState({
+    first_name: '', last_name: '', email: '', password: '',
+    confirm_password: '', phone: '', country_id: null
+  }, validateRegister);
 
-  const [errors, setErrors] = useState({
-    first_name: false,
-    last_name: false,
-    email: false,
-    password: false,
-    phone: false,
-    country_id: false
-  });
-
-  const isValid = useRef(false);
-  const [loading, setLoading] = useState(false);
   const [step, setStep] = useState(0);
   const [role, setRole] = useState('customer');
-
 
   const navigate = useNavigate();
   const location = useLocation();
   const from = location.state?.from?.pathname || '/';
 
-
-  const handleChange = (field, value) => {
-    setFormData(prev => ({ ...prev, [field]: value }));
-  };
-
-  const validateForm = () => {
-    const { first_name, last_name, email, password, confirm_password, phone, country_id } = formData;
-    const newErrors = {
-      first_name: validateText(first_name),
-      last_name: validateText(last_name),
-      email: validateEmail(email),
-      password: validatePassword(password, confirm_password),
-      phone: validateText(phone),
-      country_id: validateNumber(country_id)
-    };
-    setErrors(newErrors);
-    isValid.current = Object.values(newErrors).every(value => value === true);
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    validateForm();
-    if (!isValid.current) return;
+    const isValid = validateForm();
+    if (!isValid) return;
 
     try {
       if(step === 2) {
@@ -166,7 +140,7 @@ function Register() {
             </div>
           </div>
         ) : <Form handleChange={handleChange} handleSubmit={handleSubmit} errors={errors} formData={formData} loading={loading} />}
-        <p className="text-center mt-6">Already have an account? <a href="/login" className="underline">Log in</a></p>
+        <p className="text-center mt-6">Already have an account? <Link to="/login" className="underline">Log in</Link></p>
       </div>
     </div>
   );

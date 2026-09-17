@@ -10,6 +10,7 @@ import { PhoneInputField } from "@/components/components";
 import { getUserCountry } from "@/utils/geolocation.js";
 import country from "@/services/country.js";
 import SelectInput from '@/components/Input/SelectInput';
+import { toast } from 'react-toastify';
 
 export function AddressForm({ initialData = {}, mode = "add", handleSubmit: onFinalSubmit }) {
   const [countries, setCountries] = useState([]);
@@ -71,7 +72,7 @@ export function AddressForm({ initialData = {}, mode = "add", handleSubmit: onFi
   useEffect(() => {
     country.getAllCountries()
         .then(data => setCountries(data))
-        .catch(() => {})
+        .catch(() => toast.error('Failed to load countries'))
   }, []);
 
   useEffect(() => {
@@ -83,7 +84,7 @@ export function AddressForm({ initialData = {}, mode = "add", handleSubmit: onFi
             setValue('country', country[0])
           }
         })
-        .catch(() => {});
+        .catch(() => {}) // Geolocation failure is non-critical
     }
   },[countries])
 
@@ -96,7 +97,7 @@ export function AddressForm({ initialData = {}, mode = "add", handleSubmit: onFi
       .then(data => {
         setStates(data)
       })
-      .catch(() => {})
+      .catch(() => toast.error('Failed to load states'))
   },[countryWatchedValue])
 
 
@@ -104,7 +105,7 @@ export function AddressForm({ initialData = {}, mode = "add", handleSubmit: onFi
   useEffect(() => {
     country.getAllCitiesOfAState(stateWatchedVlue?.state_id)
       .then(data => setCities(data))
-      .catch(() => {})
+      .catch(() => toast.error('Failed to load cities'))
   }, [stateWatchedVlue]);
 
   const onSubmit = (data) => {

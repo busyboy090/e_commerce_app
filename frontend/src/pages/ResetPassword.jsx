@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { toast } from 'react-toastify';
@@ -62,10 +62,10 @@ function ResetPassword(props) {
         <button type='button' onClick={submit} className='bg-[#DB4444] mt-[20px] text-[white] h-[50px] w-[100%] rounded-[7px] font-semibold'>Continue</button>
 
 
-        <a href="/login" className='text-center block mt-[20px]'>
+        <Link to="/login" className='text-center block mt-[20px]'>
             <FontAwesomeIcon icon={faArrowLeft} />
             <span className='ms-[10px] font-medium'>Back to log in</span>
-        </a>
+        </Link>
     </div>
   )
 }

@@ -1,10 +1,10 @@
-import React from 'react'
+import { Link } from 'react-router-dom';
 
 function NavLink({path, name, active}) {
   return (
     <>
         <li className='nav-item'>
-            <a className={`nav-link ${active ? 'active-link' : ''}`} href={path}>{name}</a>
+            <Link className={`nav-link ${active ? 'active-link' : ''}`} to={path}>{name}</Link>
         </li>
     </>
   )

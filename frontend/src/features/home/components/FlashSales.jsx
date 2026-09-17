@@ -1,4 +1,4 @@
-import { React, useRef, useEffect, useState } from "react";
+import { useRef, useEffect, useState } from "react";
 import Countdown from "react-countdown";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight, faArrowLeft } from "@fortawesome/free-solid-svg-icons";
@@ -8,6 +8,7 @@ import { Mousewheel, Navigation, Autoplay, Pagination, Grid } from "swiper/modul
 import 'swiper/css';
 import "./flashSales.css";
 import api from '@/services/axios'
+import { toast } from 'react-toastify';
 
 function FlashSales() {
   const flashSalesEndDate = new Date();
@@ -46,6 +47,7 @@ function FlashSales() {
   }
 
   const [products, setProducts] = useState([])
+  const [error, setError] = useState(null);
   
   const fetchProduct = async () => {
     try {
@@ -55,7 +57,7 @@ function FlashSales() {
       setProducts(response?.data?.products);
 
     } catch (error) {
-      // silently handle
+      setError('Failed to load flash sales');
     }
   }
   
@@ -164,8 +166,11 @@ function FlashSales() {
               ))
             }
           </Swiper>
-      </div>
-        
+        </div>
+
+        {error && !products.length && (
+          <p className="text-center text-gray-500 my-4">{error}</p>
+        )}
 
         <a
           href="/product"

@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import vendor from "@/services/vendor.js";
@@ -7,59 +7,39 @@ import TextInput from "@/components/Input/TextInput";
 import { CountryInput, BusinessTypeInput } from "@/components/components.jsx";
 import { getUserCountry } from "@/utils/geolocation.js";
 import { validateText, validateNumber } from "@/utils/validator.js";
+import { useFormState } from "@/hooks/useFormState";
+
+const validateVendor = (form) => ({
+  business_name: validateText(form.business_name),
+  business_type_id: validateNumber(form.business_type_id),
+  address: validateText(form.address),
+  phone: validateText(form.phone),
+  country_id: validateNumber(form.country_id)
+});
 
 const VendorOnboarding = () => {
-    const [form, setForm] = useState({
+    const { formData: form, errors, loading, setLoading, handleChange, validateForm } = useFormState({
         business_name: "",
         business_type_id: null,
         country_id: null,
         address: "",
         phone: "",
-    });
+    }, validateVendor);
 
-    const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
-
-    const [errors, setErrors] = useState({
-        business_name: false,
-        business_type_id: false,
-        address: false,
-        phone: false,
-        country_id: false
-    });
-
-    const isValid = useRef(false);
-
-      const validateForm = () => {
-        const { business_name, business_type_id, phone, country_id, address } = form;
-        const newErrors = {
-          business_name: validateText(business_name),
-          business_type_id: validateNumber(business_type_id),
-          address: validateText(address),
-          phone: validateText(phone),
-          country_id: validateNumber(country_id)
-        };
-        setErrors(newErrors);
-        isValid.current = Object.values(newErrors).every(value => value === true);
-      };
-
-    const handleChange = (field, value) => {
-        setForm(prev => ({ ...prev, [field]: value }));
-    };
-
     const [countryCode, setCountryCode] = useState();
 
-      useEffect(() => {
+    useEffect(() => {
         getUserCountry()
           .then(data => setCountryCode(data.code))
           .catch(() => {});
-      },[])
+    },[])
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
-        validateForm();
-        if (!isValid.current) return;
+        const isValid = validateForm();
+        if (!isValid) return;
         try {
             await vendor.completeProfile(form);
             toast.success("Profile completed!");
@@ -67,7 +47,7 @@ const VendorOnboarding = () => {
         } catch (err) {
             toast.error(err?.message || 'Something went wrong');
         } finally {
-        setLoading(false);
+            setLoading(false);
         }
     };
 

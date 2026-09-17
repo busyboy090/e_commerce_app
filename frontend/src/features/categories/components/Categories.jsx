@@ -1,4 +1,4 @@
-import {React, useRef, useEffect, useState} from 'react';
+import { useRef, useEffect, useState } from 'react';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight, faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { Swiper, SwiperSlide} from 'swiper/react';
@@ -7,12 +7,14 @@ import 'swiper/css';
 import 'swiper/css/mousewheel'
 import CategoryCard from './CategoryCard';
 import api from '@/services/axios'
+import { toast } from 'react-toastify';
 
 
 function Categories() {
     const nextSlideRef = useRef();
     const prevSlideRef = useRef();
     const [categories, setCategories] = useState([]);
+    const [error, setError] = useState(null);
 
     const swiperBreakPoint = {
       320: {
@@ -36,7 +38,7 @@ function Categories() {
         setCategories(response?.data?.categories);
 
       } catch (error) {
-        // silently handle
+        setError('Failed to load categories');
       }
     } 
 
@@ -97,6 +99,9 @@ function Categories() {
                 </Swiper>
             </div>
         </div>
+        {error && !categories.length && (
+          <p className="text-center text-gray-500 my-4">{error}</p>
+        )}
     </div>
   )
 }

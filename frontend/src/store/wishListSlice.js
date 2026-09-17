@@ -5,6 +5,7 @@ const initialState = {
   wishList: JSON.parse(localStorage.getItem('exclusive_wishList')) || [],
   products: [],
   status: 'idle',
+  error: null,
 };
 
 export const fetchProducts = createAsyncThunk(
@@ -45,6 +46,9 @@ const wishlistSlice = createSlice({
       state.wishList = [];
       localStorage.removeItem('exclusive_wishList');
     },
+    clearError(state) {
+      state.error = null;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -55,8 +59,9 @@ const wishlistSlice = createSlice({
         state.status = 'succeeded';
         state.products = action.payload;
       })
-      .addCase(fetchProducts.rejected, (state) => {
+      .addCase(fetchProducts.rejected, (state, action) => {
         state.status = 'failed';
+        state.error = action.error?.message || 'Failed to fetch wishlist products';
       });
   }
 });
@@ -65,6 +70,7 @@ export const {
   addToWishList,
   removeFromWishList,
   clearWishList,
+  clearError,
 } = wishlistSlice.actions;
 
 export default wishlistSlice.reducer;

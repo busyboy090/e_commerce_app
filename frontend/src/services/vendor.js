@@ -5,7 +5,7 @@ const completeProfile = async (profile) => {
     try {
 
         const res = await api.post('/vendor/completeprofile',
-            JSON.stringify(profile)
+            profile
         );
 
         return res.data;
