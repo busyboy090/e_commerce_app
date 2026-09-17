@@ -1,10 +1,10 @@
-import {React, useEffect, useState} from 'react'
+import { useEffect, useState } from 'react'
 import SearchIcon from '@/assets/icons/search-icon.svg'
 import CartIcon from '@/assets/icons/cart-icon.svg'
 import WishlistIcon from '@/assets/icons/wishlist-icon.svg'
 import './navbar.css';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBars, faUser, faBagShopping, faXmark, faRightFromBracket} from "@fortawesome/free-solid-svg-icons";
+import { faBars } from "@fortawesome/free-solid-svg-icons";
 import api from '@/services/axios';
 import { useNavigate, useLocation, Link } from 'react-router-dom';
 import useAuth from '@/hooks/useAuth';
@@ -12,12 +12,10 @@ import { toast } from 'react-toastify';
 import { useCart } from '@/hooks/useCart';
 import { useWishList } from '@/hooks/useWishList';
 import Nav from './Nav';
-import Auth from '@/features/auth/components/Auth';
 import ProfileMenu from './ProfileMenu';
 
 function Navbar() {
     const [toggle, setToggle] = useState(false);
-    const [accountDropdown, setAccountDropdown] = useState(false)
     const { pathname } = useLocation();
 
     const { cartItems } = useCart();
@@ -26,9 +24,6 @@ function Navbar() {
     const totalCartQuantity = cartItems.reduce((total, item) => total + item.quantity, 0); 
     const totalWishList = wishList.length; 
 
-
-    const userIcon = pathname.includes('/login') || pathname.includes('/register');
-    
     const { isAuthenticated, user, logout } = useAuth();
 
     const navigate = useNavigate()
@@ -70,13 +65,11 @@ function Navbar() {
                         <img src={SearchIcon} alt="search" />
                     </button>
 
-                    <Auth>
-                        <ProfileMenu user={user} logout={handleLogout} />
-                    </Auth>
+                    <ProfileMenu user={user} logout={handleLogout} isAuthenticated={isAuthenticated} />
                 </div>
 
                 <div className={`flex-col max-lg:w-screen mt-[10px] lg:mt-[0] lg:flex lg:flex-row space-x-[148px] lg:items-center ${toggle ? 'flex' : 'hidden'} `}>
-                    <Nav isAuthenticated={isAuthenticated}/>
+                    <Nav />
 
                     <div className='flex  items-center space-x-6 mt-[10px] lg:mt-[0]'>
                         {/* search form */}
@@ -90,7 +83,7 @@ function Navbar() {
                         </form>
 
                         {/* wishlist */}
-                        <Link to="/wishlist" className={`${pathname.includes('login') || pathname.includes('register')  ? 'hidden' : ''} relative`}>
+                        <Link to="/wishlist" className='relative'>
                             <img src={WishlistIcon} alt="Wishlist" className='skeleton'/>
                             <span className='bg-[#DB4444] rounded-full w-[18px] h-[18px] text-white text-[0.75rem] absolute top-[-1px] right-[-3px] flex items-center justify-center'>
                                 { totalWishList }
@@ -98,16 +91,15 @@ function Navbar() {
                         </Link>
                         
                         {/* cart */}
-                        <Link to="/cart" className={`${pathname.includes('login') || pathname.includes('register') ? 'hidden' : ''} relative`}>
+                        <Link to="/cart" className='relative'>
                             <img src={CartIcon} alt="Cart" />
                             <span className='bg-[#DB4444] rounded-full w-[20px] h-[20px] text-white text-[0.8rem] absolute top-[-4px] right-[-3px] flex items-center justify-center'>
                                 { totalCartQuantity }
                             </span>
                         </Link>
 
-                       <Auth>
-                            <ProfileMenu user={user} logout={handleLogout}/>
-                       </Auth>
+                        {/* user icon — always visible */}
+                        <ProfileMenu user={user} logout={handleLogout} isAuthenticated={isAuthenticated} />
                     </div>
                 </div>
             </div>

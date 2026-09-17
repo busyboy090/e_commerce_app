@@ -1,7 +1,7 @@
 import React from 'react';
 import NavLink from './NavLink';
 
-function Nav({ isAuthenticated }) {
+function Nav() {
   return (
     <>
         {/* nav link */}
@@ -11,14 +11,6 @@ function Nav({ isAuthenticated }) {
             <NavLink path='/contact' name='Contact' active={false} />
 
             <NavLink path='/about' name='About' active={false} />
-            
-            { !isAuthenticated ? (
-              <>
-                <NavLink path='/login' name='Sign In' active={false} />
-
-                <NavLink path='/register' name='Sign Up' active={false} />
-              </>
-            ) : ''}
         </ul>
     </>
   )
