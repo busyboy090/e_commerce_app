@@ -1,41 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { faArrowLeft, faEyeSlash, faEye } from '@fortawesome/free-solid-svg-icons';
+import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { toast } from 'react-toastify';
 import api from '../api/axios';
-
-
-// InputField 
-function InputField({label, value, onChange, id}) {
-    const [passwordType, setPasswordType] = useState('password');
-
-    return (
-        <div className='flex flex-col gap-[10px]'>
-            <label htmlFor={id} className='font-medium'>
-                { label } 
-            </label>
-            <div className='border-2 border-[rgba(128,128,128,0.4)] focus:outline-[#DB4444] h-[40px] relative rounded-[5px]'>
-                <input type={passwordType} value={value} onChange={onChange} id={id} name={id} className='block p-[10px] h-[100%] rounded-[5px] border-0 focus:outline-0' />
-                {
-                        passwordType == 'password' ? (
-                            <FontAwesomeIcon className='absolute right-[10px] top-[12px]' icon={faEyeSlash} onClick={
-                                () => {
-                                    setPasswordType('text')
-                                }
-                            } /> 
-                        ) : (
-                            <FontAwesomeIcon className='absolute right-[10px] top-[12px]' icon={faEye} onClick={
-                                () => {
-                                    setPasswordType('password')
-                                }
-                            } /> 
-                        )
-                } 
-            </div>
-        </div>
-    )
-}
+import TextInput from '@/components/ui/TextInput';
 
 function ResetPassword(props) {
     const navigate = useNavigate();
@@ -68,8 +37,7 @@ function ResetPassword(props) {
             
             navigate('/login')
         } catch (err) {
-            console.log()
-            toast.error(err?.response?.data?.msg)
+            toast.error(err?.response?.data?.msg || 'Something went wrong')
         }
 
     }
@@ -81,12 +49,12 @@ function ResetPassword(props) {
 
         <div className='mt-[25px] flex flex-col gap-[25px]'>
             {/* password field*/}
-            <InputField label='Password' id="password" value={password} onChange={(e) => {
+            <TextInput label='Password' id="password" type="password" value={password} onChange={(e) => {
                 setPassword(e.target.value)
             }} />
 
             {/* password field*/}
-            <InputField label='Confirm password' id="confirm-password" value={confirmPassword} onChange={(e) => {
+            <TextInput label='Confirm password' id="confirm-password" type="password" value={confirmPassword} onChange={(e) => {
                 setConfirmPassword(e.target.value)
             }} />
         </div>

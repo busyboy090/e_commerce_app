@@ -4,24 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import ProfilePics from '@/assets/images/profile-pics.jpg';
 import useAuth from '@/hooks/useAuth';
 import CheckboxInput from '@/components/ui/CheckboxInput';
-
-// InputField
-function InputField({label, id, onChange, inputType, value}) {
-  return (
-    <div className="flex flex-col gap-[5px]">
-        <label htmlFor={id}>
-          {label}
-        </label>
-        <input
-          type={inputType}
-          id={id}
-          value={value}
-          onChange={onChange}
-          className="h-[50px] w-full bg-[#F5F5F5] rounded-[4px] focus:outline-0 p-[10px]"
-        />
-    </div>
-  )
-}
+import TextInput from '@/components/ui/TextInput';
 
 function Profile() {
   const { auth } = useAuth()
@@ -40,7 +23,7 @@ function Profile() {
     last_name: '',
     email: '',
     address: '',
-    old_Password: '',
+    old_password: '',
     new_password: '',
     confirm_new_password: ''
   })
@@ -56,6 +39,10 @@ function Profile() {
   
   const handleChange = (field, value) => {
     setFormData((prev) => ({...prev, [field] : value}))
+  }
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
   }
 
   const [changePassword, setChangePassword] = useState(false);
@@ -82,22 +69,22 @@ function Profile() {
       {/* profile pics */}
         <div className='profile-pics skeleton h-[150px] w-[150px] mx-auto relative group'>
           <input type="file" accept='image/*' ref={imageInput} className='hidden'/>
-          <img src={imageUrl || user?.picture} alt="" className='h-[100%] w-[100%] object-cover rounded-[50%]'/>
+          <img src={imageUrl || user?.picture} alt={`${user?.first_name || 'User'} profile picture`} className='h-[100%] w-[100%] object-cover rounded-[50%]'/>
           <button type='button' className='bg-[#DB4444] absolute top-[75%] left-[75%] w-[30px] h-[30px] rounded-[50%]' onClick={uploadFromGallery}>
             <FontAwesomeIcon icon={faPencil}  className='text-white'/>
           </button>
         </div>
       {/* user information */}
-        <form>
+        <form onSubmit={handleSubmit}>
           <h3 className='text-[#DB4444] font-semibold text-center md:text-start text-[1.25rem]'>Edit Your Profile</h3>
           <div className='mt-[16px] grid grid-cols-1 md:grid-cols-2 gap-[10px] lg:gap-[50px]'>
               {/* first name */}
-              <InputField label='First Name' id='first_name' inputType='text' value={formData.first_name} onChange={(e) => {
+              <TextInput label='First Name' id='first_name' type='text' value={formData.first_name} onChange={(e) => {
                 handleChange('first_name', e.target.value)
               }} />
 
               {/* last name */}
-              <InputField label='Last Name' id='last_name' inputType='text' value={formData.last_name} onChange={(e) => {
+              <TextInput label='Last Name' id='last_name' type='text' value={formData.last_name} onChange={(e) => {
                 handleChange('last_name', e.target.value)
               }} />
           </div>
@@ -105,7 +92,7 @@ function Profile() {
           <div className='mt-[16px] grid grid-cols-1 md:grid-cols-2 gap-[10px] lg:gap-[50px]'>
               <div>
                 {/* email  */}
-                <InputField label='Email' id='email' inputType='email' value={formData.email} onChange={(e) => {
+                <TextInput label='Email' id='email' type='email' value={formData.email} onChange={(e) => {
                   setEmailChanged(true)
                   handleChange('email', e.target.value)
                 }} />
@@ -118,7 +105,7 @@ function Profile() {
               </div>
 
               {/* address */}
-              <InputField label='Address' id='address' inputType='text' value={formData.address} onChange={(e) => {
+              <TextInput label='Address' id='address' type='text' value={formData.address} onChange={(e) => {
                 handleChange('address', e.target.value)
               }} />
           </div>
@@ -138,7 +125,7 @@ function Profile() {
                       type="password"
                       placeholder='Current Password'
                       className="h-[50px] w-full bg-[#F5F5F5] rounded-[4px] focus:outline-0 p-[10px]"
-                      value={formData.old_Password}
+                      value={formData.old_password}
                       onChange={(e) => {
                         handleChange('old_password', e.target.value)
                       }}

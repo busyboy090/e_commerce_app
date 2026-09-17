@@ -8,64 +8,6 @@ import { getUserCountry } from "../utils/geolocation.js";
 import SelectInput from '@/components/ui/SelectInput';
 import PhoneInput from 'react-phone-input-2';;
 
-export function InputField(props) {
-  const {id,inputType, label, onChange, value} = props;
-  const [passwordType, setPasswordType] = useState('password');
-  return (
-    <div className="mt-5">
-      <div className="relative">
-          {
-            inputType.toLowerCase() == 'password' ? (
-                <div className='w-[100%] border-b border-gray-300 py-1 focus:border-b-2 focus:outline-none relative'>
-                    <input
-                        id={id}
-                        name={id}
-                        value={value}
-                        type={passwordType}
-                        className="border-none py-1 focus:outline-none peer w-full pe-[50px]"
-                        onChange={onChange}
-                    />
-
-                    {
-                        passwordType == 'password' ? (
-                            <FontAwesomeIcon className='absolute right-[10px] top-[12px]' icon={faEyeSlash} onClick={
-                                () => {
-                                    setPasswordType('text')
-                                }
-                            } /> 
-                        ) : (
-                            <FontAwesomeIcon className='absolute right-[10px] top-[12px]' icon={faEye} onClick={
-                                () => {
-                                    setPasswordType('password')
-                                }
-                            } /> 
-                        )
-                    }                 
-                </div>
-            ) : (
-                <>
-                    <input
-                        id={id}
-                        name={id}
-                        value={value}
-                        type={inputType}
-                        className="border-b border-gray-300 py-1 focus:border-b-2 focus:outline-none peer w-full"
-                        onChange={onChange}
-                    />
-                </>
-            )
-          }
-          <label
-          htmlFor={id}
-          className={`${value ? '-top-4' : 'top-1'} absolute left-0 peer-focus:-top-4 text-gray-300 peer-focus:text-xs transition-all`}
-          >
-          {label}
-          </label>
-      </div>
-    </div>
-  )
-}
-
 export function CountryInput ({handleChange,value}) {
     const [countries, setCountries] = useState([]);
     const countryName = useRef('');
@@ -74,7 +16,7 @@ export function CountryInput ({handleChange,value}) {
     useEffect(() => {
         country.getAllCountries()
             .then(data => setCountries(data))
-            .catch(err => console.error(err))
+            .catch(() => {})
     }, []);
 
     // if(!value) {
@@ -109,7 +51,7 @@ export function StateInput ({handleChange,value,country_id}) {
     useEffect(() => {
         country.getAllStatesOfACountry(country_id)
           .then(data => setStates(data))
-          .catch(err => console.error(err))
+          .catch(() => {})
 
         if(value) {
             const state = states.filter(s => s.state_id === value);
@@ -135,7 +77,7 @@ export function CityInput ({ handleChange, value, state_id}) {
     useEffect(() => {
         country.getAllCitiesOfAState(state_id)
           .then(data => setCities(data))
-          .catch(err => console.error(err))
+          .catch(() => {})
         
         if(value) {
             const city = cities.filter(c => c.city_id === value);
@@ -169,7 +111,7 @@ export function BusinessTypeInput ({handleChange}) {
     useEffect(() => {
         vendor.getAllBusinessTypes()
           .then(data =>  setBusinessTypes(data))
-          .catch(err => console.error(err))
+          .catch(() => {})
       }, []);
 
     return (
@@ -218,7 +160,7 @@ export function PhoneInputField({ label, id, country, value, onChange }) {
     if(!country) {
       getUserCountry()
       .then(data => setCountryCode(data?.code.toLowerCase() || "ng"))
-      .catch(err => console.log(err));
+      .catch(() => {});
     }
   },[])
 

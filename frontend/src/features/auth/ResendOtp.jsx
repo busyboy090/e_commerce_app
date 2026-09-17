@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import api from '../../api/axios';
+import { toast } from 'react-toastify';
 
 function startCountdown(durationInSeconds, setTime, endTime, countdownDisplay) {
     const now = Date.now();
@@ -22,7 +23,7 @@ function startCountdown(durationInSeconds, setTime, endTime, countdownDisplay) {
 
     const resetTimer = () => {
         clearInterval(countdown);
-        startCountdown(durationInSeconds, setTime, endTime, setCountdownDisplay); // Reset the countdown
+        startCountdown(durationInSeconds, setTime, endTime, countdownDisplay); // Reset the countdown
     };
 
     return resetTimer;
@@ -48,7 +49,7 @@ function ResendOtp({ email }) {
                 startCountdown(180, setTime, endTime, countdownDisplay); // Start countdown for 3 minutes
             }
         } catch (err) {
-            console.log(err);
+            toast.error(err?.response?.data?.msg || 'Failed to send code');
         }
     };
 

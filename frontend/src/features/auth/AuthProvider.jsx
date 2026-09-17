@@ -15,7 +15,7 @@ function AuthProvider({ children }) {
             try {
                 await refreshToken();
             } catch (error) {
-                console.error('Failed to refresh token:', error);
+                // token refresh failed
             } finally {
                 setIsLoading(false);
             }
@@ -31,39 +31,45 @@ function AuthProvider({ children }) {
     
     }, []);
 
-    api.interceptors.request.use((config) => {
-        if(access_token) config.headers['Authorization'] = `Bearer ${access_token}`
+    // Axios interceptors - registered once, cleaned up on unmount
+    useEffect(() => {
+        const requestInterceptor = api.interceptors.request.use((config) => {
+            if(access_token) config.headers['Authorization'] = `Bearer ${access_token}`
+            return config
+        });
 
-        return config
-    })
+        const responseInterceptor = api.interceptors.response.use(
+            (res) => res,
+            async (error) => {
+                const originalRequest = error.config;
 
-    api.interceptors.response.use(
-        (res) => res,
-        async (error) => {
-        const originalRequest = error.config;
-    
-        if (error.response?.status === 401 && !originalRequest._retry) {
-            originalRequest._retry = true;
-    
-            try {
-            const response = await refreshToken();
-            if (response?.payload?.access_token) {
-                const token = response.payload.access_token;
-    
-                login(response.payload); // save new token
-                originalRequest.headers['Authorization'] = `Bearer ${token}`;
-                return api(originalRequest); // retry original request
+                if (error.response?.status === 401 && !originalRequest._retry) {
+                    originalRequest._retry = true;
+
+                    try {
+                        const response = await refreshToken();
+                        if (response?.payload?.access_token) {
+                            const token = response.payload.access_token;
+
+                            login(response.payload);
+                            originalRequest.headers['Authorization'] = `Bearer ${token}`;
+                            return api(originalRequest);
+                        }
+                    } catch (err) {
+                        logout();
+                        return Promise.reject(err);
+                    }
+                }
+
+                return Promise.reject(error);
             }
-            } catch (err) {
-            console.error('Token refresh failed');
-            logout();
-            return Promise.reject(err); // important to break loop
-            }
-        }
-    
-        return Promise.reject(error);
-        }
-    );
+        );
+
+        return () => {
+            api.interceptors.request.eject(requestInterceptor);
+            api.interceptors.response.eject(responseInterceptor);
+        };
+    }, [access_token, refreshToken, login, logout]);
 
 
     useEffect(() => {

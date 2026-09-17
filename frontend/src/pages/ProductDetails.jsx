@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import api from '@/api/axios';
 import Loading from '@/components/ui/Loading';
 import Ratings from '@/components/ui/Ratings';
+import { toast } from 'react-toastify';
 
 
 function ProdutcDetails() {
@@ -24,9 +25,8 @@ function ProdutcDetails() {
         }
         setProducts(response?.data || []);
         productId = response?.data.product_id;
-        console.log(response.data);
       } catch (error) {
-        console.error('Error fetching product details:', error);
+        toast.error('Failed to load product details');
       } finally {
         setLoading(false);
       }

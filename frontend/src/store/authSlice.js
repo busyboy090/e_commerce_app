@@ -1,7 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import api from '../api/axios';
 import axios from 'axios';
-import crypto from 'crypto';
 
 const initialState = {
     access_token: null,
@@ -22,7 +21,6 @@ export const getUserInformations = createAsyncThunk(
             const response = await api.get('/user/me');
             return response.data;
           } catch (error) {
-            console.error('Failed to get user details:', error);
             throw error;
         }
     }
@@ -35,7 +33,6 @@ export const refreshToken = createAsyncThunk(
         const response = await axiosNoInterceptor.get('/auth/refresh-token');
         return response.data;
       } catch (error) {
-        console.error('Failed to refresh token:', error);
         throw error;
       }
     }

@@ -46,7 +46,7 @@ function Navbar() {
             }
 
         } catch(err) {
-            console.log(err)
+            // silently handle
         } 
     }
 

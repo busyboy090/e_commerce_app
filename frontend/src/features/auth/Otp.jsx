@@ -90,7 +90,6 @@ function Otp(props) {
             toast.success(response?.data?.msg);
         } catch (err) {
             toast.error(err?.response?.data?.msg);
-            console.log(err);
         }
     };
 

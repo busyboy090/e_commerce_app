@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash, faPen, faChevronDown } from "@fortawesome/free-solid-svg-icons";
 import Swal from 'sweetalert2';
+import { toast } from 'react-toastify';
+import user from '@/api/user.js';
 
 // AddressCard Component
 function AddressCard(props) {
@@ -15,7 +17,17 @@ function AddressCard(props) {
       confirmButtonText: 'Yes, remove it',
       confirmButtonColor: '#DB4444',
       cancelButtonText: 'Cancel',
-    })
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
+          await user.deleteAddress(props.address_id);
+          toast.success('Address removed successfully');
+          window.location.reload();
+        } catch (err) {
+          toast.error(err?.msg || 'Failed to remove address');
+        }
+      }
+    });
   }
   return (
     <div className="shadow p-[15px] flex flex-col gap-[10px] rounded-[4px]">

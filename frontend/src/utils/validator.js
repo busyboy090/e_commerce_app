@@ -31,7 +31,6 @@ export function validatePassword(password,confirmation_password) {
 }
 
 export function validateNumber(number) {
-    console.log(typeof number)
     if(!number) {
         return 'This field is required';
     } else if (typeof number !== 'number') {

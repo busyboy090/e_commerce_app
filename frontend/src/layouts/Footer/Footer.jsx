@@ -2,6 +2,7 @@ import React from 'react';
 import SendIcon from '@/assets/icons/icon-send.svg';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFacebookF, faTwitter, faInstagram, faLinkedinIn } from "@fortawesome/free-brands-svg-icons";
+import { Link } from 'react-router-dom';
 
 function Footer() {
   return (
@@ -14,8 +15,8 @@ function Footer() {
                 <form >
                     <div className='border-1 border-white w-[100%] lg:w-[217px] ps-[10px] h-[48px] flex justify-center items-center'>
                         <input type="email" placeholder='Enter your email' className='w-[70%] focus:outline-0' />
-                        <button className='text-white px-[20px]'>
-                            <img src={SendIcon} alt="" />
+                        <button className='text-white px-[20px]' type="submit" aria-label="Subscribe">
+                            <img src={SendIcon} alt="Send" />
                         </button>
                     </div>
                 </form>
@@ -32,19 +33,19 @@ function Footer() {
                 <h2 className='text-white text-[1.5rem] font-bold mb-[24px]'>Account</h2>
                 <ul className='flex flex-col gap-[16px]'>
                     <li>
-                        <a href='/'>My Account</a>
+                        <Link to='/account/profile'>My Account</Link>
                     </li>
                     <li>
-                        <a href='/'>Login / Register</a>
+                        <Link to='/login'>Login / Register</Link>
                     </li>
                     <li>
-                        <a href='/cart'>Cart</a>
+                        <Link to='/cart'>Cart</Link>
                     </li>
                     <li>
-                        <a href='/wishlist'>Wishlist</a>
+                        <Link to='/wishlist'>Wishlist</Link>
                     </li>
                     <li>
-                        <a href='/shop'>Shop</a>
+                        <Link to='/shop'>Shop</Link>
                     </li>
                 </ul>
             </div>
@@ -53,16 +54,16 @@ function Footer() {
                 <h2 className='text-white text-[1.5rem] font-bold mb-[24px]'>Quick Link</h2>
                 <ul className='flex flex-col gap-[16px]'>
                     <li>
-                        <a href='/'>Privacy Policy</a>
+                        <Link to='/'>Privacy Policy</Link>
                     </li>
                     <li>
-                        <a href='/'>Terms Of Use</a>
+                        <Link to='/'>Terms Of Use</Link>
                     </li>
                     <li>
-                        <a href='/'>FAQ</a>
+                        <Link to='/'>FAQ</Link>
                     </li>
                     <li>
-                        <a href='/'>Contact</a>
+                        <Link to='/'>Contact</Link>
                     </li>
                 </ul>
             </div>
@@ -72,16 +73,16 @@ function Footer() {
                 <p className='text-[0.75rem]'>Save $3 with App New User Only</p>
                 
                 <div className='flex gap-[30px] mt-[20px]'>
-                    <a href="">
+                    <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
                         <FontAwesomeIcon icon={faFacebookF} className='text-[1.5rem]' />
                     </a>
-                    <a href="">
+                    <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" aria-label="Twitter">
                         <FontAwesomeIcon icon={faTwitter}  className='text-[1.5rem]'/>
                     </a>
-                    <a href="">
+                    <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
                         <FontAwesomeIcon icon={faInstagram} className='text-[1.5rem]' />
                     </a>
-                    <a href="">
+                    <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
                         <FontAwesomeIcon icon={faLinkedinIn}  className='text-[1.5rem]'/>
                     </a>
                 </div>

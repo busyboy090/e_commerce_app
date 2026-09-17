@@ -9,27 +9,17 @@ import { useCart } from '@/hooks/useCart.jsx';
 import {generateCart} from '@/utils/cart.utils.js';
 import CheckoutCartCard from "@/features/checkout/CheckoutCartCard.jsx";
 import { formatCurrency } from "@/utils/money.js";
-
-function InputField({label,id,onChange, value, type}) {
-  return (
-    <div className="flex flex-col gap-[5px]">
-      <label htmlFor={id} className="text-[rgba(0,0,0,0.5)]">
-        {label}
-      </label>
-      <input
-        type={type}
-        id={id}
-        value={value}
-        onChange={onChange}
-        className="h-[50px] w-full bg-[#F5F5F5] rounded-[4px] focus:outline-0 p-[10px]"
-      />
-    </div>
-  )
-}
+import TextInput from "@/components/ui/TextInput";
 
 function Checkout() {
   const [formData, setFormData] = useState({
-
+    first_name: '',
+    company_name: '',
+    street_address: '',
+    apartment: '',
+    town_city: '',
+    phone_number: '',
+    email: '',
   }) 
   const [isChecked, setIsChecked] = useState(false);
   const {products, cartItems} = useCart();
@@ -38,8 +28,9 @@ function Checkout() {
   const cartSubTotal = cart.reduce((total, item) => total + item.price * item.quantity, 0).toFixed(2);
   const cartTotal = cart.reduce((total, item) => total + item.price * item.quantity, 0).toFixed(2);
 
-  const handleChange = (field,value) => {
-    setFormData((prev) => ({...prev, [field]: value}));
+  const handleChange = (e) => {
+    const { id, value } = e.target;
+    setFormData((prev) => ({...prev, [id]: value}));
   }
   return (
     <div className="container mb-[50px!important] lg:mb-[100px!important]">
@@ -51,25 +42,25 @@ function Checkout() {
           <form>
             <div className="flex flex-col gap-[20px]">
               {/* first name */}
-              <InputField type='text' label='First Name*' id='first-name' onChange={handleChange} value={formData.first_Name}/>
+              <TextInput type='text' label='First Name*' id='first_name' onChange={handleChange} value={formData.first_name}/>
 
               {/* company name */}
-              <InputField type='text' label='Company Name*' id='company-name' onChange={handleChange} value={formData.company_Name}/>
+              <TextInput type='text' label='Company Name*' id='company_name' onChange={handleChange} value={formData.company_name}/>
 
               {/* street address */}
-              <InputField type='text' label='Street Address*' id='street-address' onChange={handleChange} value={formData.street_address}/>
+              <TextInput type='text' label='Street Address*' id='street_address' onChange={handleChange} value={formData.street_address}/>
 
               {/* Apartment, floor, etc. (optional)*/}
-              <InputField type='text' label='Apartment, floor, etc. (optional)' id='apartment' onChange={handleChange} value={formData.apartment}/>
+              <TextInput type='text' label='Apartment, floor, etc. (optional)' id='apartment' onChange={handleChange} value={formData.apartment}/>
               
               {/* Town / City */}
-              <InputField type='text' label='Town/City*' id='town/city' onChange={handleChange} value={formData.town_city}/>
+              <TextInput type='text' label='Town/City*' id='town_city' onChange={handleChange} value={formData.town_city}/>
 
               {/* Phone Number* */}
-              <InputField type='tel' label='Phone Number' id='phone-number' onChange={handleChange} value={formData.phone_number}/>
-              
+              <TextInput type='tel' label='Phone Number' id='phone_number' onChange={handleChange} value={formData.phone_number}/>
+
               {/* Email Address*/}
-              <InputField type='email' label='Email' id='email' onChange={handleChange} value={formData.email}/>
+              <TextInput type='email' label='Email' id='email' onChange={handleChange} value={formData.email}/>
 
               <div className="flex gap-[16px] items-center">
                 <div className="relative mt-[6px]">

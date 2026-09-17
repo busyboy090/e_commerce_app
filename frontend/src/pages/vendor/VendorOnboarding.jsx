@@ -3,8 +3,10 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import vendor from "@/api/vendor.js";
 import PhoneInput from "react-phone-input-2";
-import { InputField, CountryInput, BusinessTypeInput } from "@/features/components.jsx";
+import TextInput from "@/components/ui/TextInput";
+import { CountryInput, BusinessTypeInput } from "@/features/components.jsx";
 import { getUserCountry } from "@/utils/geolocation.js";
+import { validateText, validateNumber } from "@/utils/validator.js";
 
 const VendorOnboarding = () => {
     const [form, setForm] = useState({
@@ -29,11 +31,11 @@ const VendorOnboarding = () => {
     const isValid = useRef(false);
 
       const validateForm = () => {
-        const { business_name, business_type_id, phone, country_id } = formData;
+        const { business_name, business_type_id, phone, country_id, address } = form;
         const newErrors = {
-          business_name_name: validateText(business_name),
+          business_name: validateText(business_name),
           business_type_id: validateNumber(business_type_id),
-          address: validateText(form.address),
+          address: validateText(address),
           phone: validateText(phone),
           country_id: validateNumber(country_id)
         };
@@ -50,7 +52,7 @@ const VendorOnboarding = () => {
       useEffect(() => {
         getUserCountry()
           .then(data => setCountryCode(data.code))
-          .catch(err => console.log(err));
+          .catch(() => {});
       },[])
 
     const handleSubmit = async (e) => {
@@ -63,8 +65,7 @@ const VendorOnboarding = () => {
             toast.success("Profile completed!");
             navigate("/vendor/dashboard");
         } catch (err) {
-            console.error(err);
-            toast.error(err?.message || "Something went wrong");
+            toast.error(err?.message || 'Something went wrong');
         } finally {
         setLoading(false);
         }
@@ -75,7 +76,7 @@ const VendorOnboarding = () => {
       <form onSubmit={handleSubmit} className="bg-white p-8 rounded shadow-md w-full max-w-md flex flex-col gap-3">
         <h2 className="text-2xl font-semibold text-center">Complete Your Vendor Profile</h2>
 
-        <InputField id='business_name' label='Business Name' inputType='text' value={form.business_name} onChange={(e) => handleChange("business_name", e.target.value)}/>
+        <TextInput id='business_name' label='Business Name' type='text' value={form.business_name} onChange={(e) => handleChange("business_name", e.target.value)}/>
 
         <BusinessTypeInput handleChange={handleChange} />
 

@@ -5,24 +5,11 @@ import { useNavigate } from "react-router-dom";
 import "react-phone-input-2/lib/style.css";
 
 import CheckboxInput from "@/components/ui/CheckboxInput";
+import TextInput from "@/components/ui/TextInput";
 import { PhoneInputField } from "../components";
 import { getUserCountry } from "@/utils/geolocation.js";
 import country from "@/api/country.js";
 import SelectInput from '@/components/ui/SelectInput';
-
-function InputField({ label, id, error, ...rest }) {
-  return (
-    <div className="flex flex-col gap-[5px]">
-      <label htmlFor={id}>{label}</label>
-      <input
-        id={id}
-        className="h-[50px] w-full bg-[#F5F5F5] rounded-[4px] focus:outline-0 p-[10px]"
-        {...rest}
-      />
-      {error && <p className="text-red-500">{error}</p>}
-    </div>
-  );
-}
 
 export function AddressForm({ initialData = {}, mode = "add", handleSubmit: onFinalSubmit }) {
   const [countries, setCountries] = useState([]);
@@ -84,7 +71,7 @@ export function AddressForm({ initialData = {}, mode = "add", handleSubmit: onFi
   useEffect(() => {
     country.getAllCountries()
         .then(data => setCountries(data))
-        .catch(err => console.error(err))
+        .catch(() => {})
   }, []);
 
   useEffect(() => {
@@ -96,7 +83,7 @@ export function AddressForm({ initialData = {}, mode = "add", handleSubmit: onFi
             setValue('country', country[0])
           }
         })
-        .catch((err) => console.error(err));
+        .catch(() => {});
     }
   },[countries])
 
@@ -109,7 +96,7 @@ export function AddressForm({ initialData = {}, mode = "add", handleSubmit: onFi
       .then(data => {
         setStates(data)
       })
-      .catch(err => console.error(err))
+      .catch(() => {})
   },[countryWatchedValue])
 
 
@@ -117,7 +104,7 @@ export function AddressForm({ initialData = {}, mode = "add", handleSubmit: onFi
   useEffect(() => {
     country.getAllCitiesOfAState(stateWatchedVlue?.state_id)
       .then(data => setCities(data))
-      .catch(err => console.error(err))
+      .catch(() => {})
   }, [stateWatchedVlue]);
 
   const onSubmit = (data) => {
@@ -133,13 +120,13 @@ export function AddressForm({ initialData = {}, mode = "add", handleSubmit: onFi
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
             {/* First + Last Name */}
-          <InputField
+          <TextInput
             label="First Name"
             id="first_name"
             error={errors.first_name?.message}
             {...register("first_name", { required: "First name is required" })}
           />
-          <InputField
+          <TextInput
             label="Last Name"
             id="last_name"
             error={errors.last_name?.message}
@@ -252,13 +239,13 @@ export function AddressForm({ initialData = {}, mode = "add", handleSubmit: onFi
           </div>
 
         {/* Address + Additional Info */}
-        <InputField
+        <TextInput
           label="Address"
           id="address"
           error={errors.address?.message}
           {...register("address", { required: "Address is required" })}
         />
-        <InputField
+        <TextInput
           label="Additional Information"
           id="additional_information"
           error={errors.additional_information?.message}

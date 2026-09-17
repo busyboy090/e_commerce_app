@@ -1,13 +1,15 @@
 import React, { useEffect, useState  } from 'react'
 import AddressForm from '@/features/address/AddressForm';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import user from '@/api/user.js';
+import { toast } from 'react-toastify';
 
 
 function EditAddress() {
   const [address, setAddress] = useState([])
   const { id } = useParams();
   const [loading, setLoading] = useState(true)
+  const navigate = useNavigate();
 
   useEffect(()=>{
     user.getAddress(id)
@@ -16,7 +18,6 @@ function EditAddress() {
         setLoading(false)
       })
       .catch(err => {
-        console.log(err)
         setLoading(false)
       })
   },[])
@@ -31,12 +32,18 @@ function EditAddress() {
 
   if(!address || address.length < 1) {
     return (
-      <p className="text-3xl text-center my-10">No adddress found</p>
+      <p className="text-3xl text-center my-10">No address found</p>
     )
   }
 
-  const handleSubmit = (data) => {
-
+  const handleSubmit = async (data) => {
+    try {
+      await user.updateAddress(id, data);
+      toast.success('Address updated successfully');
+      navigate('/account/addresses');
+    } catch (err) {
+      toast.error(err?.msg || 'Failed to update address');
+    }
   }
   
   return (

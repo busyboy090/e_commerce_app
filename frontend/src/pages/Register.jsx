@@ -3,18 +3,20 @@ import SideImage from "@/assets/images/login-register-image.svg";
 import PhoneInput from "react-phone-input-2";
 import './register.css';
 import { validateEmail, validatePassword, validateText, validateNumber } from "@/utils/validator.js";
-import { InputField, CountryInput } from "@/features/components.jsx";
+import TextInput from "@/components/ui/TextInput";
+import { CountryInput } from "@/features/components.jsx";
 import { toast } from "react-toastify";
 import { useNavigate, useLocation } from "react-router-dom";
 import GoogleLogin from "@/features/auth/GoogleLogin.jsx";
 import auth from '@/api/auth.js';
+import { getUserCountry } from "@/utils/geolocation.js";
 
 function Form ({ handleChange, handleSubmit, formData, loading, errors}) {
   const [countryCode, setCountryCode] = useState('');
   useEffect(() => {
     getUserCountry()
       .then(data => setCountryCode(data?.code))
-      .catch(err => console.log(err));
+      .catch(() => {});
   },[])
   return (
     <form onSubmit={handleSubmit}>
@@ -22,22 +24,22 @@ function Form ({ handleChange, handleSubmit, formData, loading, errors}) {
       <p className="text-center mb-6">Enter your details below</p>
 
       <div className="flex flex-col gap-4">
-        <InputField id='first_name' label='Firstname' onChange={(e) => handleChange('first_name', e.target.value)} inputType='text' value={formData.first_name} />
+        <TextInput id='first_name' label='Firstname' onChange={(e) => handleChange('first_name', e.target.value)} type='text' value={formData.first_name} />
         {errors.first_name && <p className="text-red-500">{errors.first_name}</p>}
 
-        <InputField id='last_name' label='Lastname' onChange={(e) => handleChange('last_name', e.target.value)} inputType='text' value={formData.last_name} />
+        <TextInput id='last_name' label='Lastname' onChange={(e) => handleChange('last_name', e.target.value)} type='text' value={formData.last_name} />
         {errors.last_name && <p className="text-red-500">{errors.last_name}</p>}
 
-        <InputField id='email' label='Email' onChange={(e) => handleChange('email', e.target.value)} inputType='email' value={formData.email} />
+        <TextInput id='email' label='Email' onChange={(e) => handleChange('email', e.target.value)} type='email' value={formData.email} />
         {errors.email && <p className="text-red-500">{errors.email}</p>}
 
         <PhoneInput country={countryCode.toLowerCase()} onChange={(value) => handleChange('phone', value)} className='phone' value={formData.phone} />
         {errors.phone && <p className="text-red-500">{errors.phone}</p>}
 
-        <InputField id='password' label='Password' onChange={(e) => handleChange('password', e.target.value)} inputType='password' value={formData.password} />
+        <TextInput id='password' label='Password' onChange={(e) => handleChange('password', e.target.value)} type='password' value={formData.password} />
         {errors.password && <p className="text-red-500">{errors.password}</p>}
 
-        <InputField id='confirmation_password' label='Confirm Password' onChange={(e) => handleChange('confirm_password', e.target.value)} inputType='password' value={formData.confirm_password} />
+        <TextInput id='confirmation_password' label='Confirm Password' onChange={(e) => handleChange('confirm_password', e.target.value)} type='password' value={formData.confirm_password} />
 
         {/* Country Dropdown */}
         <CountryInput handleChange={handleChange}/>
@@ -125,8 +127,7 @@ function Register() {
         window.location.href = '/login';
       }
     } catch (err) {
-      console.error(err);
-      toast.error(err);
+      toast.error(err?.msg || 'Registration failed');
     } finally {
       setLoading(false);
     }

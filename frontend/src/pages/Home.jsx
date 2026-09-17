@@ -2,9 +2,7 @@ import {React} from "react";
 import Hero from "@/features/hero/Hero";
 import FlashSales from "@/features/flashsales/FlashSales";
 import Categories from "@/features/categories/Categories";
-import BestSellingProduct from "@/features/product/BestSellingProduct";
 import Jbl from "@/assets/products/BIG-JBL.svg";
-import Product from "@/features/product/Product";
 import NewArrival from "@/features/product/NewArrival";
 import FastDelivery from '@/assets/icons/Fast-Delivery.svg';
 import CustomerService from '@/assets/icons/Customer-service.svg';
@@ -18,7 +16,6 @@ function Home() {
       <Hero />
       <FlashSales />
       <Categories />
-      {/* <BestSellingProduct /> */}
 
       <div className="container bg-black p-[56px!important] flex max-lg:flex-col gap-[43px]">
         <div className="content lg:w-[443px]">
@@ -53,7 +50,7 @@ function Home() {
             Buy Now!
           </button>
         </div>
-        <img src={Jbl} className="w-130" alt="" />
+        <img src={Jbl} className="w-130" alt="JBL Speaker Promo" />
       </div>
 
       <Product />

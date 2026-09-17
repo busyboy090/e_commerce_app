@@ -23,7 +23,6 @@ export const syncCartToDatabase = createAsyncThunk(
 
       return response?.data;
     } catch (err) {
-      console.log(err);
       return null;
     }
   }
@@ -41,7 +40,6 @@ export const updateCartProductQuantity = createAsyncThunk(
 
       return response?.data;
     } catch (err) {
-      console.log(err);
       return null;
     }
   }
@@ -57,7 +55,6 @@ export const deleteCartProductFromDatabase = createAsyncThunk(
 
       return response?.data;
     } catch (err) {
-      console.log(err);
       return null;
     }
   }
@@ -72,7 +69,6 @@ export const fetchCartFromDatabase = createAsyncThunk(
       );
       return response.data;
     } catch (err) {
-      console.log(err);
       return []
     }
   }
@@ -87,10 +83,8 @@ export const fetchProducts = createAsyncThunk(
         JSON.stringify({ productIds }),
         { headers: { 'Content-Type': 'application/json' } }
       );
-      console.log(response.data)
       return response.data.products;
     } catch (err) {
-      console.log(err);
       return []
     }
   }

@@ -26,7 +26,6 @@ export const getUserCountry = async () => {
         return country;
       }
     } catch (err) {
-      console.error("Geo fetch failed:", err);
       return null;
     }
 };

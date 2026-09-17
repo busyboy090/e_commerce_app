@@ -34,17 +34,16 @@ function GoogleLogin() {
             // Redirect
             navigate(from, { replace: true });
           } catch (err) {
-            toast.error(err?.response?.data?.msg);
-            console.log(err)
+            toast.error(err?.response?.data?.msg || 'Login failed');
           }
         }, 
-        onError: () => console.log('Failed')
+        onError: () => toast.error('Google login failed')
       })
 
   return (
     <>
         <button onClick={handleOAuthSubmit} type='button' className="w-full flex justify-center items-center gap-[16px] mt-[16px] h-[56px] rounded-[4px] border border-[rgba(0,0,0,0.4)]">
-            <img src="https://img.icons8.com/color/48/000000/google-logo.png" alt="" className="size-[24px]" />
+            <img src="https://img.icons8.com/color/48/000000/google-logo.png" alt="Google" className="size-[24px]" />
             <span className="text-[1rem]">Sign in with Google</span>
         </button>
     </>

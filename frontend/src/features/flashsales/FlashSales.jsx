@@ -55,7 +55,7 @@ function FlashSales() {
       setProducts(response?.data?.products);
 
     } catch (error) {
-      console.log('Error fetching product', error)
+      // silently handle
     }
   }
   

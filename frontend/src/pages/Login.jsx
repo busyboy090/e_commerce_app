@@ -1,6 +1,6 @@
 import React, {useState, useRef, useEffect } from "react";
 import SideImage from "@/assets/images/login-register-image.svg";
-import { InputField } from "@/features/components";
+import TextInput from "@/components/ui/TextInput";
 import { validateText } from "@/utils/validator";
 import { toast } from "react-toastify";
 import { useNavigate, useLocation } from "react-router-dom";
@@ -70,8 +70,8 @@ function Login() {
         password: formData.password
       })
   
-      // save the userdetais
-      login(response?.data);
+      // save the user details
+      login(data);
 
       // show notification
       toast.success(data?.msg);
@@ -80,8 +80,7 @@ function Login() {
       navigate(from, { replace: true });
 
     } catch (err) {
-      console.error(err);
-      toast.error(err?.error)
+      toast.error(err?.error || 'Login failed')
     } finally {
       setLoading(false);
     }
@@ -98,10 +97,10 @@ function Login() {
             <p className="text-[1rem] max-md:text-center">Enter your details below</p>
             <div className="flex flex-col gap-[15px]">
               {/* email input */}
-              <InputField id='email' label='Email'  onChange={(e) => handleChange('email', e.target.value)} inputType='email'  value={formData.email}/>
+              <TextInput id='email' label='Email'  onChange={(e) => handleChange('email', e.target.value)} type='email'  value={formData.email}/>
               {errors.email && <p style={{ color: "red" }}>{errors.email}</p>}
               {/* password input */}
-              <InputField id='password' label='Password' onChange={(e) => handleChange('password', e.target.value)} inputType='Password' value={formData.password} />
+              <TextInput id='password' label='Password' onChange={(e) => handleChange('password', e.target.value)} type='password' value={formData.password} />
               {errors.password && <p style={{ color: "red" }}>{errors.password}</p>}
             </div>
 

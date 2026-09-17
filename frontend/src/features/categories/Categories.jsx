@@ -36,7 +36,7 @@ function Categories() {
         setCategories(response?.data?.categories);
 
       } catch (error) {
-        console.log(error);
+        // silently handle
       }
     } 
 

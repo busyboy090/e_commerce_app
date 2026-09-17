@@ -23,16 +23,16 @@ function ProductCard({ product, settings }) {
   const price = product?.product_variants[0]?.price;
   const productId = product?.product_id;
   const name = product?.name
-  const discount = 40;
-  const newProduct = true
+  const discount = product?.discount || 0;
+  const isNew = product?.isNew || false;
 
  const { addToCart } = useCart();
  const { addToWishList, removeFromWishList, wishList } = useWishList();
 
 
-  // Check if product exists
+  // Check if product exists in wishlist
   const productExists = (productId) => {
-    wishList.some(item => item.productId === productId);
+    return wishList.some(item => item.productId === productId);
   }
 
   const productCard = useRef()
@@ -60,27 +60,25 @@ function ProductCard({ product, settings }) {
     return ratingsArray;
   };
 
-  <FontAwesomeIcon icon={faStarHalfStroke} />
-
   return (
     <div className="mt-[40px]" ref={productCard}>
       <div className="max-sm:w-[100%] snap-center w-[270px] bg-[#F5F5F5] h-[250px] relative rounded-[4px] overflow-hidden product-card">
         <div ref={imageContainer} onClick={() => {
           window.location.href = `/product/${productId}`; 
         }}>
-          <img className="product-image" src={image} alt="Gamepad" onError={() => {
+          <img className="product-image" src={image} alt={name || 'Product image'} onError={() => {
           imageContainer.current.classList.add('image-skeleton')
         }} />
         </div>
         {discount ? (
           <p className="discount absolute top-[12px] left-[12px] w-[55px] h-[26px] bg-[#DB4444] flex justify-center items-center text-white rounded-[4px] text-[0.75rem]">
-            -40%
+            -{discount}%
           </p>
         ) : (
           ""
         )}
 
-        {newProduct ? (
+        {isNew ? (
           <p className="discount absolute top-[12px] left-[12px] w-[55px] h-[26px] bg-[#00FF66] flex justify-center items-center text-white rounded-[4px] text-[0.75rem]">
             New
           </p>
@@ -95,6 +93,7 @@ function ProductCard({ product, settings }) {
               className={`wishlist w-[34px] h-[34px] bg-[#FFFFFF] ${
                 isWishlisted ? "text-[#DB4444]" : ""
               } flex justify-center items-center font-[] rounded-full`}
+              aria-label={isWishlisted ? "Remove from wishlist" : "Add to wishlist"}
               onClick={() => {
                   setIsWishlisted(!isWishlisted)
                   if (!isWishlisted) {
@@ -121,11 +120,12 @@ function ProductCard({ product, settings }) {
           {
             deleteBtn ? (
               <button type='button' className='w-[34px] h-[34px] bg-[#FFFFFF] flex justify-center items-center rounded-full' 
+              aria-label="Remove from wishlist"
               onClick={() => {
                 removeFromWishList(productId)
                 productCard.current.remove();
               }}>
-                <img src={DeleteIcon} alt="" />
+                <img src={DeleteIcon} alt="Remove from wishlist" />
               </button>
             ) : ''
           }
@@ -135,6 +135,7 @@ function ProductCard({ product, settings }) {
             view ? (
               <button
                 className="view w-[34px] h-[34px] bg-[#FFFFFF] flex justify-center items-center rounded-full"
+                aria-label="Quick view"
                 onClick={() => setIsViewed(!isViewed)}
               >
                 <FontAwesomeIcon icon={isViewed ? faEyeSolid : faEyeRegular} />
@@ -157,7 +158,7 @@ function ProductCard({ product, settings }) {
         <p>{name}</p>
         <div className="flex gap-[12px]">
           <p className="text-[#DB4444] text-[1rem]">${price}</p>
-          {discount ? <p className="line-through opacity-25">$160</p> : " "}
+          {discount ? <p className="line-through opacity-25">${(price / (1 - discount / 100)).toFixed(2)}</p> : " "}
           {!discount ? (
             <ul className="flex gap-[4px]">
               {rendenderRatings(product?.averageRating).map((item, index) => {

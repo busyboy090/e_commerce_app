@@ -32,7 +32,7 @@ function GetEmail(props) {
 
 
     } catch (err) {
-      console.log(err)
+      toast.error(err?.response?.data?.msg || 'Something went wrong');
     }
   }
 

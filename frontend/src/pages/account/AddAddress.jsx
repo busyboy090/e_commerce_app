@@ -1,19 +1,19 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import AddressForm from '@/features/address/AddressForm';
-import { getUserCountry } from '@/utils/geolocation.js';
 import user from '@/api/user.js';
-import { validateEmail, validatePassword, validateText, validateNumber } from "@/utils/validator.js";
 import { toast } from 'react-toastify';
-import Swal from 'sweetalert2';
 
 function AddAddress() {
+  const navigate = useNavigate();
+
   const handleSubmit = async (formData) => {
     try {
       const data = await user.createNewAddress(formData);
-      toast.error(data?.msg)
+      toast.success(data?.msg || 'Address added successfully');
+      navigate('/account/addresses');
     } catch (err) {
-      console.log(err)
-      toast.error(err?.msg)
+      toast.error(err?.msg || 'Failed to add address')
     }
   }
 
